@@ -3,17 +3,17 @@
     {
       "name": "环网冗余场景",
       "desc": "适用于工业生产、控制等场景的交换机设备",
-      "pic": "/data/images/DK-S24GS4XS.png",
+      "pic": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/DK-S24GS4XS.png"
     },
     {
       "name": "视频监控场景",
       "desc": "支持PoE供电能力的交换机设备",
-      "pic": "/data/images/DK-S24GT4XS-P.jpg",
+      "pic": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/DK-S24GT4XS-P.jpg"
     },
     {
       "name": "EPON宽带接入场景",
       "desc": "EPON设备",
-      "pic": "/data/images/OLT-P128-E.png",
+      "pic": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/OLT-P128-E.png"
     }
   ]
 }
