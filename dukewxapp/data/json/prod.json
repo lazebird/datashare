@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "name": "工业交换机",
+      "desc": "适用于工业生产、控制等场景的交换机设备",
+      "pic": "/data/images/DK-S24GS4XS.png",
+      "hwspec": "/data/images/switch_hwspec.png",
+      "swspec": "/data/images/switch_swspec.png"
+    },
+    {
+      "name": "PoE交换机",
+      "desc": "支持PoE供电能力的交换机设备",
+      "pic": "/data/images/DK-S24GT4XS-P.jpg",
+      "hwspec": "/data/images/switch_hwspec.png",
+      "swspec": "/data/images/switch_swspec.png"
+    },
+    {
+      "name": "XPON设备",
+      "desc": "EPON设备",
+      "pic": "/data/images/OLT-P128-E.png",
+      "hwspec": "/data/images/switch_hwspec.png",
+      "swspec": "/data/images/switch_swspec.png"
+    }
+  ]
+}
