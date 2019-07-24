@@ -1,0 +1,39 @@
+{
+    "subpages": [
+        {
+            "name": "介绍",
+            "url": "/pages/intro/intro",
+            "open_type": "navigate"
+        },
+        {
+            "name": "产品",
+            "url": "/pages/prod/prod",
+            "open_type": "switchTab"
+        },
+        {
+            "name": "案例",
+            "url": "/pages/case/case",
+            "open_type": "switchTab"
+        },
+        {
+            "name": "合作",
+            "url": "/pages/coop/coop",
+            "open_type": "navigate"
+        },
+        {
+            "name": "加入",
+            "url": "/pages/join/join",
+            "open_type": "navigate"
+        },
+        {
+            "name": "客服",
+            "url": "/pages/chat/chat",
+            "open_type": "switchTab"
+        },
+        {
+            "name": "设置",
+            "url": "/pages/option/option",
+            "open_type": "navigate"
+        }
+    ]
+}
