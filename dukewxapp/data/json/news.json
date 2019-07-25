@@ -1,0 +1,29 @@
+{
+    "items": [
+        {
+            "name": "t1",
+            "short": "test article",
+            "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t1.txt"
+        },
+        {
+            "name": "t2",
+            "short": "test article",
+            "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t2.txt"
+        },
+        {
+            "name": "t3",
+            "short": "test article",
+            "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t3.txt"
+        },
+        {
+            "name": "t4",
+            "short": "test article",
+            "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t4.txt"
+        },
+        {
+            "name": "t5",
+            "short": "test article",
+            "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t5.txt"
+        }
+    ]
+}
