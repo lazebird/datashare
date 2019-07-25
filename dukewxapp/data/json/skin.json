@@ -3,44 +3,51 @@
         {
             "name": "normal-skin",
             "tag": "默认",
-            "color": "#000000",
-            "background": "#f6f6f6"
+            "fcolor": "#000000",
+            "bcolor": "#f6f6f6",
+            "tcolor": "#000000"
         },
         {
             "name": "dark-skin",
             "tag": "深黑",
-            "color": "#999999",
-            "background": "#000000"
+            "fcolor": "#ffffff",
+            "bcolor": "#000000",
+            "tcolor": "#999999"
         },
         {
             "name": "red-skin",
             "tag": "粉红",
-            "color": "#8e5a54",
-            "background": "#f9e5ee"
+            "fcolor": "#000000",
+            "bcolor": "#f9e5ee",
+            "tcolor": "#8e5a54"
         },
         {
             "name": "yellow-skin",
             "tag": "橘黄",
-            "color": "#8c6031",
-            "background": "#f6e1c9"
+            "fcolor": "#000000",
+            "bcolor": "#f6e1c9",
+            "tcolor": "#8c6031"
         },
         {
             "name": "green-skin",
             "tag": "草绿",
-            "color": "#5d6021",
-            "background": "#e3eabb"
+            "fcolor": "#000000",
+            "bcolor": "#e3eabb",
+            "tcolor": "#5d6021"
         },
         {
             "name": "cyan-skin",
             "tag": "青葱",
-            "color": "#417036",
-            "background": "#d1e9cd"
+            "fcolor": "#000000",
+            "bcolor": "#d1e9cd",
+            "tcolor": "#417036"
         },
         {
             "name": "blue-skin",
             "tag": "水蓝",
-            "color": "#2e6167",
-            "background": "#bbe4e3"
+            "fcolor": "#000000",
+            "bcolor": "#bbe4e3",
+            "tcolor": "#2e6167"
         }
     ]
 }
