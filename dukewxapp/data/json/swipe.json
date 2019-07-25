@@ -2,22 +2,27 @@
     "items": [
         {
             "name": "f1",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg"
         },
         {
             "name": "f2",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f2.jpg",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f2.jpeg"
         },
         {
             "name": "f3",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f3.jpg",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f3.jfif"
         },
         {
             "name": "f4",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f4.jpg",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f4.jpg"
         },
         {
             "name": "f5",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f5.jpg",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f5.jpg"
         }
     ]
