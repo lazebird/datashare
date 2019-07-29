@@ -1,31 +1,36 @@
 {
     "items": [
         {
-            "name": "t1",
+            "title": "t1",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/image/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t1.txt"
         },
         {
-            "name": "t2",
+            "title": "t2",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/image/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t2.txt"
         },
         {
-            "name": "t3",
+            "title": "t3",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/image/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t3.txt"
         },
         {
-            "name": "t4",
+            "title": "t4",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/image/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t4.txt"
         },
         {
-            "name": "t5",
+            "title": "t5",
+            "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/image/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t5.txt"
