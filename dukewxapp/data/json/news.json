@@ -5,6 +5,7 @@
             "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
+            "author": "anonymous",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t1.txt"
         },
         {
@@ -12,6 +13,7 @@
             "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
+            "author": "anonymous",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t2.txt"
         },
         {
@@ -19,6 +21,7 @@
             "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
+            "author": "anonymous",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t3.txt"
         },
         {
@@ -26,6 +29,7 @@
             "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
+            "author": "anonymous",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t4.txt"
         },
         {
@@ -33,6 +37,7 @@
             "image": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/images/f1.jpg",
             "short": "test article",
             "date": "2019-07-25 14:20:11",
+            "author": "anonymous",
             "url": "https://code.aliyun.com/lazebird/datashare/raw/master/dukewxapp/data/text/t5.txt"
         }
     ]
