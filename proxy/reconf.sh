@@ -14,6 +14,7 @@ sed -i 's/- GEOIP/- DOMAIN-SUFFIX,youku.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,iqiyi.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,aliyun.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,sina.com,DIRECT\n- GEOIP/' config.yml
+sed -i 's/- GEOIP/- DOMAIN-SUFFIX,weibo.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,163.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,qq.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,taobao.com,DIRECT\n- GEOIP/' config.yml
