@@ -10,6 +10,9 @@ sed -i 's/- { name: MunCloud-旗舰加速-Diamond Package-new/#- { name: MunClou
 sed -i 's/#- { name: auto/- { name: MunCloud-旗舰加速-Diamond Package-new/' config.yml
 # add rule
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,baidu.com,DIRECT\n- GEOIP/' config.yml
+sed -i 's/- GEOIP/- DOMAIN-SUFFIX,youku.com,DIRECT\n- GEOIP/' config.yml
+sed -i 's/- GEOIP/- DOMAIN-SUFFIX,iqiyi.com,DIRECT\n- GEOIP/' config.yml
+sed -i 's/- GEOIP/- DOMAIN-SUFFIX,aliyun.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,sina.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,163.com,DIRECT\n- GEOIP/' config.yml
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,qq.com,DIRECT\n- GEOIP/' config.yml
