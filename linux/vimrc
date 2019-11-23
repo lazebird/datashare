@@ -59,3 +59,4 @@ endif
 
 color desert
 set mouse-=a
+set hlsearch
