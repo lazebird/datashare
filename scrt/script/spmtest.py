@@ -1,11 +1,13 @@
-loopcmdnum = parseInt(30)
-timeout = parseInt(5)
+import random
+
+loopcmdnum = int(30)
+timeout = int(5)
 prompt1="login:"
 prompt2="xxxxxx" # unused
 intr1="^C"
 intr2="<INTERRUPT>"
 
-cmdarray=new Array(
+cmdarray=(
 	"spanning-tree mode rstp", 
 	"spanning-tree mode stp", 
 	"spanning-tree mode provider-rstp edge", 
@@ -61,13 +63,14 @@ def  cmdwait2login():
 def  cmdloop(num):
 
 	#crt.Screen.Send("logging level nsm 7\nlogging console 7\n")
-	while num-- and not wait4pause(timeout:) 
-		execcmd(cmdarray[Math.floor(Math.random()*cmdarray.length)])
+  while num>1 and not wait4pause(timeout):
+	  	num-=1 
+		execcmd(cmdarray[random.randint(0,cmdarray.length)])
 	
 	return (num == -1)
 
 
-#while cmdloop(loopcmdnum: and cmdreboot() and cmdwait2login())
-while cmdloop(loopcmdnum:)
+#while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
+while cmdloop(loopcmdnum):pass
 crt.Screen.Send("#game over!\n")
 

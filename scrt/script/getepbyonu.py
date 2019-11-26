@@ -1,4 +1,3 @@
-onumac
 onumac = crt.Dialog.Prompt("Please enter your ONU MAC like 74b9.ebc0.add5:")
 if onumac == "": 
 	onumac="74b9.ebc0.add5"
@@ -10,18 +9,18 @@ lines = onuinfo.split("\n")
 arrays = lines[1].split(/\s+/)
 ifname = arrays[0]
 llid = arrays[1]
-crt.Screen.Send("#========== onu " + onumac + " interface " + ifname + ", llid " + llid + "\n")	
+crt.Screen.Send("#========== onu " + onumac + " interface " + ifname + ", llid " + str(llid) + "\n")	
 crt.Screen.WaitForString("OLT#")
 filter
 if ifname.length == 7: 
-	filter = ifname + "    " + llid + " "
+	filter = ifname + "    " + str(llid) + " "
 else: 
-	filter = ifname + "   " + llid + " "
+	filter = ifname + "   " + str(llid) + " "
 
 crt.Screen.Send("show epon mac-address-table all | inc " + filter + "\n          ")	
 ponmacinfo = crt.Screen.ReadString("OLT#")
 lines = ponmacinfo.split("\n")
-for (i = 1 i < lines.length i++) 
+for (i = 1 i < lines.length i+=1) 
 	arrays = lines[i].split(/\s+/)
 	epmac = arrays[4]
 	if epmac: 

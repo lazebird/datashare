@@ -6,7 +6,7 @@ modfilename = "D:#restart_mode.txt"
 def  loadfile(filename): 
 	fso, f           
 	fso = new ActiveXObject("Scripting.FileSystemObject")
-	if not fso.FileExists(filename:) 
+	if not fso.FileExists(filename): 
 		return
 	
 	f = fso.OpenTextFile(filename, 1) #ForReading = 1, ForWriting = 2 
@@ -31,7 +31,7 @@ def  writefile(filename):
 
 loadfile(modfilename)
 
-args = new Array()
+args = ()
 prog = prog.replace(new RegExp("#","gm"), "")
 args = prog.split(",")
 if args[1]:  # input string has args
@@ -47,7 +47,7 @@ else:
 if(crt.Screen.MatchIndex != 3 and prog != "") 
 	crt.Screen.Send("\3")
 	crt.Screen.WaitForString("root", 1)
-    crt.Screen.Send("wget http:#192.168.1.106/bin/"+prog+"\r\n")
+    crt.Screen.Send("wget http://192.168.1.106/bin/"+prog+"\r\n")
     ret = crt.Screen.WaitForStrings(["saved","failed", "ERROR", "No such", "^C"])
     if(ret == 1) 
         crt.Screen.Send("chmod 777 "+prog+"\r\n")
@@ -59,12 +59,12 @@ if(crt.Screen.MatchIndex != 3 and prog != "")
 			crt.Screen.Send("pkill "+prog+"\r\n")
 			crt.Screen.WaitForString("root", 1)
 			crt.Screen.Send(prog+" &\r\n")
-		 else: if restart_mode == "reboot": 
+		 elif restart_mode == "reboot": 
 			crt.Screen.Send("reboot\r\n")
-		 else: if restart_mode == "none": 
+		 elif restart_mode == "none": 
 			crt.Screen.Send("\3\r\n#please deal with it ASAP.\r\n")
 		
-     else: 
+    else: 
 		crt.Screen.Send("\3\r\n#something is wrong, ret "+ret+"\r\n")
 	
 else: 

@@ -1,11 +1,11 @@
-loopcmdnum = parseInt(30)
-timeout = parseInt(3)
+loopcmdnum = int(30)
+timeout = int(3)
 prompt1="login:"
 prompt2="xxxxxx" # unused
 intr1="^C"
 intr2="<INTERRUPT>"
 
-cmdarray=new Array(
+cmdarray=(
 	"diagnostic register write 0 0x2040004 ", #0x81700000", 
 	"diagnostic register read 0 0x2040150")
 
@@ -52,18 +52,18 @@ def  cmdwait2login():
 
 
 def  addZero(str,length):               
-    return new Array(length - str.length + 1).join("0") + str              
+    return (length - str.length + 1).join("0") + str              
 
 
 def  cmdloop(num):
 
 	i, data, lastdata
-	for (i = 1 i < 20 i++) 
+	for (i = 1 i < 20 i+=1) 
 		lastdata = 0
 		execcmd(cmdarray[0] + "0x8" + addZero(i + "", 2) + "00000")
 		crt.Screen.ReadString("SWITCH#", 1)
 		j
-		for (j = 0 j < 2 j++) 
+		for (j = 0 j < 2 j+=1) 
 			execcmd(cmdarray[1])
 			re = /rv 0 data (\w+)/g
 			re1 = /\r*\n/g
@@ -79,7 +79,7 @@ def  cmdloop(num):
 				#return 0
 			
 			lastdata = data
-			if wait4pause(2:) 
+			if wait4pause(2): 
 				return 0
 			
 		
@@ -87,6 +87,6 @@ def  cmdloop(num):
 	return 0
 
 
-#while cmdloop(loopcmdnum: and cmdreboot() and cmdwait2login())
-while cmdloop(loopcmdnum:)
+#while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
+while cmdloop(loopcmdnum):pass
 crt.Screen.Send("#game over!\n")

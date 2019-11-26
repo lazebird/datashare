@@ -3,14 +3,14 @@ import time
 mytime = int(time.time())
 cursec = mytime%60 # [0,59]
 randseed = cursec%10
-loopcmdnum = parseInt(10 + randseed)
-timeout = parseInt(180 + randseed)
+loopcmdnum = int(10 + randseed)
+timeout = int(180 + randseed)
 prompt1="login:"
 prompt2="RETURN" # unused
 intr1="^C"
 intr2="<INTERRUPT>"
 
-cmdarray=new Array(
+cmdarray=(
 	"no igmp snooping\r\n",
 	"end\r\n show igmp snooping all\r\n show diagnostic igmp\r\n conf t\r\n igmp snooping\r\n")
 
@@ -71,8 +71,8 @@ def  cmdloop(num):
 	return ret
 
 
-crt.Screen.send("#loopcmdnum " + loopcmdnum + " timeout " + timeout + "\n")
-#while cmdloop(loopcmdnum: and cmdreboot() and cmdwait2login())
-while cmdloop(loopcmdnum: and not wait4pause(timeout))
+crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
+#while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
+while cmdloop(loopcmdnum) and not wait4pause(timeout):pass
 crt.Screen.Send("#game over!\n")
 

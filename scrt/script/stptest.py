@@ -1,11 +1,13 @@
-loopcmdnum = 5 + Math.floor(Math.random() * 10)
-timeout = 5 + Math.floor(Math.random() * 10)
+import random
+
+loopcmdnum = 5 + random.randint(0,9)
+timeout = 5 + random.randint(0,9)
 prompt1 = "login:"
 prompt2 = "RETURN" # unused
 intr1 = "^C"
 intr2 = "<INTERRUPT>"
 
-cmdarray = new Array(
+cmdarray = (
   "interface eth0/7\r\nshutdown\r\nexit",
   "interface eth0/7\r\nno shutdown\r\nexit",
   "interface eth0/8\r\nshutdown\r\nexit",
@@ -19,7 +21,7 @@ def  execcmd(cmdstr):
 def  wait4pause(time): 
   ret = crt.Screen.WaitForStrings(["^C", "<INTERRUPT>"], time)
   if ret > 0: 
-    crt.Screen.Send("###user terminated(" + ret + ")!\n")
+    crt.Screen.Send("###user terminated(" + str(ret) + ")!\n")
     return 1
   
   return 0
@@ -44,18 +46,19 @@ def  cmdwait2login():
     crt.Screen.Send("admin\n")
     crt.Sleep(1000)
     return not wait4pause(5) and cmdpreconfig() # wait for a moment, make sure system started.
-   else: 
+  else: 
     return 0
   
 
 
 def  cmdloop(num): 
-  while num-- and not wait4pause(timeout:) 
+  while num>1 and not wait4pause(timeout):
+    num-=1 
     execcmd(cmdarray[Math.floor(Math.random() * cmdarray.length)])
   
   return num == -1
 
 
-crt.Screen.send("#loopcmdnum " + loopcmdnum + " timeout " + timeout + "\n")
-while cmdloop(loopcmdnum: and cmdreboot() and cmdwait2login())
+crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
+while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
 crt.Screen.Send("#game over!\n")

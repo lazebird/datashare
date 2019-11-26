@@ -1,11 +1,10 @@
-# 测试vrrp重启后实例未就绪问题
-loopcmdnum = parseInt(10)
-timeout = parseInt(10)
+loopcmdnum = int(10)
+timeout = int(10)
 prompt1 = "login:"
 prompt2 = "xxxxxx" # unused
 intr1 = "^C"
 intr2 = "<INTERRUPT>"
-bug_found = false
+bug_found = 0
 
 def  iobuf_empty(): 
   crt.Screen.WaitForStrings(["[should never be read]", intr1, intr2], 1)
@@ -34,7 +33,7 @@ def  wait4pause(time):
   ret = crt.Screen.WaitForStrings(["^C", "<INTERRUPT>"], time)
   if ret > 0: 
     #crt.Sleep(10000)
-    crt.Screen.Send("###user terminated(" + ret + ")!\n")
+    crt.Screen.Send("###user terminated(" + str(ret) + ")!\n")
     return 1
   
   return 0
@@ -61,13 +60,13 @@ def  cmdwait2login():
     crt.Screen.Send("enable\n")
     # crt.Sleep(5000) # wait for a moment, make sure system started.
     return not wait4pause(30) # wait for a moment, make sure system started.
-   else: 
+  else: 
     return 0
   
 
 
 init_debug()
-while not bug_check(: and not wait4pause(3))
-#while not wait4pause(300: and cmdreboot() and cmdwait2login())
+while not bug_check() and not wait4pause(3):pass
+#while not wait4pause(300) and cmdreboot() and cmdwait2login():pass
 crt.Screen.Send("#Bug Found!\n" if bug_found else "#Game Over!\n")
 if bug_found: crt.Dialog.MessageBox("Bug Found!")

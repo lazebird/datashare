@@ -34,4 +34,4 @@ while ret == "" or ret == 0:
 if ret == 3 or ret == 4: 
 	crt.Screen.Send("reset\r\n")
 else: 
-	crt.Screen.Send("#err " + ret + "\r\n")
+	crt.Screen.Send("#err " + str(ret) + "\r\n")

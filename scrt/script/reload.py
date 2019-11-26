@@ -1,11 +1,13 @@
-loopcmdnum = parseInt(10)
-timeout = parseInt(10)
+import random
+
+loopcmdnum = int(10)
+timeout = int(10)
 prompt1="login:"
 prompt2="xxxxxx" # unused
 intr1="^C"
 intr2="<INTERRUPT>"
 
-cmdarray=new Array(
+cmdarray=(
 	"interface eth0/1\r\n shutdown\r\nexit",
 	"interface eth0/1\r\n no shutdown\r\nexit",
 	"interface eth0/10\r\n shutdown\r\nexit",
@@ -50,7 +52,7 @@ def  cmdwait2login():
 		crt.Screen.Send("enable\nconfig t\n")
 		# crt.Sleep(5000) # wait for a moment, make sure system started.
 		return not wait4pause(5) # wait for a moment, make sure system started.
-	 else: 
+	else: 
 		return 0
 	
 
@@ -58,13 +60,14 @@ def  cmdwait2login():
 def  cmdloop(num):
 
 	#crt.Screen.Send("logging level nsm 7\nlogging console 7\n")
-	while num-- and not wait4pause(timeout:) 
-		execcmd(cmdarray[Math.floor(Math.random()*cmdarray.length)])
+  while num>1 and not wait4pause(timeout):
+    	num-=1 
+		execcmd(cmdarray[random.randint(0,cmdarray.length)])
 	
 	return (num == -1)
 
 
-while cmdloop(loopcmdnum: and cmdreboot() and cmdwait2login())
-#while not wait4pause(300: and cmdreboot() and cmdwait2login())
+while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
+#while not wait4pause(300) and cmdreboot() and cmdwait2login():pass
 crt.Screen.Send("#game over!\n")
 
