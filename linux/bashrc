@@ -78,7 +78,7 @@ alias tftplite='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$lite >> $
 alias tftpliterel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$literel >> $tftpfile && service tftpd-hpa restart'
 alias tftpac3='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3 >> $tftpfile && service tftpd-hpa restart'
 alias tftpac3rel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3rel >> $tftpfile && service tftpd-hpa restart'
-alias tftpset='mytftp() { dir=$1; echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$dir>> $tftpfile && service tftpd-hpa restart; }; mytftp'
+alias tftpset='mytftp() { dir=$(cd "${1%/*}/"; pwd); echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$dir>> $tftpfile && service tftpd-hpa restart; }; mytftp'
 
 alias linkvm='mount -t cifs -o username=root //192.168.1.31/projects /mnt/liulang-vm/'
 alias gen='ng generate'
