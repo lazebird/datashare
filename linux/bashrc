@@ -56,7 +56,7 @@ alias dsearch='dpkg -l | grep '
 CMDSTR2="make mrprobe\r\nmake menuconfig\r\ncp /boot/config-??? .config\r\nmake -kpkg --initrd  --append-to-version=-liulang  -j 4 kernel_image kernel_headers"
 alias kernel='echo -e "$CMDSTR2"'
 alias makekernel='makekernel() { make menuconfig; make -kpkg clean; make -kpkg --initrd --append-to-version=-liulang --revision=1.0 kernel_image; }; makekernel; '
-alias makeshare='mkdir -p $PRJROOT/share/ && rm -rf $PRJROOT/share/*.x $PRJROOT/share/*.ubi $PRJROOT/share/*.h && cp $PRJROOT/zebos/lib/mib_id.h $PRJROOT/share/ && cp $PRJROOT/zebos/lib/rpcl/*.x $PRJROOT/share/ -a && cp $PRJROOT/olt/rootfs_pack/rootfs.ubi $PRJROOT/share/ -a && rm -rf $PRJROOT/share/oltmib_erpsinfo.x && ls -l $PRJROOT/share/'
+alias makeshare='mkdir -p $PRJROOT/share/ && rm -rf $PRJROOT/share/*.x $PRJROOT/share/*.ubi $PRJROOT/share/*.h && cp $PRJROOT/zebos/lib/mib_id.h $PRJROOT/share/ && cp $PRJROOT/zebos/lib/rpcl/*.x $PRJROOT/share/ -a && cp $PRJROOT/lite/rootfs_pack/rootfs.ubi $PRJROOT/share/ -a && rm -rf $PRJROOT/share/litemib_erpsinfo.x && ls -l $PRJROOT/share/'
 
 alias xindent='myindent() { file=$1; indent -o $file $file; }; myindent'
 alias aindent='astyle --style=ansi -s4 -U -A10 --c --suffix=none -xe'
@@ -65,26 +65,22 @@ alias cindent='find . -name "*.[ch]" | grep -v .si4project | xargs clang-format 
 tftpfile='/etc/default/tftpd-hpa'
 tftpbasic='TFTP_USERNAME="root"\nTFTP_ADDRESS="0.0.0.0:69"\nTFTP_OPTIONS="-v -l -c -s"'
 prjroot='/root/projects/'
-olt=$prjroot"olt"
-oltrel=$prjroot"olt/projects/prj_olt/release"
-oltuboot=$prjroot"olt/olt/u-boot-2009.08"
-xcat=$prjroot"xcat"
-xcatrel=$prjroot"xcat/projects/prj_xcat/release"
-xcatuboot=$prjroot"xcat/xcat/uboot_2010_12/build_output"
-ac3=$prjroot"ac3"
-ac3rel=$prjroot"ac3/projects/prj_sw_ac3/release"
-ac3uboot=$prjroot"ac3/ac3/uboot_2010_12/build_output"
+lite=$prjroot"lite/output"
+literel=$prjroot"lite/release"
+xcat=$prjroot"xcat/output"
+xcatrel=$prjroot"xcat/release"
+ac3=$prjroot"ac3/output"
+ac3rel=$prjroot"ac3/release"
 alias tftpshow='service tftpd-hpa status; cat $tftpfile'
 alias tftpxcat='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$xcat >> $tftpfile && service tftpd-hpa restart'
-alias tftpxcatuboot='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$xcatuboot >> $tftpfile && service tftpd-hpa restart'
 alias tftpxcatrel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$xcatrel >> $tftpfile && service tftpd-hpa restart'
-alias tftpolt='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$olt >> $tftpfile && service tftpd-hpa restart'
-alias tftpoltuboot='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$oltuboot >> $tftpfile && service tftpd-hpa restart'
-alias tftpoltrel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$oltrel >> $tftpfile && service tftpd-hpa restart'
+alias tftplite='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$lite >> $tftpfile && service tftpd-hpa restart'
+alias tftpliterel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$literel >> $tftpfile && service tftpd-hpa restart'
 alias tftpac3='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3 >> $tftpfile && service tftpd-hpa restart'
-alias tftpac3uboot='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3uboot >> $tftpfile && service tftpd-hpa restart'
 alias tftpac3rel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3rel >> $tftpfile && service tftpd-hpa restart'
+alias tftpset='mytftp() { dir=$1; echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$dir>> $tftpfile && service tftpd-hpa restart; }; mytftp'
 
+alias linkvm='mount -t cifs -o username=root //192.168.1.31/projects /mnt/liulang-vm/'
 alias gen='ng generate'
 alias serve='ng serve --host=0.0.0.0'
 
@@ -95,5 +91,9 @@ if [[ $PWD == "/root" ]]; then
 #    export PRJROOT=.
     cd $prjroot
 fi
+if [[ $PWD == "/home/liulang" ]]; then
+	cd projects
+fi
 ulimit -c unlimited 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
