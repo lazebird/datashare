@@ -31,7 +31,7 @@
 		<string name="Cache Directory V2"/>
 		<string name="Certificate Path V2"/>
 		<dword name="Change Config Passphrase">0</dword>
-		<dword name="Chat Window Height">236</dword>
+		<dword name="Chat Window Height">202</dword>
 		<dword name="Check Shell Telnet Command">0</dword>
 		<dword name="Clip On Resize">0</dword>
 		<string name="Clipboard Data Format"/>
@@ -120,7 +120,7 @@
 		<dword name="Keep Shared Memory Agent Open">1</dword>
 		<dword name="Kermit Upload ASCII">0</dword>
 		<string name="Last Local Directory V2"/>
-		<string name="Last Script Run V2">C:\Users\liulang\Desktop\script\loadbin.py</string>
+		<string name="Last Script Run V2">C:\Users\liulang\Desktop\script\wait2update.py</string>
 		<dword name="Launch New Windows in a Separate Process">0</dword>
 		<dword name="Limit Windows Taskbar Preview Thumbnails">1</dword>
 		<dword name="List View Number Style">0</dword>
@@ -21424,7 +21424,7 @@
 			<string>SEND,git stash\\r\\n,git stash,,,0,1,</string>
 			<string>SEND,git stash pop\\r\\n,git stash pop,,,0,1,</string>
 			<string>SEND,git commit -m &quot;more&quot;\\r\\n\r\ngit pull --rebase\\r\\n\r\ngit push\\r\\n,cmt&amp;push,,,0,1,</string>
-			<string>SEND,git fetch -p\\r\\n,git fetch,,,0,1,</string>
+			<string>SEND,git fetch -pa\\r\\n,git fetch,,,0,1,</string>
 			<string>SEND,make linux-update-defconfig\\n\r\nmake uboot-update-defconfig\\n\r\nmake savedefconfig\\n,buildroot saveconfig,,,0,1,</string>
 			<string>SEND,#qemu-system-i386 -curses -boot d -cdrom output/images/rootfs.iso9660 -m 512\\n\r\nqemu-system-arm -machine vexpress-a9 -nographic -no-reboot -kernel output/build/uboot-2019.07/u-boot  \\n,buildroot qemu,,,0,1,</string>
 			<string>SEND,cd $PRJROOT/release &amp;&amp; mkbin_rootfs &amp;&amp; cd -\\n,mkbin_rootfs,,,0,1,</string>
@@ -21444,7 +21444,7 @@
 			<string>SEND,end\\r\\n\r\nshow spanning-tree | include tate\\r\\n \\r\\n\r\n#show spanning-tree mst instance 2 | include tate\\r\\n\r\nshow diagnostic stp status \\r\\n\r\nshow diagnostic stp instance 0\\r\\n\r\n#show diagnostic stp instance 1\\r\\n\r\n#show diagnostic stp instance 2\\r\\n\r\n,show mstp,,,0,1,</string>
 			<string>SEND,end \\r\\n\r\nshow igmp snooping all \\r\\n   \r\nshow diagnostic igmp \\r\\n,show igmp,,,0,1,</string>
 			<string>SEND,debug trace module level erps * none\\n\r\ndebug trace module level mep * none\\n\r\nplatform debug deny \\n,vtss undbg,,,0,1,</string>
-			<string>SEND,end\\n entershell\\n\r\nwget http://192.168.1.106/vrrpd &amp;&amp; chmod 777 vrrpd &amp;&amp; mv vrrpd /usr/bin/ \\n,reload vrrpd,,,0,1,</string>
+			<string>SEND,end\\n entershell\\n\r\nwget http://192.168.1.106/bin/vrrpd &amp;&amp; chmod 777 vrrpd &amp;&amp; mv vrrpd /usr/bin/ &amp;&amp; reboot \\n,wget vrrpd,,,0,1,</string>
 			<string>RUN,C:\\Users\\liulang\\Desktop\\script\\loadbin.py,loadbin,,,0,1,</string>
 			<string>RUN,C:\\Users\\liulang\\Desktop\\script\\ifreset.py,ifreset,,,0,1,</string>
 			<string>RUN,C:\\Users\\liulang\\Desktop\\script\\stptest.py,stptest,,,0,1,</string>
