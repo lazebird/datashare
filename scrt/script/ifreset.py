@@ -29,7 +29,7 @@ while loop == 1:
       break
     noshutdown(s)
     tout = random.randint(0, 120) + 1 # 0 means infinite
-    crt.Screen.Send("#tout " + tout + "\n")
+    crt.Screen.Send("#tout " + str(tout) + "\n")
     if wait4pause(tout): 
       loop = 0
       break
