@@ -12,11 +12,11 @@ def iobuf_empty():
 
 
 def init_test():
-    crt.Screen.Send("./guard.sh\n")
+    crt.Screen.Send("## start\n")
 
 
 def stop_test():
-    crt.Screen.Send("./guard.sh stop\n")
+    crt.Screen.Send("## stop\n")
 
 
 def do_clean():  # avoid flash full
@@ -28,11 +28,15 @@ def do_clean():  # avoid flash full
 def bug_check():
     global bug_found
     iobuf_empty()
-    crt.Screen.Send("rm -rf output/*/ && rm -rf output/*.done\n")
-    ret = crt.Screen.WaitForStrings(["FAILED"], 1)
+    crt.Screen.Send("make distclean && make dep V=1 -j12 && time make all V=1 -j12\n")
+    ret = crt.Screen.WaitForStrings([" Error ", "liulang-deb:"], 300)
     bug_found = (ret == 1)
-    crt.Screen.Send("tree output/\n")
-    return ret == 1
+    if bug_found:
+        return 1
+    crt.Screen.Send("du -hd 0 bin/\n")
+    ret = crt.Screen.WaitForStrings(["93M"], 3)
+    bug_found = (ret != 1)
+    return ret != 1
 
 
 def wait4pause(time):
