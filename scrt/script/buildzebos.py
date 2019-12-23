@@ -9,7 +9,9 @@ bug_found = False
 
 def iobuf_empty():
     crt.Screen.WaitForStrings(["[should never be read]", intr1, intr2], 1)
-
+    # crt.Session.LogFileName = "/home/liulang/projects/log/session-%S-d%D.log"
+    crt.Session.Log(False)
+    crt.Session.Log(True)
 
 def init_test():
     crt.Screen.Send("## start\n")
@@ -28,7 +30,9 @@ def do_clean():  # avoid flash full
 def bug_check():
     global bug_found
     iobuf_empty()
-    crt.Screen.Send("make distclean && make dep V=1 -j12 && time make all V=1 -j12\n")
+    crt.Screen.Send("make distclean && time make all V=1 -j12\n")
+    # crt.Screen.Send("make distclean && make dep V=1 -j12 && time make all V=1 -j12\n")
+    # crt.Screen.Send("rm -f dep/hsl.dep && make dep-lib-hsl -j12 && make liba-hsl -j12\n")
     ret = crt.Screen.WaitForStrings([" Error ", "liulang-deb:"], 300)
     bug_found = (ret == 1)
     if bug_found:
