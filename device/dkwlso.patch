@@ -1,0 +1,120 @@
+diff --git a/zebos/hal/Rules.dir b/zebos/hal/Rules.dir
+index 6608953d2a..59d1dcbea0 100755
+--- a/zebos/hal/Rules.dir
++++ b/zebos/hal/Rules.dir
+@@ -16,7 +16,7 @@
+ DIR_PROD=ZebOS
+ DIR_NAME=hal
+ DIR_OFFS=
+-DIR_MODE=libso
++DIR_MODE=lib
+ DIR_ADDS=
+ DIR_ADDD=
+ 
+diff --git a/zebos/lib/Rules.dir b/zebos/lib/Rules.dir
+index 1443db49e0..6593eea885 100755
+--- a/zebos/lib/Rules.dir
++++ b/zebos/lib/Rules.dir
+@@ -16,7 +16,7 @@
+ DIR_PROD=ZebOS
+ DIR_NAME=lib
+ DIR_OFFS=
+-DIR_MODE=libso
++DIR_MODE=lib
+ DIR_ADDS=
+ DIR_ADDD=
+ 
+diff --git a/zebos/platform/linux/Makefile b/zebos/platform/linux/Makefile
+index 40b959b2db..ab91810425 100755
+--- a/zebos/platform/linux/Makefile
++++ b/zebos/platform/linux/Makefile
+@@ -35,7 +35,7 @@ ifeq ($(filter $(MAKECMDGOALS),distclean clean fdep dep), $(empty))
+     include $(LIBSO_DEP) $(LIBA_DEP) $(EXE_DEP)
+ endif
+ 
+-all: dirs $(FILE_LIBA) $(FILE_LIBSO) $(FILE_EXE)
++all: dirs $(FILE_EXE)
+ dep: $(LIBSO_DEP) $(LIBA_DEP) $(EXE_DEP)
+ fdep forcedep: 
+ 	@$(RM) $(LIBSO_DEP) $(LIBA_DEP) $(EXE_DEP)
+@@ -57,6 +57,7 @@ print:
+ 	@echo "ARCH_CFLAGS=$(ARCH_CFLAGS), INC_CFLAGS=$(INC_CFLAGS), DEBUG_CFLAGS=$(DEBUG_CFLAGS), IPNET_CFLAGS=$(IPNET_CFLAGS)"
+ 	@echo "LDFLAGS=$(LDFLAGS), ARFLAGS=$(ARFLAGS), EXTRA_LIBS=$(EXTRA_LIBS), LDLIBS_FLAGS=$(LDLIBS_FLAGS)"
+ 	@echo "hsl_EXTRA_FLAGS=$(hsl_EXTRA_FLAGS), hsl_EXTRA_LIBS=$(hsl_EXTRA_LIBS)"
++	@echo "var=$(patsubst %,$(OBJ_BASE)/$(LIBA_PRE)%$(LIBA_SUFF), $(filter-out pal, $(ALL_LIBA)))"
+ 
+ $(addprefix clean-,$(ALL_LIBSO)) $(addprefix clean-,$(ALL_LIBA)) $(addprefix clean-,$(ALL_EXE)):
+ 	@$(MAKE) -C $(TOP_DIR)/$(patsubst clean-%,%,$@) clean
+@@ -109,7 +110,7 @@ $(LIBSO_DEP): | dirs gen
+ 
+ $(FILE_LIBA):
+ 	@$(MAKE) -C $(TOP_DIR)/$(patsubst $(OBJ_BASE)/$(LIBA_PRE)%$(LIBA_SUFF),%,$@) all
+-$(FILE_LIBSO):
+-	@$(MAKE) -C $(TOP_DIR)/$(patsubst $(OBJ_BASE)/$(LIBSO_PRE)%$(LIBSO_SUFF),%,$@) all
++$(FILE_LIBSO): $(patsubst %,$(OBJ_BASE)/$(LIBA_PRE)%$(LIBA_SUFF), $(filter-out pal, $(ALL_LIBA)))
++	$(MAKE_LIBRARY_SO) -o $@ -Wl,--whole-archive $(patsubst %,$(OBJ_BASE)/$(LIBA_PRE)%$(LIBA_SUFF), $(filter-out pal, $(ALL_LIBA))) -Wl,--no-whole-archive
+ $(FILE_EXE): | $(FILE_LIBSO)
+-	$(MAKE_OUTPUT_FILE) -o $@ $(patsubst $(EXE_BASE)/%$(EXE_SUFF),$(BLD_BASE)/%.c,$@) -Wl,-\( $(patsubst $(EXE_BASE)/%$(EXE_SUFF),$(OBJ_BASE)/$(LIBA_PRE)%$(LIBA_SUFF),$@) $($(patsubst $(EXE_BASE)/%$(EXE_SUFF),%_EXTRA_LIBS,$@)) $(EXTRA_LIBS) $(OBJ_BASE)/$(LIBA_PRE)pal$(LIBA_SUFF) -L$(OBJ_BASE) -llib -ltpool -Wl,-\) $(LDLIBS_FLAGS) $($(patsubst $(EXE_BASE)/%$(EXE_SUFF),%_EXTRA_FLAGS,$@))
++	$(MAKE_OUTPUT_FILE) -o $@ $(patsubst $(EXE_BASE)/%$(EXE_SUFF),$(BLD_BASE)/%.c,$@) -Wl,-\( $(patsubst $(EXE_BASE)/%$(EXE_SUFF),$(OBJ_BASE)/$(LIBA_PRE)%$(LIBA_SUFF),$@) $($(patsubst $(EXE_BASE)/%$(EXE_SUFF),%_EXTRA_LIBS,$@)) $(EXTRA_LIBS) $(OBJ_BASE)/$(LIBA_PRE)pal$(LIBA_SUFF) -L$(OBJ_BASE) -ldkwl -Wl,-\) $(LDLIBS_FLAGS) $($(patsubst $(EXE_BASE)/%$(EXE_SUFF),%_EXTRA_FLAGS,$@))
+diff --git a/zebos/platform/linux/Rules.platform b/zebos/platform/linux/Rules.platform
+index 2e05756697..f2158fed77 100755
+--- a/zebos/platform/linux/Rules.platform
++++ b/zebos/platform/linux/Rules.platform
+@@ -263,8 +263,8 @@ endif
+ #
+ # Directories to include in the build (these are off TOP_DIR)
+ #
+-ALL_LIBA=pal
+-ALL_LIBSO=lib hal
++ALL_LIBA=pal lib hal
++ALL_LIBSO=dkwl
+ ALL_EXE=
+ 
+ ifeq ($(ENABLE_HA),yes)
+@@ -368,7 +368,7 @@ ifeq ($(ENABLE_BGPD),yes)
+ endif
+ 
+ ifeq ($(ENABLE_THREAD_POOL),yes)
+-  ALL_LIBSO+=tpool
++  ALL_LIBA+=tpool
+   EXTRA_LIBS += -lpthread
+   INC_CFLAGS+= -I$(TOP_DIR)/tpool
+   #
+@@ -690,7 +690,7 @@ endif
+ 
+ 
+ ifeq ($(ENABLE_HAL),yes)
+-  $(foreach m, hsl nsm mribd l2mribd mstpd ribd, $(eval $(m)_EXTRA_FLAGS+= -lhal);)
++  # $(foreach m, hsl nsm mribd l2mribd mstpd ribd, $(eval $(m)_EXTRA_FLAGS+= -lhal);)
+ endif
+ 
+ ifeq ($(ENABLE_WINTEGRA),yes)
+@@ -700,7 +700,6 @@ ifeq ($(ENABLE_WINTEGRA),yes)
+   INC_CFLAGS+= -I$(TOP_DIR)/hal/L2
+   INC_CFLAGS+= -I$(TOP_DIR)/hal/hsl
+   ALL_EXE+= hsl
+-  EXTRA_LIBS+= -lhal
+   #add WDDI library
+   ifeq "$(WPI_TARGET)" ""
+     WPI_TARGET 	= mips_linux
+@@ -872,7 +871,6 @@ ifeq ($(ENABLE_MARVELL_LS),yes)
+   INC_CFLAGS+= -I$(TOP_DIR)/hal/L2
+   INC_CFLAGS+= -I$(TOP_DIR)/hal/hsl
+   ARCH_CFLAGS+=-L$(HOST_CROSS_LIB_DIR)
+-  EXTRA_LIBS+= -lhal
+   EXTRA_LIBS+=$(MARVELL_DSDT)/Library/qdDrv.o
+ endif
+ 
+diff --git a/zebos/tpool/Rules.dir b/zebos/tpool/Rules.dir
+index 4f40f62168..58d1ac53d7 100644
+--- a/zebos/tpool/Rules.dir
++++ b/zebos/tpool/Rules.dir
+@@ -16,7 +16,7 @@
+ DIR_PROD=ZebOS
+ DIR_NAME=tpool
+ DIR_OFFS=
+-DIR_MODE=libso
++DIR_MODE=lib
+ DIR_ADDS=
+ DIR_ADDD=
+ 
