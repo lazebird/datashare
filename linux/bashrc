@@ -8,92 +8,79 @@ umask 000
 
 # You may uncomment the following lines if you want `ls' to be colorized:
 export LS_OPTIONS='--color=auto'
-eval "`dircolors`"
+eval "$(dircolors)"
 alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -l'
 alias l='ls $LS_OPTIONS -lA'
 
 # user defined alias
-alias testd='cd ~/projects/test'
 alias chmoda='chmod 777 -R ./'
-alias prj='cd ~/projects'
-CMDSTR1="dpkg -l | grep ^rc | awk ' { print \$2}' | xargs apt-get -y purge"
-alias dpkgclr='echo "$CMDSTR1"' 
 alias ifreset='ifrst() { ifdown $1; ifup $1; }; ifrst'
+alias dsearch='dpkg -l | grep '
+alias aindent='astyle --style=ansi -s4 -U -A10 --c --suffix=none -xe'
+alias cindent='find . -name "*.[ch]" | grep -v .si4project | xargs clang-format -i'
+alias xindent='myindent() { file=$1; indent -o $file $file; }; myindent'
+alias linkvm='mount -t cifs -o username=root //192.168.1.31/projects /mnt/liulang-vm/'
 
-# sysver=`uname -v`
-typeset -l sysver 
-sysver=`cat /etc/issue`
-if [[ $sysver =~ ubuntu ]]; then
-    sys="ubuntu"
-elif [[ $sysver =~ centos ]]; then
-    sys="centos"
-elif [[ $sysver =~ debian ]]; then
-    sys="debian"
-else 
-    sys="unknown"
-fi
+# user defined funcs
+dpkgclr() {
+    dpkg -l | grep ^rc | awk ' { print \$2}' | xargs apt-get -y purge
+}
 
-if [[ $sys == "ubuntu" || $sys == "debian" ]]; then
+typeset -l issue #set lower case
+issue=$(cat /etc/issue)
+if [[ $issue =~ centos ]]; then
+    alias appupg='appupg() { yum update; yum -y  upgrade; }; appupg; '
+    alias appclr='appclr() { yum clean; yum -y autoremove; yum autoclean; yum -y purge; }; appclr; '
+    alias install='yum install'
+    alias remove='yum -y remove'
+    alias search='yum search'
+else
     alias halt='shutdown now'
     alias aptupg='aptupg() { apt-spy -a Asia -d stable -t 5; apt-get update; apt-get -y   upgrade; }; aptupg; '
     alias appupg='appupg() { apt-get update; apt-get -y  upgrade; }; appupg; '
     alias appclr='appclr() { apt-get clean; apt-get -y autoremove; apt-get autoclean; apt-get -y purge; }; appclr; '
     alias install='apt-get install'
-    #alias install='apt-get -y  install'
     alias remove='apt-get -y --purge remove'
     alias search='apt-cache search'
-elif [[ $sys == "centos" ]]; then
-    alias appupg='appupg() { yum update; yum -y  upgrade; }; appupg; '
-    alias appclr='appclr() { yum clean; yum -y autoremove; yum autoclean; yum -y purge; }; appclr; '
-    alias install='yum install'
-    #alias install='yum -y  install'
-    alias remove='yum -y remove'
-    alias search='yum search'
 fi
-alias dsearch='dpkg -l | grep '
 
-CMDSTR2="make mrprobe\r\nmake menuconfig\r\ncp /boot/config-??? .config\r\nmake -kpkg --initrd  --append-to-version=-liulang  -j 4 kernel_image kernel_headers"
-alias kernel='echo -e "$CMDSTR2"'
-alias makekernel='makekernel() { make menuconfig; make -kpkg clean; make -kpkg --initrd --append-to-version=-liulang --revision=1.0 kernel_image; }; makekernel; '
-alias makeshare='mkdir -p $PRJROOT/share/ && rm -rf $PRJROOT/share/*.x $PRJROOT/share/*.ubi $PRJROOT/share/*.h && cp $PRJROOT/zebos/lib/mib_id.h $PRJROOT/share/ && cp $PRJROOT/zebos/lib/rpcl/*.x $PRJROOT/share/ -a && cp $PRJROOT/lite/rootfs_pack/rootfs.ubi $PRJROOT/share/ -a && rm -rf $PRJROOT/share/litemib_erpsinfo.x && ls -l $PRJROOT/share/'
+# kernel
+KERNEL_CMDSTR="make mrprobe\nmake menuconfig\ncp /boot/config-??? .config\nmake -kpkg --initrd  --append-to-version=-liulang  -j 4 kernel_image kernel_headers"
+alias kernel='echo -e "$KERNEL_CMDSTR"'
+makekernel() {
+    make menuconfig
+    make -kpkg clean
+    make -kpkg --initrd --append-to-version=-liulang --revision=1.0 kernel_image
+}
 
-alias xindent='myindent() { file=$1; indent -o $file $file; }; myindent'
-alias aindent='astyle --style=ansi -s4 -U -A10 --c --suffix=none -xe'
-alias cindent='find . -name "*.[ch]" | grep -v .si4project | xargs clang-format -i'
-
+# tftp-hpa
 tftpfile='/etc/default/tftpd-hpa'
 tftpbasic='TFTP_USERNAME="root"\nTFTP_ADDRESS="0.0.0.0:69"\nTFTP_OPTIONS="-v -l -c -s"'
-prjroot='/root/projects/'
-lite=$prjroot"lite/output"
-literel=$prjroot"lite/release"
-xcat=$prjroot"xcat/output"
-xcatrel=$prjroot"xcat/release"
-ac3=$prjroot"ac3/output"
-ac3rel=$prjroot"ac3/release"
-alias tftpshow='service tftpd-hpa status; cat $tftpfile'
-alias tftpxcat='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$xcat >> $tftpfile && service tftpd-hpa restart'
-alias tftpxcatrel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$xcatrel >> $tftpfile && service tftpd-hpa restart'
-alias tftplite='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$lite >> $tftpfile && service tftpd-hpa restart'
-alias tftpliterel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$literel >> $tftpfile && service tftpd-hpa restart'
-alias tftpac3='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3 >> $tftpfile && service tftpd-hpa restart'
-alias tftpac3rel='echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$ac3rel >> $tftpfile && service tftpd-hpa restart'
-alias tftpset='mytftp() { dir=$(cd "${1%/*}/"; pwd); echo -e $tftpbasic > $tftpfile && echo TFTP_DIRECTORY=$dir>> $tftpfile && service tftpd-hpa restart; }; mytftp'
+prjroot='/root/projects'
+tftpset() {
+    if [ ! -d $1 ]; then
+        echo "DIR NONEXISTENT: $1" && return
+    fi
+    tftpdir=$(cd $1 && pwd)
+    echo -e $tftpbasic >$tftpfile && echo TFTP_DIRECTORY=$tftpdir >>$tftpfile && service tftpd-hpa restart
+    echo "TFTP_DIRECTORY=$tftpdir"
+}
+alias tftpshow="service tftpd-hpa status; cat $tftpfile"
+prjs=(lite ac3 xcat)
+for prj in ${prjs[@]}; do
+    alias tftp$prj="tftpset ${prjroot}/${prj}/release"
+done
 
-alias linkvm='mount -t cifs -o username=root //192.168.1.31/projects /mnt/liulang-vm/'
+# angular
 alias gen='ng generate'
 alias serve='ng serve --host=0.0.0.0'
 
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-if [[ $PWD == "/root" ]]; then
-#    export PRJROOT=.
-    cd $prjroot
+if [[ $PWD == "/root" || $PWD == "/home/liulang" ]]; then
+    cd projects
 fi
-if [[ $PWD == "/home/liulang" ]]; then
-	cd projects
-fi
-ulimit -c unlimited 
+ulimit -c unlimited
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-
