@@ -24,7 +24,7 @@ alias linkvm='mount -t cifs -o username=root //192.168.1.31/projects /mnt/liulan
 
 # user defined funcs
 dpkgclr() {
-    dpkg -l | grep ^rc | awk ' { print \$2}' | xargs apt-get -y purge
+    dpkg -l | grep ^rc | awk ' { print $2} ' | xargs apt-get -y purge
 }
 
 typeset -l issue #set lower case
