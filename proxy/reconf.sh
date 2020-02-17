@@ -10,6 +10,7 @@ sed -i 's/allow-lan: false/allow-lan: true/' $filename
 # use auto group instead
 sed -i 's/type: select/type: url-test/' $filename
 sed -i 's/\]\}/\], url: http:\/\/www\.gstatic\.com\/generate_204, interval: 300 \}/' $filename
+sed -i '/- { name: MunCloud-旗舰加速-Diamond Package-new/d' $filename
 sed -i 's/#- { name: auto/- { name: MunCloud-旗舰加速-Diamond Package-new/' $filename
 # add rule
 sed -i 's/- GEOIP/- DOMAIN-SUFFIX,baidu.com,DIRECT\n- GEOIP/' $filename
