@@ -156,7 +156,7 @@
 	"Designated Cost": "Designated Cost",
 	"Designated Port": "Designated Port",
 	"Designated Root": "Designated Root",
-	"Destination Port": "Destination Port",
+	"Destination Port": "目标端口",
 	"Destination Port equals Source Port in a UDP header carried in an unfragmented IP datagram or in the first fragment of a fragmented IP datagram.": "目标端口等于未分段IP数据报或分段IP数据报的第一个片段中携带的UDP报头中的源端口。",
 	"Destination Port Equals Source Port in the TCP header carried in an unfragmented IP datagram or in the first fragment of a fragmented IP datagram.": "未分段的IP数据报或分段的IP数据报的第一个片段中携带的TCP报头中的目标端口等于源端口。",
 	"Dest Type": "目标类型",
