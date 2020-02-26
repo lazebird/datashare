@@ -861,6 +861,7 @@
     "edit": "Edit",
     "help": "Help Index",
     "logout": "Logout",
+    "reboot": "Reboot",
     "save_cfg": "Save Configuration"
   },
   "units": {
