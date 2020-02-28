@@ -66,10 +66,10 @@
     "enable": "Enable",
     "enabled": "Enabled",
     "false": "False",
-    "help_title": "ROBO-OS-Help",
+    "help_title": "Switch-Help",
     "ingress": "Ingress",
     "loading": "Loading",
-    "main_banner_title": "ROBO-OS™ Web-Management Software",
+    "main_banner_title": "Switch Web-Management Software",
     "mode": "Mode",
     "msg_cfg_save_error": "Error: Configuration not saved",
     "msg_cfg_save_success": "Configuration Saved",
@@ -449,7 +449,7 @@
       "lldp_remote_mib": "LLDP Remote MIB Configuration",
       "lldp_statistics": "LLDP Statistics",
       "lldp_tlv": "LLDP TLV Configuration",
-      "main_banner": "Robo-OS™ Web-Management Help",
+      "main_banner": "Switch Web-Management Help",
       "password": "Password Configuration",
       "port_cfg": "Port Configuration",
       "port_mirroring": "Port Mirroring",
@@ -469,7 +469,7 @@
       "tbd": "Help Section Template"
     },
     "vlan": {
-      "cfg_page_descr": "A VLAN is a group of ports that can be anywhere in the network, but communicate as though they were in the same area. ROBO-OS supports IEEE 802.1Q-based VLANs as well as port-based VLANs. The default VLAN mode is IEEE 802.1Q VLAN. All ports are in VLAN 1 in untagged mode by default. VLAN mode can be toggled to Port-Based VLANs by clicking the Port Based VLAN Mode button on the top right of the VLAN Configuration page. NOTE: Toggling between VLAN modes results in the VLAN configuration resetting to the default values.",
+      "cfg_page_descr": "A VLAN is a group of ports that can be anywhere in the network, but communicate as though they were in the same area. Switch supports IEEE 802.1Q-based VLANs as well as port-based VLANs. The default VLAN mode is IEEE 802.1Q VLAN. All ports are in VLAN 1 in untagged mode by default. VLAN mode can be toggled to Port-Based VLANs by clicking the Port Based VLAN Mode button on the top right of the VLAN Configuration page. NOTE: Toggling between VLAN modes results in the VLAN configuration resetting to the default values.",
       "dot1q": {
         "mbr_cfg_descr": "Port membership can be configured to one of untagged, tagged or not a member.",
         "mbr_cfg_note": "Note: Ports can only belong to one VLAN as untagged members. Ports can belong to multiple VLANs as tagged members."
