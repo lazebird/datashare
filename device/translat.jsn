@@ -97,7 +97,9 @@
     "no_file_sel": "No File Selected",
     "progress": "Progress",
     "upload_cfg": "Upload Configuration",
-    "upload_failed": "Upload Failed"
+    "upload_failed": "Upload Failed",
+    "title_default": "Restore Default Configuration",
+    "msg_default": "Are you sure you want to restore defaults?<br>You'll need to reboot afterwards."
   },
   "developer": {
     "developer": "Developer Tools",
