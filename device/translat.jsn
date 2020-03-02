@@ -756,6 +756,7 @@
     "wrr": "Weighted Round Robin"
   },
   "rstp": {
+    "global_admin": "Global Admin",
     "auto_edge_port": "Auto Edge Port",
     "bpdu_migr_chk": "BPDU Migration Check",
     "bridge_fwd_delay": "Bridge Forward Delay",
