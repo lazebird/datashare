@@ -330,7 +330,7 @@
 	"Last": "最后",
 	"Layer2": "二层",
 	"Learning": "Learning",
-	"Length Errors": "长度误差",
+	"Length Errors": "长度错误",
 	"length is undefined": "长度不确定",
 	"Level": "Level",
 	"Link Aggregation (LAG), also known as trunking, allows multiple Ethernet ports to be bundled together. The trunk is treated as one logical link and is useful when high bandwidth and redundancy between links is required. Bandwidth is distributed across the LAG such that all frames for a given flow are assigned to the same member of the LAG.": "链路聚合（LAG），也称为中继，允许将多个以太网端口捆绑在一起。中继线被视为一条逻辑链路，当需要高带宽和链路之间的冗余时非常有用。带宽跨LAG分配，因此给定流的所有帧都分配给LAG的同一成员。",
