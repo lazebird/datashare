@@ -11,7 +11,7 @@ my $str = join "", @lines;
 # allow lan
 $str =~ s/allow-lan: false/allow-lan: true/mg;
 # use auto group instead
-$str =~ s/name: Proxy\n  type: select/name: Proxy\n  type: url-test\n  url: http:\/\/www\.gstatic\.com\/generate_204, interval: 300/smg;    # about perl multi-line match, refer to zebos/script/rpc*_mod.pl
+$str =~ s/name: Proxy\n  type: select/name: Proxy\n  type: url-test\n  url: http:\/\/www\.gstatic\.com\/generate_204\n  interval: 300/smg;    # about perl multi-line match, refer to zebos/script/rpc*_mod.pl
 
 open F2, '>', $filename or die $filename . " open failed.\n";
 print F2 $str;
