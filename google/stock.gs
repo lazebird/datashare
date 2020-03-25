@@ -1,10 +1,8 @@
 // google apps script, similar to javascript; 本脚本用于构建股票数据跟踪表；
 var spreadsheet = SpreadsheetApp.getActive();
-var stockdbname = "Database"; // 存放所有股票代码
+var stockdbname = "Database"; // 存放所有股票代码 [上证A股](http://www.sse.com.cn/assortment/stock/list/share/) [深证A股](http://www.szse.cn/market/stock/list/index.html)
 var defsheetname = "Stocks"; // 存放关注的股票和相关逻辑，当前最多同时关注19只；参考activezone
 var activezone = "C2:C20";
-var stocks_url1 = "https://www.banban.cn/gupiao/list_sh.html"; // [上证A股](http://www.sse.com.cn/assortment/stock/list/share/)
-var stocks_url2 = "https://www.banban.cn/gupiao/list_sz.html"; // [深证A股](http://www.szse.cn/market/stock/list/index.html)
 var trade_url_pre = "http://quotes.money.163.com/trade/lszjlx_";
 var trade_url_suf = ".html#01b08";
 
