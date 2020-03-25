@@ -5,7 +5,6 @@ var defsheetname = "Stocks"; // 存放关注的股票和相关逻辑，当前最
 var activezone = "C2:C20";
 var trade_url_pre = "http://quotes.money.163.com/trade/lszjlx_";
 var trade_url_suf = ".html#01b08";
-var my_stocks = [];
 
 function _getsheet(spreadsheet, name, clear_flag) {
   if (name.length == 0) return null;
@@ -77,20 +76,6 @@ function onEdit(e) {
   var sheet = spreadsheet.getActiveSheet();
   if (sheet.getName() != defsheetname || e.range.getA1Notation() != "E2") return;
   _init_active_zone(false);
-  var values = sheet.getRange(activezone).getValues();
-  for (var i = 0; i < values.length; i++) {
-    for (var j = 0; j < values[i].length; j++) {
-      if (my_stocks == null || my_stocks[i] == null || my_stocks[i][j] == null) my_stocks[i] = [""];
-      if (my_stocks[i][j] == values[i][j]) continue;
-      Logger.log("[" + i + "][" + j + "]: " + "old " + my_stocks[i][j] + ", new " + values[i][j]);
-      if (my_stocks[i][j].length > 0) spreadsheet.deleteSheet(spreadsheet.getSheetByName(my_stocks[i][j]));
-      if (values[i][j].length > 0) _create_trade_sheet(values[i][j]);
-      my_stocks[i][j] = values[i][j];
-    }
-  }
-}
-function onOpen(e) {
-  var sheet = _getsheet(spreadsheet, defsheetname, false);
-  my_stocks = sheet.getRange(activezone).getValues();
-  Logger.log(my_stocks);
+  destroy_trades();
+  create_trades(); // spreadsheet.setActiveSheet(sheet);
 }
