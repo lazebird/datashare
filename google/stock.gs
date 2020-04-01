@@ -1,8 +1,12 @@
 // google apps script, similar to javascript; 本脚本用于构建股票数据跟踪表；
 var spreadsheet = SpreadsheetApp.getActive();
 var stockdbname = "Database"; // 存放所有股票代码 [上证A股](http://www.sse.com.cn/assortment/stock/list/share/) [深证A股](http://www.szse.cn/market/stock/list/index.html)
-var defsheetname = "Stocks"; // 存放关注的股票和相关逻辑，当前最多同时关注19只；参考activezone
-var activezone = "C2:C20";
+var defsheetname = "Stocks"; // 存放关注的股票和相关逻辑，当前最多同时关注有限数量股票；参考activezone
+var workzone = "A1:M40";
+var activetitlezone = "C1";
+var activezone = "C2:C30";
+var backuptitlezone = "M1";
+var backupzone = "M2:M30";
 var trade_url_pre = "http://quotes.money.163.com/trade/lszjlx_";
 var trade_url_suf = ".html#01b08";
 
@@ -15,13 +19,18 @@ function _getsheet(spreadsheet, name, clear_flag) {
 }
 function _init_active_zone(clear_flag) {
   var sheet = _getsheet(spreadsheet, defsheetname, clear_flag);
-  sheet.getRange("A1").setValue("在黄色区域中选择待监控股票，删除Refresh单元完成监控数据更新!");
-  sheet.getRange("E2").setValue("Refresh");
+  sheet.getRange(workzone).setHorizontalAlignment("center");
+  sheet.getRange(workzone).trimWhitespace();
+  sheet.getRange("E1").setValue("Update");
+  // avoid too many checkboxes are created
+  if (clear_flag) sheet.getRange("E2").insertCheckboxes("yes", "no");
+  else sheet.getRange("E2").setValue("no");
   sheet.getRange("E2").setNote("Last modified: " + new Date());
-  var dbsheet = _getsheet(spreadsheet, stockdbname, false);
   var rule = SpreadsheetApp.newDataValidation()
     .requireValueInRange(spreadsheet.getRange(stockdbname + "!E1:F5000"))
     .build();
+  sheet.getRange(activetitlezone).setValue("Active");
+  sheet.getRange(backuptitlezone).setValue("Backup");
   var range = sheet.getRange(activezone);
   range.setBackground("yellow").setDataValidation(rule);
 }
@@ -76,6 +85,15 @@ function onEdit(e) {
   var sheet = spreadsheet.getActiveSheet();
   if (sheet.getName() != defsheetname || e.range.getA1Notation() != "E2") return;
   _init_active_zone(false);
-  destroy_trades();
-  create_trades(); // spreadsheet.setActiveSheet(sheet);
+  var newvals = sheet.getRange(activezone).getValues();
+  var oldvals = sheet.getRange(backupzone).getValues();
+  // if a stock is moved, strict [i][j] compare will still cause a recreation
+  for (var i = 0; i < newvals.length; i++) {
+    for (var j = 0; j < newvals[i].length; j++) {
+      if (newvals[i][j] == oldvals[i][j]) continue;
+      if (oldvals[i][j].length > 0) spreadsheet.deleteSheet(spreadsheet.getSheetByName(oldvals[i][j]));
+      if (newvals[i][j].length > 0) _create_trade_sheet(newvals[i][j]);
+    }
+  }
+  sheet.getRange(backupzone).setValues(newvals);
 }
