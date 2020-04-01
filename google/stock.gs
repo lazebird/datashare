@@ -19,8 +19,7 @@ function _getsheet(spreadsheet, name, clear_flag) {
 }
 function _init_active_zone(clear_flag) {
   var sheet = _getsheet(spreadsheet, defsheetname, clear_flag);
-  sheet.getRange(workzone).setHorizontalAlignment("center");
-  sheet.getRange(workzone).trimWhitespace();
+  sheet.getRange(workzone).setHorizontalAlignment("center"); // sheet.getRange(workzone).trimWhitespace(); // trim from source, else validation fails
   sheet.getRange("E1").setValue("Update");
   // avoid too many checkboxes are created
   if (clear_flag) sheet.getRange("E2").insertCheckboxes("yes", "no");
@@ -40,8 +39,8 @@ function _init_database(clear_flag) {
   sheet.getRange("C1").setValue('=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1r_VW-KpV4HFMJxP-ms2HYco5GxpDUVoHpLwo2U19C1Y/edit#gid=436989383", "list!A1:B5000")'); // C+D
   sheet.getRange("E1").setValue("上证");
   sheet.getRange("F1").setValue("深证");
-  for (var i = 2; i < 5000; i++) sheet.getRange("E" + i).setValue("=CONCAT(B" + i + ",A" + i + ")"); // E=AB
-  for (var i = 2; i < 5000; i++) sheet.getRange("F" + i).setValue("=CONCAT(D" + i + ",C" + i + ")"); // F=CD
+  for (var i = 2; i < 5000; i++) sheet.getRange("E" + i).setValue("=TRIM(CONCAT(B" + i + ",A" + i + "))"); // E=AB
+  for (var i = 2; i < 5000; i++) sheet.getRange("F" + i).setValue("=TRIM(CONCAT(D" + i + ",C" + i + "))"); // F=CD
 }
 
 function init_stocks() {
