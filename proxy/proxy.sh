@@ -1,5 +1,7 @@
-cat > proxy_update.sh <<EOF && bash proxy_update.sh
+cat > updater.sh <<EOF && bash updater.sh
 #!/bin/bash
+
+echo "#### this is an updater for proxy"
 
 # parameter: filename, path, url
 fetch_file() {
@@ -25,5 +27,6 @@ fetch_file reconf.sh \$workdir "https://code.aliyun.com/lazebird/datashare/raw/m
 fetch_file Country.mmdb \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 echo "#### processing configure files"
 dos2unix \$filename && ./reconf.sh \$filename
-pgrep clash | xargs kill; sleep 1s &&  ./clashr -d . &
+kill `pgrep clash`; sleep 1s &&  ./clashr -d . &
+echo "#### update successfully!"
 EOF
