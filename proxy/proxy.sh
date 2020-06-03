@@ -15,7 +15,7 @@ fetch_file() {
 
 configname=config.yaml
 workdir=.
-configurl=\$1 # secret
+configurl=$1 # secret
 
 echo "#### updating configure files"
 mv \$workdir/\$configname \$workdir/\$configname".bak" 2>/dev/null # force update
