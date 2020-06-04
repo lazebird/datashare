@@ -15,12 +15,13 @@ fetch_file() {
     wget -O \$path/\$filename \$url || exit 1
 }
 
+BASHDIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
 configname=config.yaml
-workdir=.
+workdir=$BASHDIR
 configurl="$1" # secret
-
+cd \$workdir
 echo "#### updating configure files"
-mv \$workdir/\$configname \$workdir/\$configname".bak" 2>/dev/null # force update
+mv \$configname \$configname".bak" 2>/dev/null # force update
 fetch_file \$configname \$workdir \$configurl
 fetch_file clashr \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/clashr-linux-mipsle-hardfloat"
 fetch_file reconf.sh \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.sh"
