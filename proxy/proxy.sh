@@ -28,7 +28,7 @@ fetch_file reconf.sh \$workdir "https://code.aliyun.com/lazebird/datashare/raw/m
 fetch_file Country.mmdb \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 echo "#### processing configure files"
 cd \$workdir && chmod 777 *.sh clashr
-dos2unix \$filename && ./reconf.sh \$filename
+dos2unix \$configname && ./reconf.sh \$configname
 kill `pgrep clash`; sleep 1s &&  ./clashr -d . &
 echo "#### update successfully!"
 EOF
