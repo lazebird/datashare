@@ -17,7 +17,7 @@ fetch_file() {
 
 BASHDIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
 configname=config.yaml
-workdir=$BASHDIR
+workdir=\$BASHDIR
 configurl="$1" # secret
 cd \$workdir
 echo "#### updating configure files"
