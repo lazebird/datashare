@@ -1,0 +1,1 @@
+"D:\bin\clang-format.exe" -style="{ BasedOnStyle: LLVM, KeepEmptyLinesAtTheStartOfBlocks: false, BreakBeforeBraces: WebKit, AllowShortFunctionsOnASingleLine: false, AllowShortIfStatementsOnASingleLine: true, AllowShortLoopsOnASingleLine: true, IndentCaseLabels: false, ColumnLimit: 200, SortIncludes: false, IndentWidth: 4 }" -i %1
