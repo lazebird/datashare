@@ -1,4 +1,9 @@
+import sys
 import time
+
+srvip = "192.168.100.106"#"10.1.1.2"
+if len(sys.argv) > 1:
+    srvip = sys.argv[1]
 
 ret = 0
 prompt1 = "bootloader#"
@@ -9,7 +14,6 @@ progress1 = "Bytes"
 progress2 = "#"
 done1 = "[Done]"
 done2 = "OK"
-srvip = "192.168.100.106"#"10.1.1.2"
 mytime = int(time.time())
 cursec = mytime%60 # [0,59]
 ip_pending = str(cursec + 190)
@@ -22,7 +26,7 @@ while ret == "" or ret == 0:
 ret = 0 if ret == 1 or ret == 2 else -1
 #crt.Screen.Send("#ret "+ret+"\r\n")
 while ret == "" or ret == 0: 
-	crt.Screen.Send("update_rootfs " + srvip + " " + localip + " rootfs.ubi\r\n")
+	crt.Screen.Send("update_rootfs0 " + srvip + " " + localip + " rootfs.ubi\r\n")
 	ret = crt.Screen.WaitForStrings([progress1, progress2, intr1, intr2], 3)
 
 

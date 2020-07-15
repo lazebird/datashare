@@ -38,7 +38,7 @@ def bug_check():
     if bug_found:
         return 1
     crt.Screen.Send("du -hd 0 bin/\n")
-    ret = crt.Screen.WaitForStrings(["93M"], 3)
+    ret = crt.Screen.WaitForStrings(["89M"], 3)
     bug_found = (ret != 1)
     return ret != 1
 
