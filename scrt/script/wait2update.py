@@ -2,8 +2,8 @@ import sys
 import time
 
 srvip = "192.168.100.106"#"10.1.1.2"
-if len(sys.argv) > 1:
-    srvip = sys.argv[1]
+if crt.Arguments.Count > 0:
+    srvip = crt.Arguments[0]
 
 ret = 0
 prompt1 = "bootloader#"

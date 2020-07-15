@@ -1,8 +1,8 @@
 import sys
 
 loopcnt = 1
-if len(sys.argv) > 1:
-    loopcnt = sys.argv[1]
+if crt.Arguments.Count > 0:
+    loopcnt = crt.Arguments[0]
 ret = 0
 prompt1 = "autoboot"
 crt.Screen.Send("\x1a\x1a\x1a")
