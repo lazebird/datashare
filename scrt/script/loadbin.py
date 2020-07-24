@@ -1,3 +1,7 @@
+srvip = "192.168.100.106"#"10.1.1.2"
+if crt.Arguments.Count > 0:
+    srvip = crt.Arguments[0]
+
 prog = crt.Screen.ReadString({"\r\n","?", "^C"})
 restart_mode = "none"  # mode: restart reboot none
 
@@ -39,13 +43,10 @@ else:
 if crt.Screen.MatchIndex != 3 and prog != "":
 	crt.Screen.Send("\3")
 	crt.Screen.WaitForString("root", 1)
-	crt.Screen.Send("wget http://192.168.1.106/bin/"+prog+"\r\n")
+	crt.Screen.Send("wget http://"+srvip+"/bin/"+prog+"\r\n")
 	ret = crt.Screen.WaitForStrings(["saved","failed", "ERROR", "No such", "^C"])
 	if ret == 1:
-		crt.Screen.Send("chmod 777 "+prog+"\r\n")
-		crt.Screen.Send("mv /usr/bin/"+prog+" /"+prog+".bak\r\n")
-		crt.Screen.Send("mv "+prog+" /usr/bin\r\n")
-		crt.Screen.Send("sync\r\n")
+		crt.Screen.Send("chmod 777 "+prog+" && mv /usr/bin/"+prog+" /"+prog+".bak && mv "+prog+" /usr/bin && sync\r\n")
 		crt.Screen.WaitForStrings(["root", "^C"])
 		if restart_mode == "restart": 
 			crt.Screen.Send("pkill "+prog+"\r\n")
