@@ -18,7 +18,7 @@ alias chmoda='chmod 777 -R ./'
 alias ifreset='ifrst() { ifdown $1; ifup $1; }; ifrst'
 alias dsearch='dpkg -l | grep '
 alias aindent='astyle --style=ansi -s4 -U -A10 --c --suffix=none -xe'
-alias cindent='find . -name "*.[ch]" | grep -v .si4project | xargs clang-format -i'
+alias cindent='find . -name "*.[ch]" | grep -v .si4project | xargs clang-format -style="{ BasedOnStyle: LLVM, KeepEmptyLinesAtTheStartOfBlocks: false, BreakBeforeBraces: WebKit, AllowShortFunctionsOnASingleLine: false, AllowShortIfStatementsOnASingleLine: true, AllowShortLoopsOnASingleLine: true, IndentCaseLabels: false, ColumnLimit: 200, SortIncludes: false, IndentWidth: 4 }" -i'
 alias xindent='myindent() { file=$1; indent -o $file $file; }; myindent'
 alias linkvm='mount -t cifs -o username=root //192.168.1.31/projects /mnt/liulang-vm/'
 
