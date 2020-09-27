@@ -23,12 +23,12 @@ cd \$workdir
 echo "#### updating configure files"
 mv \$configname \$configname".bak" 2>/dev/null # force update
 fetch_file \$configname \$workdir \$configurl
-fetch_file clashr \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/clashr-linux-mipsle-hardfloat"
+fetch_file clash \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/clash-linux-mipsle-hardfloat"
 fetch_file reconf.sh \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.sh"
 fetch_file Country.mmdb \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 echo "#### processing configure files"
-cd \$workdir && chmod 777 *.sh clashr
+cd \$workdir && chmod 777 *.sh clash
 dos2unix \$configname && ./reconf.sh \$configname
-kill \`pgrep clash\`; sleep 1s &&  ./clashr -d . &
+kill \`pgrep clash\`; sleep 1s &&  ./clash -d . &
 echo "#### update successfully!"
 EOF
