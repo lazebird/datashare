@@ -8,10 +8,14 @@ intr1 = "^C"
 intr2 = "<INTERRUPT>"
 
 cmdarray = (
-  "interface eth0/7\r\nshutdown\r\nexit",
-  "interface eth0/7\r\nno shutdown\r\nexit",
-  "interface eth0/8\r\nshutdown\r\nexit",
-  "interface eth0/8\r\nno shutdown\r\nexit"
+  "interface eth0/25\r\nshutdown\r\nexit",
+  "interface eth0/25\r\nno shutdown\r\nexit",
+  "interface eth0/26\r\nshutdown\r\nexit",
+  "interface eth0/26\r\nno shutdown\r\nexit",
+  "interface eth0/27\r\nshutdown\r\nexit",
+  "interface eth0/27\r\nno shutdown\r\nexit",
+  "interface eth0/28\r\nshutdown\r\nexit",
+  "interface eth0/28\r\nno shutdown\r\nexit"
 )
 
 def  execcmd(cmdstr): 
@@ -39,25 +43,28 @@ def  cmdpreconfig():
 
 
 def  cmdwait2login(): 
-  ret = crt.Screen.WaitForStrings([prompt1, prompt2, intr1, intr2])
-  if ret == 1 or ret == 2: 
-    crt.Screen.Send("admin\n")
-    crt.Sleep(500)
-    crt.Screen.Send("admin\n")
-    crt.Sleep(1000)
-    return not wait4pause(5) and cmdpreconfig() # wait for a moment, make sure system started.
-  else: 
-    return 0
-  
-
+	ret = 0
+	while ret == "" or ret == 0: 
+		ret = crt.Screen.WaitForStrings([prompt1, prompt2, intr1, intr2])
+	
+	if ret == 1 or ret == 2: 
+		crt.Sleep(5000)
+		crt.Screen.Send("admin\n")
+		crt.Sleep(1000)
+		crt.Screen.Send("admin\n")
+		crt.Sleep(3000)
+		crt.Screen.Send("enable\nconfig t\n")
+		# crt.Sleep(5000) # wait for a moment, make sure system started.
+		return not wait4pause(5) # wait for a moment, make sure system started.
+	else: 
+		return 0
 
 def  cmdloop(num): 
-  while num>1 and not wait4pause(timeout):
-    num-=1 
-    execcmd(cmdarray[Math.floor(Math.random() * cmdarray.length)])
-  
-  return num == -1
-
+	while num>0 and not wait4pause(timeout):
+		num-=1 
+		execcmd(cmdarray[random.randint(0,len(cmdarray) - 1)])
+	
+	return (num == 0)
 
 crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
 while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
