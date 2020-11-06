@@ -42,8 +42,8 @@ function _reset_active_zone()
 function _init_database()
 {
     var sheet = _getsheet(spreadsheet, stockdbname, true);
-    sheet.getRange("A1").setValue('=IMPORTRANGE("https://docs.google.com/spreadsheets/d/15pUouNMIJyuxyMbPaY9c7ddMpmLL8xAy1lKOwOstLRA/edit#gid=102777648", "list!A1:B5000")'); // A+B
-    sheet.getRange("C1").setValue('=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1r_VW-KpV4HFMJxP-ms2HYco5GxpDUVoHpLwo2U19C1Y/edit#gid=436989383", "list!A1:B5000")'); // C+D
+    sheet.getRange("A1").setValue('=IMPORTRANGE("https://docs.google.com/spreadsheets/d/19Xu0WyPGbD8MUIOY4zqr3QZ-v1OCkFyFR2trP8bjCeU/edit#gid=226774756", "list!A1:B5000")'); // A+B
+    sheet.getRange("C1").setValue('=query(IMPORTRANGE("https://docs.google.com/spreadsheets/d/1JtrTGwFax4vENH4xv1zU07ai7gmzeVf0N40EDCsLHtM/edit#gid=1527914076", "list!E1:F5000"), "select Col1, Col2",0)'); // C+D
     sheet.getRange("E1").setValue("上证");
     sheet.getRange("F1").setValue("深证");
     sheet.getRange("E2:E5000").setFormulaR1C1("=TRIM(CONCAT(R[0]C[-3],R[0]C[-4]))"); // E=BA
