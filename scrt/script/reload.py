@@ -1,7 +1,7 @@
 import random
 
-loopcmdnum = int(10)
-timeout = int(10)
+loopcmdnum = int(4)
+timeout = int(100)
 prompt1="login:"
 prompt2="xxxxxx" # unused
 intr1="^C"
@@ -14,22 +14,23 @@ cmdarray=(
 	"interface eth0/10\r\n no shutdown\r\nexit"
 	)
 
-def  execcmd(cmdstr):
+def	 execcmd(cmdstr):
 
-	crt.Screen.Send(cmdstr+"\n")
+	#crt.Screen.Send("#"+cmdstr+"\n")
+	crt.Screen.Send("#fake command\n")
 
 
-def  wait4pause(time):
+def	 wait4pause(time):
 
 	ret = crt.Screen.WaitForStrings(["^C", "<INTERRUPT>"], time)
-	if ret > 0:  #crt.Sleep(10000)
+	if ret > 0:	 #crt.Sleep(10000)
 		crt.Screen.Send("###user terminated("+ret+")!\n")
 		return 1
 	
 	return 0
 
 
-def  cmdreboot():
+def	 cmdreboot():
 
 	crt.Screen.Send("end\nentershell\n")
 	# crt.Screen.Send("cat /var/log/crash.log\n")
@@ -38,17 +39,18 @@ def  cmdreboot():
 	return 1
 
 
-def  cmdwait2login():
+def	 cmdwait2login():
 
 	ret = 0
 	while ret == "" or ret == 0: 
 		ret = crt.Screen.WaitForStrings([prompt1, prompt2, intr1, intr2])
 	
 	if ret == 1 or ret == 2: 
-		crt.Screen.Send("admin\n")
-		crt.Sleep(500)
+		crt.Sleep(5000)
 		crt.Screen.Send("admin\n")
 		crt.Sleep(1000)
+		crt.Screen.Send("admin\n")
+		crt.Sleep(3000)
 		crt.Screen.Send("enable\nconfig t\n")
 		# crt.Sleep(5000) # wait for a moment, make sure system started.
 		return not wait4pause(5) # wait for a moment, make sure system started.
@@ -57,14 +59,14 @@ def  cmdwait2login():
 	
 
 
-def  cmdloop(num):
+def	 cmdloop(num):
 
 	#crt.Screen.Send("logging level nsm 7\nlogging console 7\n")
-  while num>1 and not wait4pause(timeout):
-    	num-=1 
-		execcmd(cmdarray[random.randint(0,cmdarray.length)])
+	while num>0 and not wait4pause(timeout):
+		num-=1 
+		execcmd(cmdarray[random.randint(0,len(cmdarray) - 1)])
 	
-	return (num == -1)
+	return (num == 0)
 
 
 while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
