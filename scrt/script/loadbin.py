@@ -60,7 +60,7 @@ def do_load(prog, restart_mode):
 		elif restart_mode == "none": 
 			crt.Screen.Send("\3\r\n#please deal with it ASAP.\r\n")
 	else: 
-		crt.Screen.Send("\3\r\n#something is wrong, ret "+ret+"\r\n")
+		crt.Screen.Send("\3\r\n#something is wrong, ret "+str(ret)+"\r\n")
 
 loadmodefile(modfilename)
 optparse(prog)
