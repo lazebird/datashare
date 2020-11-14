@@ -2,12 +2,26 @@ srvip = "192.168.100.106"#"10.1.1.2"
 if crt.Arguments.Count > 0:
     srvip = crt.Arguments[0]
 
-prog = crt.Screen.ReadString({"\r\n","?", "^C"})
+prog = crt.Dialog.Prompt("Please enter binary name; format: name [,mode]; mode: restart reboot none") # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
 restart_mode = "none"  # mode: restart reboot none
-
 modhash = {}
 modfilename = "D:/restart_mode.txt"
-def  loadfile(filename): 
+
+def optparse(s):
+	global prog
+	global restart_mode
+	global modhash
+	s = s.replace("#", ",") # support '#' as ','
+	args = s.split(",")
+	if len(args) > 1:  # input string has args
+		prog = args[0]
+		restart_mode = args[1]
+		modhash[prog] = restart_mode
+	else: 
+		if prog in modhash: 
+			restart_mode = modhash[prog]
+
+def  loadmodefile(filename): 
 	try :
 		f = open(filename, "r")
 		for line in f.readlines():
@@ -18,29 +32,18 @@ def  loadfile(filename):
 	except:
 		crt.Screen.Send("#File "+filename+" not exists")
 
-
-def  writefile(filename): 
+def  writemodefile(filename): 
 	f = open(filename, "w") 
 	for key in modhash:
 		f.write(key+" "+modhash[key]+"\n")     
 	f.close()  
 
+def do_load(prog, restart_mode):
+	if prog == "":
+		crt.Screen.Send("\3\r\n#invalid input\r\n")
+		crt.Screen.Send("\3\r\n#script terminated for u.\r\n")
+		return
 
-loadfile(modfilename)
-
-prog = prog.replace("#", ",")
-args = prog.split(",")
-if len(args) > 1:  # input string has args
-	prog = args[0]
-	restart_mode = args[1]
-	modhash[prog] = restart_mode
-else: 
-	if prog in modhash: 
-		restart_mode = modhash[prog]
-	
-
-
-if crt.Screen.MatchIndex != 3 and prog != "":
 	crt.Screen.Send("\3")
 	crt.Screen.WaitForString("root", 1)
 	crt.Screen.Send("wget http://"+srvip+"/bin/"+prog+"\r\n")
@@ -58,9 +61,8 @@ if crt.Screen.MatchIndex != 3 and prog != "":
 			crt.Screen.Send("\3\r\n#please deal with it ASAP.\r\n")
 	else: 
 		crt.Screen.Send("\3\r\n#something is wrong, ret "+ret+"\r\n")
-else: 
-	crt.Screen.Send("\3\r\n#input format: \"progname [,mode]?\", mode: restart reboot none\r\n")
-	crt.Screen.Send("\3\r\n#script terminated for u.\r\n")
 
-
-writefile(modfilename)
+loadmodefile(modfilename)
+optparse(prog)
+writemodefile(modfilename)
+do_load(prog, restart_mode)
