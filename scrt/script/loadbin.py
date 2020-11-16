@@ -1,3 +1,12 @@
+import sys
+import os
+
+(strScriptPath, strScriptName) = os.path.split(__file__)
+if strScriptPath not in sys.path:
+    sys.path.insert(0, strScriptPath)
+
+import fsutils
+
 srvip = "192.168.100.106"#"10.1.1.2"
 if crt.Arguments.Count > 0:
     srvip = crt.Arguments[0]
@@ -7,10 +16,9 @@ restart_mode = "none"  # mode: restart reboot none
 modhash = {}
 modfilename = "D:/restart_mode.txt"
 
-def optparse(s):
+def optparse(s, modhash):
 	global prog
 	global restart_mode
-	global modhash
 	s = s.replace("#", ",") # support '#' as ','
 	args = s.split(",")
 	if len(args) > 1:  # input string has args
@@ -20,23 +28,6 @@ def optparse(s):
 	else: 
 		if prog in modhash: 
 			restart_mode = modhash[prog]
-
-def  loadmodefile(filename): 
-	try :
-		f = open(filename, "r")
-		for line in f.readlines():
-			line = line.strip()
-			params=line.split(' ')
-			modhash[params[0]] = params[1]
-		f.close()  
-	except:
-		crt.Screen.Send("#File "+filename+" not exists")
-
-def  writemodefile(filename): 
-	f = open(filename, "w") 
-	for key in modhash:
-		f.write(key+" "+modhash[key]+"\n")     
-	f.close()  
 
 def do_load(prog, restart_mode):
 	if prog == "":
@@ -62,7 +53,7 @@ def do_load(prog, restart_mode):
 	else: 
 		crt.Screen.Send("\3\r\n#something is wrong, ret "+str(ret)+"\r\n")
 
-loadmodefile(modfilename)
-optparse(prog)
-writemodefile(modfilename)
+modhash = eval(fsutils.loadkvfile(modfilename))
+optparse(prog, modhash)
+fsutils.writekvfile(modfilename, str(modhash))
 do_load(prog, restart_mode)
