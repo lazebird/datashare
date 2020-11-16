@@ -1,62 +1,25 @@
+import sys
+import os
+
+(strScriptPath, strScriptName) = os.path.split(__file__)
+if strScriptPath not in sys.path:
+	sys.path.insert(0, strScriptPath)
+
+import devutils
+
 loopcmdnum = int(30)
 timeout = int(3)
-prompt1="login:"
-prompt2="xxxxxx" # unused
-intr1="^C"
-intr2="<INTERRUPT>"
-
 cmdarray=(
 	"diagnostic register write 0 0x2040004 ", #0x81700000", 
 	"diagnostic register read 0 0x2040150")
 
 def  execcmd(cmdstr):
-
 	crt.Screen.Send(cmdstr+"\n")
-
-
-def  wait4pause(time):
-
-	ret = crt.Screen.WaitForStrings(["^C", "<INTERRUPT>"], time)
-	if ret > 0: 
-		crt.Screen.Send("###user terminated("+ret+")!\n")
-		return 1
-	
-	return 0
-
-
-def  cmdreboot():
-
-	crt.Screen.Send("end\nentershell\n")
-	crt.Screen.Send("cat /var/log/crash.log\n")
-	crt.Screen.Send("reboot\n")
-	return 1
-
-
-def  cmdwait2login():
-
-	ret = 0
-	while ret == "" or ret == 0: 
-		ret = crt.Screen.WaitForStrings([prompt1, prompt2, intr1, intr2])
-	
-	if ret == 1 or ret == 2: 
-		crt.Screen.Send("admin\n")
-		crt.Sleep(500)
-		crt.Screen.Send("admin\n")
-		crt.Sleep(1000)
-		crt.Screen.Send("enable\nconfig t\n")
-		# crt.Sleep(5000) # wait for a moment, make sure system started.
-		return not wait4pause(5) # wait for a moment, make sure system started.
-	 else: 
-		return 0
-	
-
 
 def  addZero(str,length):               
     return (length - str.length + 1).join("0") + str              
 
-
 def  cmdloop(num):
-
 	i, data, lastdata
 	for (i = 1 i < 20 i+=1) 
 		lastdata = 0
@@ -76,17 +39,11 @@ def  cmdloop(num):
 				crt.Screen.Send("####################### loop "+i+" data "+data+" lastdata "+lastdata+"#######################\n")
 				crt.Screen.ReadString("SWITCH#", 1)
 				break
-				#return 0
-			
 			lastdata = data
-			if wait4pause(2): 
+			if devutils.wait4pause(crt, 2): 
 				return 0
-			
-		
-	
 	return 0
 
-
-#while cmdloop(loopcmdnum) and cmdreboot() and cmdwait2login():pass
+#while cmdloop(loopcmdnum) and devutils.cmdreboot(crt) and devutils.wait_login(crt):pass
 while cmdloop(loopcmdnum):pass
 crt.Screen.Send("#game over!\n")

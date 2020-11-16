@@ -63,7 +63,7 @@ def	 cmdloop(num):
 
 	#crt.Screen.Send("logging level nsm 7\nlogging console 7\n")
 	while num>0 and not wait4pause(timeout):
-		num-=1 
+		num = num - 1 
 		execcmd(cmdarray[random.randint(0,len(cmdarray) - 1)])
 	
 	return (num == 0)

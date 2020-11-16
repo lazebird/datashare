@@ -35,7 +35,7 @@ def do_load(prog, restart_mode):
 		crt.Screen.Send("\3\r\n#script terminated for u.\r\n")
 		return
 
-	crt.Screen.Send("\3")
+	crt.Screen.Send("\3") # ctrl+c; ctrl characters
 	crt.Screen.WaitForString("root", 1)
 	crt.Screen.Send("wget http://"+srvip+"/bin/"+prog+"\r\n")
 	ret = crt.Screen.WaitForStrings(["saved","failed", "ERROR", "No such", "^C"])
