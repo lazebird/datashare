@@ -25,7 +25,7 @@ def wait_login(crt):
 		crt.Sleep(3000)
 		crt.Screen.Send("enable\nconfig t\n")
 		# wait for a moment, make sure system started.
-		return not wait4pause(5)
+		return not wait4pause(crt, 5)
 	return False
 
 def wait2uboot(crt):
