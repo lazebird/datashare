@@ -1,41 +1,38 @@
 import sys
+import os
+
+(strScriptPath, strScriptName) = os.path.split(__file__)
+if strScriptPath not in sys.path:
+    sys.path.insert(0, strScriptPath)
+sys.dont_write_bytecode = True
+
+import devutils
+import stringutils
 import time
+import log
 
 srvip = "192.168.100.106"#"10.1.1.2"
-if crt.Arguments.Count > 0:
-    srvip = crt.Arguments[0]
+workdir = "D:/"
+argstr = ""
+for index in range(crt.Arguments.Count):
+	argstr = argstr + crt.Arguments[index] + " "
 
-ret = 0
-prompt1 = "bootloader#"
-prompt2 = ">>"
-intr1 = "^C"
-intr2 = "<INTERRUPT>"
-progress1 = "Bytes"
-progress2 = "#"
-done1 = "[Done]"
-done2 = "OK"
-mytime = int(time.time())
-cursec = mytime%60 # [0,59]
+optstr = stringutils.optparse(argstr)
+opthash = eval(optstr)
+if "ip" in opthash:
+	srvip = opthash["ip"]
+if "workdir" in opthash:
+	workdir = opthash["workdir"]
+log.init(workdir)
+
+cursec = (int(time.time()))%60 # [0,59]
 ip_pending = str(cursec + 190)
 localip = srvip[0:srvip.rindex('.') + 1] + ip_pending # [190,250]
-while ret == "" or ret == 0: 
-	crt.Screen.Send(" \r\n")
-	ret = crt.Screen.WaitForStrings([prompt1, prompt2, intr1, intr2], 1)
 
-
-ret = 0 if ret == 1 or ret == 2 else -1
-#crt.Screen.Send("#ret "+ret+"\r\n")
-while ret == "" or ret == 0: 
+if devutils.wait2uboot(crt):
 	crt.Screen.Send("update_rootfs0 " + srvip + " " + localip + " rootfs.ubi\r\n")
-	ret = crt.Screen.WaitForStrings([progress1, progress2, intr1, intr2], 3)
-
-
-ret = 0 if ret == 1 or ret == 2 else -1
-while ret == "" or ret == 0: 
-	ret = crt.Screen.WaitForStrings([prompt1, prompt2, done1, done2, intr1, intr2], 300)
-
-
-if ret == 3 or ret == 4: 
-	crt.Screen.Send("reset\r\n")
-else: 
-	crt.Screen.Send("#err " + str(ret) + "\r\n")
+	if not devutils.wait2exec(crt, "##", 15, ""):
+		crt.Screen.Send("\3\3\3")
+		crt.Screen.Send("#err\r\n")
+	elif not devutils.wait2exec(crt, "written: OK", 300, "reset\n"):
+		crt.Screen.Send("#err\r\n")

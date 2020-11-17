@@ -6,16 +6,28 @@ if strScriptPath not in sys.path:
     sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
+import log
 import fsutils
+import stringutils
 
 srvip = "192.168.100.106"#"10.1.1.2"
-if crt.Arguments.Count > 0:
-    srvip = crt.Arguments[0]
+workdir = "D:/"
+argstr = ""
+for index in range(crt.Arguments.Count):
+	argstr = argstr + crt.Arguments[index] + " "
+
+optstr = stringutils.optparse(argstr)
+opthash = eval(optstr)
+if "ip" in opthash:
+	srvip = opthash["ip"]
+if "workdir" in opthash:
+	workdir = opthash["workdir"]
+log.init(workdir)
 
 prog = crt.Dialog.Prompt("Please enter binary name; format: name [,mode]; mode: restart reboot none") # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
 restart_mode = "none"  # mode: restart reboot none
 modhash = {}
-modfilename = "D:/restart_mode.txt"
+modfilename = workdir + "/restart_mode.txt"
 
 def optparse(s, modhash):
 	global prog

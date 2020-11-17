@@ -1,3 +1,6 @@
+import time
+import log
+
 intr1 = "^C"
 intr2 = "<INTERRUPT>"
 
@@ -8,8 +11,11 @@ def wait4pause(crt, time):
 		return True
 	return False
 
-def wait2exec(crt, prompt, time, cmd):
-	ret = crt.Screen.WaitForStrings([prompt, intr1, intr2], time)
+def wait2exec(crt, prompt, timeout, cmd):
+	cursec = int(time.time())
+	ret = crt.Screen.WaitForStrings([prompt, intr1, intr2], timeout)
+	timeinterval = int(time.time()) - cursec
+	log.info("wait for prompt " + prompt + " used seconds " + str(timeinterval))
 	if ret == 1:
 		crt.Screen.Send(cmd)
 		return True
@@ -28,22 +34,32 @@ def wait_login(crt):
 		return not wait4pause(crt, 5)
 	return False
 
+def is_uboot(crt):
+	crt.Screen.Send("\r\n")
+	return crt.Screen.WaitForStrings([">>"], 1) == 1
+
 def wait2uboot(crt):
-	return wait2exec(crt, "stop with 'space'", 0xfffffff, " ")
+	return is_uboot(crt) or wait2exec(crt, "stop with 'space'", 0xfffffff, " ")
+
+def is_shell(crt):
+	crt.Screen.Send("\r\n")
+	return crt.Screen.WaitForStrings(["root@SWITCH"], 1) == 1
 
 def try_login(crt):
 	crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 	crt.Screen.Send("\r\n")
-	ret = crt.Screen.WaitForStrings(["login"], 1)
-	if ret == 1:  # login needed
+	if crt.Screen.WaitForStrings(["login"], 1) == 1:  # login needed
 		crt.Screen.Send("admin\r\n")
-		crt.Screen.WaitForStrings(["Password"], 3)
+		crt.Screen.WaitForStrings(["Password"], 5)
 		crt.Screen.Send("admin\r\n")
-		crt.Screen.WaitForStrings([">"], 3)
+		crt.Screen.WaitForStrings([">"], 5)
 		crt.Screen.Send("enable\r\n")
-	return ret == 1
+		return True
+	return False
 
 def cmdreboot(crt): 
-  crt.Screen.Send("end\nentershell\n")
-  crt.Screen.Send("reboot\n")
-  return True
+	crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
+	if not is_shell(crt):
+		crt.Screen.Send("entershell\n")
+	crt.Screen.Send("reboot\n")
+	return True
