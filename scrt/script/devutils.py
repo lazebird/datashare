@@ -8,8 +8,7 @@ def wait4pause(crt, time):
 	ret = crt.Screen.WaitForStrings([intr1, intr2], time)
 	if ret > 0:
 		crt.Screen.Send("###user terminated(" + str(ret) + ")!\n")
-		return True
-	return False
+	return ret # 1/2: on interrupt; 0: on timeout
 
 def wait2exec(crt, prompt, timeout, cmd):
 	cursec = int(time.time())
@@ -18,8 +17,7 @@ def wait2exec(crt, prompt, timeout, cmd):
 	log.info("wait for prompt " + prompt + " used seconds " + str(timeinterval))
 	if ret == 1:
 		crt.Screen.Send(cmd)
-		return True
-	return False
+	return ret # 1/True: on success; 0: on timeout; 2/3: on interrupt
 
 def wait_login(crt):
 	ret = wait2exec(crt, "login:", 0xfffffff, "")
@@ -31,7 +29,7 @@ def wait_login(crt):
 		crt.Sleep(3000)
 		crt.Screen.Send("enable\nconfig t\n")
 		# wait for a moment, make sure system started.
-		return not wait4pause(crt, 5)
+		return wait4pause(crt, 5) == 0
 	return False
 
 def is_uboot(crt):
@@ -39,7 +37,7 @@ def is_uboot(crt):
 	return crt.Screen.WaitForStrings([">>"], 1) == 1
 
 def wait2uboot(crt):
-	return is_uboot(crt) or wait2exec(crt, "stop with 'space'", 0xfffffff, " ")
+	return is_uboot(crt) or wait2exec(crt, "stop with 'space'", 0xfffffff, " ") == 1
 
 def is_shell(crt):
 	crt.Screen.Send("\r\n")
