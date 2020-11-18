@@ -17,8 +17,8 @@ cmdarray=(
 def  execcmd(cmdstr):
 	crt.Screen.Send(cmdstr+"\n")
 
-def  addZero(str,length):               
-    return (length - str.length + 1).join("0") + str              
+def  addZero(str,length):			   
+	return (length - str.length + 1).join("0") + str			  
 
 def  cmdloop(num):
 	i, data, lastdata

@@ -23,23 +23,23 @@ loop = 1
 curtabidx = crt.GetActiveTab().Index
 while loop == 1: 
   for s in ifarray:
-    if curtabidx == 3 and crt.GetActiveTab().Index == 2: # skip when bug occurred
-      wait4pause(10)
-      continue
-    shutdown(s)
-    tout = random.randint(0, 120) + 1 # 0 means infinite
-    if wait4pause(tout): 
-      loop = 0
-      break
-    if curtabidx == 3 and crt.GetActiveTab().Index == 2: # skip when bug occurred
-      wait4pause(10)
-      continue
-    noshutdown(s)
-    tout = random.randint(0, 120) + 1 # 0 means infinite
-    crt.Screen.Send("#tout " + str(tout) + "\n")
-    if wait4pause(tout): 
-      loop = 0
-      break
+	if curtabidx == 3 and crt.GetActiveTab().Index == 2: # skip when bug occurred
+	  wait4pause(10)
+	  continue
+	shutdown(s)
+	tout = random.randint(0, 120) + 1 # 0 means infinite
+	if wait4pause(tout): 
+	  loop = 0
+	  break
+	if curtabidx == 3 and crt.GetActiveTab().Index == 2: # skip when bug occurred
+	  wait4pause(10)
+	  continue
+	noshutdown(s)
+	tout = random.randint(0, 120) + 1 # 0 means infinite
+	crt.Screen.Send("#tout " + str(tout) + "\n")
+	if wait4pause(tout): 
+	  loop = 0
+	  break
 
 crt.GetScriptTab().Activate()
 # crt.Screen.Send("#script exit\n")
