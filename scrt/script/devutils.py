@@ -56,8 +56,9 @@ def try_login(crt):
 	return False
 
 def cmdreboot(crt): 
-	crt.Screen.Send("\x1a\x1a\x1a\x1a\x1a")  # ctrl+z; ctrl characters
+	crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 	if not is_shell(crt):
+		crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 		crt.Screen.Send("entershell\n")
 	crt.Screen.Send("reboot\n")
 	return True
