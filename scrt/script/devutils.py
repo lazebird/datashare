@@ -1,26 +1,27 @@
 import time
 import log
 
-intr1 = "^C"
-intr2 = "<INTERRUPT>"
+intrlist = ["^C", "<INTERRUPT>"]
 
 def wait4pause(crt, time):
-	ret = crt.Screen.WaitForStrings([intr1, intr2], time)
+	ret = crt.Screen.WaitForStrings(intrlist, time)
 	if ret > 0:
 		crt.Screen.Send("###user terminated(" + str(ret) + ")!\n")
 	return ret # 1/2: on interrupt; 0: on timeout
 
-def wait2exec(crt, prompt, timeout, cmd):
+def wait2exec(crt, promptlist, timeout, cmd):
 	cursec = int(time.time())
-	ret = crt.Screen.WaitForStrings([prompt, intr1, intr2], timeout)
+	plen = len(promptlist)
+	promptlist.extend(intrlist)
+	ret = crt.Screen.WaitForStrings(promptlist, timeout)
 	timeinterval = int(time.time()) - cursec
-	log.info("wait for prompt " + prompt + " used seconds " + str(timeinterval))
-	if ret == 1:
+	log.info("wait for promptlist [" + " ".join(promptlist) + "] used seconds " + str(timeinterval))
+	if ret > 0 and ret <= plen:
 		crt.Screen.Send(cmd)
 	return ret # 1/True: on success; 0: on timeout; 2/3: on interrupt
 
 def wait_login(crt):
-	ret = wait2exec(crt, "login:", 0xfffffff, "")
+	ret = wait2exec(crt, ["login:"], 0xfffffff, "")
 	if ret == 1:
 		crt.Sleep(5000)
 		crt.Screen.Send("admin\n")
@@ -28,8 +29,7 @@ def wait_login(crt):
 		crt.Screen.Send("admin\n")
 		crt.Sleep(3000)
 		crt.Screen.Send("enable\nconfig t\n")
-		# wait for a moment, make sure system started.
-		return wait4pause(crt, 5) == 0
+		return wait4pause(crt, 5) == 0  # wait for a moment, make sure system started.
 	return False
 
 def is_uboot(crt):
@@ -37,7 +37,7 @@ def is_uboot(crt):
 	return crt.Screen.WaitForStrings([">>"], 1) == 1
 
 def wait2uboot(crt):
-	return is_uboot(crt) or wait2exec(crt, "stop with 'space'", 0xfffffff, " ") == 1
+	return is_uboot(crt) or wait2exec(crt, ["stop with 'space'"], 0xfffffff, " ") == 1
 
 def is_shell(crt):
 	crt.Screen.Send("\r\n")
@@ -56,7 +56,7 @@ def try_login(crt):
 	return False
 
 def cmdreboot(crt): 
-	crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
+	crt.Screen.Send("\x1a\x1a\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 	if not is_shell(crt):
 		crt.Screen.Send("entershell\n")
 	crt.Screen.Send("reboot\n")

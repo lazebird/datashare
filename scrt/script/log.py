@@ -1,4 +1,6 @@
-workdir="D:/"
+import os.path
+
+workdir="D:/" if os.path.isdir("D:/") else "/tmp"
 info_path=workdir+"/info.log"
 err_path=workdir+"/error.log"
 

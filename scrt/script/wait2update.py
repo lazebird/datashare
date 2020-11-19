@@ -40,7 +40,7 @@ def exec_upgrade(crt):
 
 	while True:
 		crt.Screen.Send("update_rootfs0 " + srvip + " " + localip + " rootfs.ubi\r\n")
-		ret = devutils.wait2exec(crt, "####", 20, "")
+		ret = devutils.wait2exec(crt, ["####"], 20, "")
 		if ret > 1:
 			crt.Screen.Send("\3\r\n# script terminated for u.\r\n")
 			break
@@ -48,7 +48,7 @@ def exec_upgrade(crt):
 			crt.Screen.Send("\3\3\3# retry later\r\n") # ctrl+c to break current update
 			crt.Screen.WaitForStrings(["####"], 1) # escape ctrl+c strings
 			continue
-		ret = devutils.wait2exec(crt, "written: OK", 300, "reset\n")
+		ret = devutils.wait2exec(crt, ["written: OK"], 300, "reset\n")
 		if ret > 1:
 			crt.Screen.Send("\3\r\n# script terminated for u.\r\n")
 		if ret == 0:
