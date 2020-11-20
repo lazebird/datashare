@@ -4,10 +4,11 @@ import log
 intrlist = ["^C", "<INTERRUPT>"]
 
 def wait4pause(crt, time):
-	ret = crt.Screen.WaitForStrings(intrlist, time)
+	output = crt.Screen.ReadString(intrlist, time)
+	ret = crt.Screen.MatchIndex
 	if ret > 0:
 		crt.Screen.Send("###user terminated(" + str(ret) + ")!\n")
-	return ret # 1/2: on interrupt; 0: on timeout
+	return ret # 1/2: on interrupt; 0: on timeout; securecrt donot support tuple(ret, output) return, or else output can be used to check for other exceptions!
 
 def wait2exec(crt, promptlist, timeout, cmd):
 	cursec = int(time.time())
@@ -59,6 +60,6 @@ def cmdreboot(crt):
 	crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 	if not is_shell(crt):
 		crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
-		crt.Screen.Send("entershell\n")
+		crt.Screen.Send("\nentershell\n")
 	crt.Screen.Send("reboot\n")
 	return True
