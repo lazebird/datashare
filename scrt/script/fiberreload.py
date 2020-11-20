@@ -22,7 +22,7 @@ def do_clean():  # avoid flash full
 def bug_check():
 	return bug_found = crt.Screen.WaitForStrings(["HAL-6: Interface eth0/2"], 3) == 1
 
-while not bug_check() and do_clean() and sess.cmdreboot() and sess.wait_login():
+while not bug_check() and do_clean() and sess.cmdreboot() and sess.wait2login():
 	pass
 crt.Screen.Send("#Bug Found!\n" if bug_found else "#Game Over!\n")
 if bug_found:
