@@ -7,40 +7,37 @@ if strScriptPath not in sys.path:
 sys.dont_write_bytecode = True
 
 import log
-import fsutils
-import stringutils
+import kvfile
+import opt
+
+opthash = opt.opt(crt.Arguments).tohash()
 
 srvip = "192.168.100.106"#"10.1.1.2"
 workdir = "D:/"
-argstr = ""
-for index in range(crt.Arguments.Count):
-	argstr = argstr + crt.Arguments[index] + " "
-
-optstr = stringutils.optparse(argstr)
-opthash = eval(optstr)
 if "ip" in opthash:
 	srvip = opthash["ip"]
 if "workdir" in opthash:
 	workdir = opthash["workdir"]
-log.init(workdir)
+	logger = log.log(workdir)
 
 prog = crt.Dialog.Prompt("Please enter binary name; format: name [,mode]; mode: restart reboot none") # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
 restart_mode = "none"  # mode: restart reboot none
 modhash = {}
 modfilename = workdir + "/restart_mode.txt"
 
-def optparse(s, modhash):
+def modeparse(s, modhash):
 	global prog
 	global restart_mode
 	s = s.replace("#", ",") # support '#' as ','
+	s = s.replace(" ", ",") # support ' ' as ','
+	s = s.replace(",,", ",") # remove extra separator
 	args = s.split(",")
 	if len(args) > 1:  # input string has args
 		prog = args[0]
 		restart_mode = args[1]
 		modhash[prog] = restart_mode
 	else: 
-		if prog in modhash: 
-			restart_mode = modhash[prog]
+		restart_mode = modhash[prog] if prog in modhash else "none"
 
 def do_load(prog, restart_mode):
 	if prog == "":
@@ -66,7 +63,8 @@ def do_load(prog, restart_mode):
 	else: 
 		crt.Screen.Send("\3\r\n#something is wrong, ret "+str(ret)+"\r\n")
 
-modhash = eval(fsutils.loadkvfile(modfilename))
-optparse(prog, modhash)
-fsutils.writekvfile(modfilename, str(modhash))
+f = kvfile.kvfile(modfilename)
+modhash = f.read()
+modeparse(prog, modhash)
+f.write(modhash)
 do_load(prog, restart_mode)

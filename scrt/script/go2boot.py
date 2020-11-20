@@ -6,15 +6,17 @@ if strScriptPath not in sys.path:
 	sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-import devutils
+import session
+
+sess = session.sess(crt)
 
 loopcnt = 1
 if crt.Arguments.Count > 0:
 	loopcnt = int(crt.Arguments[0])
-prompt1 = "autoboot"
-devutils.try_login(crt)
-devutils.cmdreboot(crt)
+if not sess.is_uboot():
+	sess.try_login()
+	sess.cmdreboot()
 while loopcnt > 0:
 	loopcnt = loopcnt - 1
-	if not devutils.wait2uboot(crt):
+	if not sess.wait2uboot():
 		break

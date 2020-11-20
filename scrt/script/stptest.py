@@ -7,8 +7,9 @@ if strScriptPath not in sys.path:
 	sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-import devutils
+import session
 
+sess = session.sess(crt)
 loopcmdnum = 5 + random.randint(0,9)
 timeout = 5 + random.randint(0,9)
 cmdarray = (
@@ -30,11 +31,11 @@ def  cmdpreconfig():
   return 1
 
 def  cmdloop(num): 
-	while num>0 and not devutils.wait4pause(crt, timeout):
+	while num>0 and not sess.wait(timeout):
 		num = num - 1 
 		execcmd(cmdarray[random.randint(0,len(cmdarray) - 1)])
 	return (num == 0)
 
 crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
-while cmdloop(loopcmdnum) and devutils.cmdreboot(crt) and devutils.wait_login(crt):pass
+while cmdloop(loopcmdnum) and sess.cmdreboot() and sess.wait_login():pass
 crt.Screen.Send("#game over!\n")

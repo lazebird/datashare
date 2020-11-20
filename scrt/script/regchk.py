@@ -6,8 +6,9 @@ if strScriptPath not in sys.path:
 	sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-import devutils
+import session
 
+sess = session.sess(crt)
 loopcmdnum = int(30)
 timeout = int(3)
 cmdarray=(
@@ -41,10 +42,9 @@ def  cmdloop(num):
 				crt.Screen.ReadString("SWITCH#", 1)
 				break
 			lastdata = data
-			if devutils.wait4pause(crt, 2): 
+			if sess.wait(2): 
 				return 0
 	return 0
 
-#while cmdloop(loopcmdnum) and devutils.cmdreboot(crt) and devutils.wait_login(crt):pass
 while cmdloop(loopcmdnum):pass
 crt.Screen.Send("#game over!\n")

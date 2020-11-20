@@ -6,15 +6,16 @@ if strScriptPath not in sys.path:
 	sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-import devutils
+import session
 
+sess = session.sess(crt)
 loopcmdnum = int(10)
 timeout = int(10)
 bug_found = False
 
 
 def iobuf_empty():
-	devutils.wait4pause(crt, 1)
+	sess.wait(1)
 	# crt.Session.LogFileName = "/home/liulang/projects/log/session-%S-d%D.log"
 	crt.Session.Log(False)
 	crt.Session.Log(True)
@@ -46,7 +47,7 @@ def bug_check():
 	return ret != 1
 
 init_test()
-while not bug_check() and not devutils.wait4pause(crt, 3):
+while not bug_check() and not sess.wait(3):
 	pass
 stop_test()
 crt.Screen.Send("#Bug Found!\n" if bug_found else "#Game Over!\n")

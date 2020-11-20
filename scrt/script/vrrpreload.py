@@ -6,14 +6,15 @@ if strScriptPath not in sys.path:
 	sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-import devutils
+import session
 
+sess = session.sess(crt)
 loopcmdnum = int(10)
 timeout = int(10)
 bug_found = False
 
 def iobuf_empty():
-	devutils.wait4pause(crt, 1)
+	sess.wait(1)
 
 def init_test():
 	crt.Screen.Send("entershell\n")
@@ -36,7 +37,7 @@ def bug_check():
 	return bug_found = crt.Screen.WaitForStrings(["Initialize", "SWITCH#"], timeout) == 1
 
 init_test()
-while not bug_check() and do_clean() and devutils.cmdreboot(crt) and devutils.wait_login():
+while not bug_check() and do_clean() and sess.cmdreboot() and sess.wait2login():
 	pass
 stop_test()
 crt.Screen.Send("#Bug Found!\n" if bug_found else "#Game Over!\n")
