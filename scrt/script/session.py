@@ -3,6 +3,7 @@ import log
 
 class sess:
 	def __init__(self, screen):
+		screen.Synchronous = True
 		self.screen = screen
 		self.intrlist = ["^C", "<INTERRUPT>"]
 		self.output = None
@@ -96,13 +97,13 @@ class sess:
 		if self.ret != 1: # wait for echo
 			self.errmsg = "# cmd "+cmdstr+" echo failed!"
 			log.err(self.errmsg)
-			# return False # not very reliable
+			return False
 		self.output = self.screen.ReadString([prompt], timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1:
 			self.errmsg = "# cmd "+cmdstr+" prompt "+prompt+" wait failed!"
 			log.err(self.errmsg)
-			# return False # not very reliable
+			return False
 		return True
 
 	def cmdsexec(self, cmdsstr, prompt="SWITCH", timeout=3): 
