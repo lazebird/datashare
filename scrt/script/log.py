@@ -2,18 +2,17 @@ import os.path
 
 class log(object):
 	_instance = None
-	workdir = None
+	logpath = None
 	def __new__(cls, *args, **kw): # single instance
 		if cls._instance is None:
 			cls._instance = object.__new__(cls, *args, **kw)
 		return cls._instance
 
-	def __init__(self, workdir=None):
-		if not workdir and not self.workdir:
-			workdir="D:/" if os.path.isdir("D:/") else "/tmp"
-		if workdir:
-			self.workdir = workdir
-		self.logpath = self.workdir+"/pyscript.log"
+	def __init__(self, logpath=None):
+		if not logpath and not self.logpath:
+			logpath="D:/pyscript.log" if os.path.isdir("D:/") else "/tmp/pyscript.log"
+		if logpath:
+			self.logpath = logpath
 
 	def info(self, s): 
 		try:

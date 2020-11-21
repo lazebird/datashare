@@ -16,12 +16,8 @@ opthash = opt.opt(crt.Arguments).tohash()
 
 srvip = "192.168.100.106" # "10.1.1.2"
 localip = "" # calc by srvip
-workdir = "D:/"
 if "ip" in opthash:
 	srvip = opthash["ip"]
-if "workdir" in opthash:
-	workdir = opthash["workdir"]
-	logger = log.log(workdir)
 
 def arg_parse(crt):
 	global localip

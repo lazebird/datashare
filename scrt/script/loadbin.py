@@ -13,12 +13,11 @@ import opt
 opthash = opt.opt(crt.Arguments).tohash()
 
 srvip = "192.168.100.106"#"10.1.1.2"
-workdir = "D:/"
+workdir="D:/" if os.path.isdir("D:/") else "/tmp"
 if "ip" in opthash:
 	srvip = opthash["ip"]
 if "workdir" in opthash:
 	workdir = opthash["workdir"]
-	logger = log.log(workdir)
 
 prog = crt.Dialog.Prompt("Please enter binary name; format: name [,mode]; mode: restart reboot none") # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
 restart_mode = "none"  # mode: restart reboot none
