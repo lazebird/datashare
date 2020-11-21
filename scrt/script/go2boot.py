@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 
 import session
 
-sess = session.sess(crt)
+sess = session.sess(crt.Screen)
 
 loopcnt = 1
 if crt.Arguments.Count > 0:

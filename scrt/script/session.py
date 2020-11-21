@@ -2,11 +2,12 @@ import time
 import log
 
 class sess:
-	def __init__(self, crt):
-		self.crt = crt
+	def __init__(self, screen):
+		self.screen = screen
 		self.intrlist = ["^C", "<INTERRUPT>"]
 		self.output = None
 		self.ret = None
+		self.errmsg = None
 	
 	def add_intr(self, intrlist):
 		self.intrlist.extend(intrlist)
@@ -20,64 +21,94 @@ class sess:
 	def get_ret(self):
 		return self.ret
 
+	def get_errmsg(self):
+		return self.errmsg
+
 	def wait(self, timeout):
-		self.output = self.crt.Screen.ReadString(self.intrlist, timeout)
-		self.ret = self.crt.Screen.MatchIndex
+		self.output = self.screen.ReadString(self.intrlist, timeout)
+		self.ret = self.screen.MatchIndex
 		if self.ret > 0:
-			self.crt.Screen.Send("###user terminated(" + str(self.ret) + ")!\n")
+			self.errmsg = "###user terminated(" + str(self.ret) + ")!"
+			self.screen.Send(self.errmsg+"\n")
 		return self.ret # 1/2: on interrupt; 0: on timeout; securecrt donot support tuple(ret, output) return, or else output can be used to check for other exceptions!
 
 	def wait2exec(self, promptlist, timeout, cmd):
 		cursec = int(time.time())
 		plen = len(promptlist)
 		promptlist.extend(self.intrlist)
-		self.output = self.crt.Screen.ReadString(promptlist, timeout)
-		self.ret = self.crt.Screen.MatchIndex
+		self.output = self.screen.ReadString(promptlist, timeout)
+		self.ret = self.screen.MatchIndex
 		timeinterval = int(time.time()) - cursec
 		log.info("wait for promptlist [" + " ".join(promptlist) + "] used seconds " + str(timeinterval))
 		if self.ret > 0 and self.ret <= plen:
-			self.crt.Screen.Send(cmd)
+			self.screen.Send(cmd)
 		return self.ret # 1/True: on success; 0: on timeout; 2/3: on interrupt
 
 	def wait2login(self):
 		ret = self.wait2exec(["login:"], 0xfffffff, "")
 		if ret == 1:
 			time.sleep(5)
-			self.crt.Screen.Send("admin\n")
+			self.screen.Send("admin\n")
 			time.sleep(1)
-			self.crt.Screen.Send("admin\n")
+			self.screen.Send("admin\n")
 			time.sleep(3)
-			self.crt.Screen.Send("enable\nconfig t\n")
+			self.screen.Send("enable\nconfig t\n")
 			return self.wait(5) == 0  # wait for a moment, make sure system started.
 		return False
 
 	def is_uboot(self):
-		self.crt.Screen.Send("\r\n")
-		return self.crt.Screen.WaitForStrings([">>"], 1) == 1
+		self.screen.Send("\r\n")
+		return self.screen.WaitForStrings([">>"], 1) == 1
 
 	def wait2uboot(self):
 		return self.wait2exec(["stop with 'space'"], 0xfffffff, " ") == 1
 
 	def is_shell(self):
-		self.crt.Screen.Send("\r\n")
-		return self.crt.Screen.WaitForStrings(["root@SWITCH"], 1) == 1
+		self.screen.Send("\r\n")
+		return self.screen.WaitForStrings(["root@SWITCH"], 1) == 1
 
 	def try_login(self, uname="admin", passwd="admin"):
-		self.crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
-		self.crt.Screen.Send("\r\n")
-		if self.crt.Screen.WaitForStrings(["login"], 1) == 1:  # login needed
-			self.crt.Screen.Send(uname + "\r\n")
-			self.crt.Screen.WaitForStrings(["Password"], 5)
-			self.crt.Screen.Send(passwd + "\r\n")
-			self.crt.Screen.WaitForStrings([">"], 5)
-			self.crt.Screen.Send("enable\r\n")
+		self.screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
+		self.screen.Send("\r\n")
+		if self.screen.WaitForStrings(["login"], 1) == 1:  # login needed
+			self.screen.Send(uname + "\r\n")
+			self.screen.WaitForStrings(["Password"], 5)
+			self.screen.Send(passwd + "\r\n")
+			self.screen.WaitForStrings([">"], 5)
+			self.screen.Send("enable\r\n")
 			return True
 		return False
 
 	def cmdreboot(self): 
-		self.crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
+		self.screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 		if not self.is_shell():
-			self.crt.Screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
-			self.crt.Screen.Send("\nentershell\n")
-		self.crt.Screen.Send("reboot\n")
+			self.screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
+			self.screen.Send("\nentershell\n")
+		self.screen.Send("reboot\n")
+		return True
+
+	def cmdexec(self, cmdstr, prompt="SWITCH", timeout=3): 
+		self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
+		fcmdstr = cmdstr + "\n"
+		self.screen.Send(fcmdstr)
+		self.output = self.screen.ReadString([cmdstr], 1)
+		self.ret = self.screen.MatchIndex
+		if self.ret != 1: # wait for echo
+			self.errmsg = "# cmd "+cmdstr+" echo failed!"
+			log.err(self.errmsg)
+			# return False # not very reliable
+		self.output = self.screen.ReadString([prompt], timeout)
+		self.ret = self.screen.MatchIndex
+		if self.ret != 1:
+			self.errmsg = "# cmd "+cmdstr+" prompt "+prompt+" wait failed!"
+			log.err(self.errmsg)
+			# return False # not very reliable
+		return True
+
+	def cmdsexec(self, cmdsstr, prompt="SWITCH", timeout=3): 
+		cmdsstr = cmdsstr.replace("\r", "")
+		cmds = cmdsstr.split("\n")
+		for cmdstr in cmds:
+			if not self.cmdexec(cmdstr, prompt, timeout):
+				return False
 		return True

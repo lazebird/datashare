@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 
 import session
 
-sess = session.sess(crt)
+sess = session.sess(crt.Screen)
 loopcmdnum = int(30)
 timeout = int(3)
 cmdarray=(
