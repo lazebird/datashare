@@ -16,7 +16,7 @@ def  noshutdown(ifname):
 
 
 def  wait4pause(time): 
-  return crt.Screen.WaitForStrings(["^C", "<INTERRUPT>", "^Z", "failed"], int(time)) #crt.Sleep(10000)
+  return crt.Screen.WaitForStrings(["^C", "<INTERRUPT>", "^Z", "failed"], int(time))
 
 
 loop = 1

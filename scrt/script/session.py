@@ -42,11 +42,11 @@ class sess:
 	def wait2login(self):
 		ret = self.wait2exec(["login:"], 0xfffffff, "")
 		if ret == 1:
-			self.crt.Sleep(5000)
+			time.sleep(5)
 			self.crt.Screen.Send("admin\n")
-			self.crt.Sleep(1000)
+			time.sleep(1)
 			self.crt.Screen.Send("admin\n")
-			self.crt.Sleep(3000)
+			time.sleep(3)
 			self.crt.Screen.Send("enable\nconfig t\n")
 			return self.wait(5) == 0  # wait for a moment, make sure system started.
 		return False

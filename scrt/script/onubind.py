@@ -9,7 +9,7 @@ for (i = 1 i <= portnum and ret > 3 i+=1)
 		macpost = (i + j * llidperport).toString()
 		mac = macfmt.substr(0, macfmt.length - macpost.length) + macpost
 		crt.Screen.Send(" onu bind mac-address " + mac + " llid "+j+"\n")
-		ret = crt.Screen.WaitForStrings(["^C", "<INTERRUPT>", "^Z", "#"], int(timeout)) #crt.Sleep(10000)
+		ret = crt.Screen.WaitForStrings(["^C", "<INTERRUPT>", "^Z", "#"], int(timeout))
 	
 	crt.Screen.Send("exit\n")
 
