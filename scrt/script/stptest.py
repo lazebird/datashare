@@ -9,7 +9,7 @@ sys.dont_write_bytecode = True
 
 import session
 
-sess = session.sess(crt.Screen)
+sess = session.sess(crt.GetActiveTab())
 loopcmdnum = 5 + random.randint(0,9)
 timeout = 5 + random.randint(0,9)
 cmdarray = (

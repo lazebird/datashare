@@ -11,7 +11,7 @@ import log
 import opt
 import session
 
-sess = session.sess(crt.Screen)
+sess = session.sess(crt.GetActiveTab())
 opthash = opt.opt(crt.Arguments).tohash()
 
 srvip = "192.168.100.106" # "10.1.1.2"

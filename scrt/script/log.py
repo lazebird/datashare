@@ -1,4 +1,5 @@
 import os.path
+import time
 
 class log(object):
 	_instance = None
@@ -17,7 +18,7 @@ class log(object):
 	def info(self, s): 
 		try:
 			f = open(self.logpath, "a") 
-			f.write("[Info] " + s + "\n")
+			f.write(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime())+"[Info] " + s + "\n")
 			f.close()  
 		except:
 			print s
@@ -25,7 +26,7 @@ class log(object):
 	def err(self, s): 
 		try:
 			f = open(self.logpath, "a") 
-			f.write("[Error] " + s + "\n")
+			f.write(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime())+"[Error] " + s + "\n")
 			f.close()  
 		except:
 			print s

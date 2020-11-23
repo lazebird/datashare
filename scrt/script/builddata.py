@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 
 import session
 
-sess = session.sess(crt.Screen)
+sess = session.sess(crt.GetActiveTab())
 loopcmdnum = int(10)
 timeout = int(10)
 bug_found = False

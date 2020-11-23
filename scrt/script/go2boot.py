@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 
 import session
 
-sess = session.sess(crt.Screen)
+sess = session.sess(crt.GetActiveTab())
 
 loopcnt = 1
 if crt.Arguments.Count > 0:

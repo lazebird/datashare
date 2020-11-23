@@ -8,7 +8,7 @@ sys.dont_write_bytecode = True
 
 import session
 
-sess = session.sess(crt.Screen)
+sess = session.sess(crt.GetActiveTab())
 bug_found = False
 
 def iobuf_empty():
