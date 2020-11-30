@@ -103,7 +103,7 @@ class sess:
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1:
 			self.errmsg = "# cmd "+cmdstr+" prompt "+prompt+" wait failed!"
-			log.err(self.name + ": " + self.errmsg)
+			log.err(self.name + ": errmsg " + self.errmsg + ", output " + self.output)
 			return False
 		return True
 
