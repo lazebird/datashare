@@ -97,7 +97,7 @@ class sess:
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1: # wait for echo
 			self.errmsg = "# cmd "+cmdstr+" echo failed!"
-			log.err(self.name + ": " + self.errmsg)
+			log.err(self.name + ": errmsg " + self.errmsg + ", output " + self.output)
 			return False
 		self.output = self.screen.ReadString([prompt], timeout)
 		self.ret = self.screen.MatchIndex
