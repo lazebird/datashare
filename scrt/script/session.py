@@ -93,7 +93,7 @@ class sess:
 		self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
 		fcmdstr = cmdstr + "\n"
 		self.screen.Send(fcmdstr)
-		self.output = self.screen.ReadString([cmdstr], 1)
+		self.output = self.screen.ReadString([cmdstr], timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1: # wait for echo
 			self.errmsg = "# cmd "+cmdstr+" echo failed!"
