@@ -89,7 +89,8 @@ class sess:
 		self.screen.Send("reboot\n")
 		return True
 
-	def cmdexec(self, cmdstr, prompt="SWITCH", timeout=3): 
+	# cmd send by crt may be later than send() called? there should be enough time to wait, if timeout, script fail; else no time will be wasted
+	def cmdexec(self, cmdstr, prompt="SWITCH", timeout=9): 
 		self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
 		fcmdstr = cmdstr + "\n"
 		self.screen.Send(fcmdstr)
@@ -107,7 +108,7 @@ class sess:
 			return False
 		return True
 
-	def cmdsexec(self, cmdsstr, prompt="SWITCH", timeout=3): 
+	def cmdsexec(self, cmdsstr, prompt="SWITCH", timeout=9): 
 		cmdsstr = cmdsstr.replace("\r", "")
 		cmds = cmdsstr.split("\n")
 		for cmdstr in cmds:
