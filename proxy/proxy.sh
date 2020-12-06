@@ -1,5 +1,5 @@
-cat > updater.sh <<EOF && bash updater.sh
-#!/bin/bash
+cat > updater.sh <<EOF && sh updater.sh
+#!/bin/sh
 
 echo "#### this is an updater for proxy"
 
@@ -28,7 +28,9 @@ fetch_file reconf.sh \$workdir "https://code.aliyun.com/lazebird/datashare/raw/m
 fetch_file Country.mmdb \$workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 echo "#### processing configure files"
 cd \$workdir && chmod 777 *.sh clash
-dos2unix \$configname && ./reconf.sh \$configname
-kill \`pgrep clash\`; sleep 1s &&  ./clash -d . &
+sed -i 's/\r//g' \$configname # dos2unix \$configname # may not exist, use sed instead?
+./reconf.sh \$configname
+kill \`pgrep clash\` 2>/dev/null && sleep 1s
+./clash -d . &
 echo "#### update successfully!"
 EOF
