@@ -44,3 +44,4 @@ def	cmdloop(num):
 crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
 while cmdloop(loopcmdnum) and sess.cmdreboot() and sess.wait2login():pass
 crt.Screen.Send("#game over!\n")
+crt.Dialog.MessageBox("#script exit")
