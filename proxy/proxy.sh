@@ -35,8 +35,9 @@ get_clash() {
 BASHDIR="$(cd "$(dirname "$SCRIPTPATH")" && pwd)"
 workdir=${1-"/tmp"}
 configname=config.yaml
-configurl=$(cat $BASHDIR/proxyurl.txt) # secret
-[ -z "$configurl" ] && print_exit "#### config url invalid!"
+urlfile=proxyurl.txt
+configurl=$(cat $BASHDIR/$urlfile) # secret
+[ -z "$configurl" ] && print_exit "#### config url in $BASHDIR/$urlfile is invalid!"
 
 cd $workdir
 echo "#### updating configure files in $workdir:"
