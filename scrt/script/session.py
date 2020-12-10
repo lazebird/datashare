@@ -6,6 +6,7 @@ class sess:
 		self.screen = tab.Screen
 		self.name = tab.Caption
 		self.intrlist = ["^C", "<INTERRUPT>"]
+		self.lastoutput = None
 		self.output = None
 		self.ret = None
 		self.errmsg = None
@@ -27,6 +28,7 @@ class sess:
 		return self.errmsg
 
 	def wait(self, timeout):
+		self.lastoutput = self.output
 		self.output = self.screen.ReadString(self.intrlist, timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret > 0:
@@ -38,6 +40,7 @@ class sess:
 		cursec = int(time.time())
 		plen = len(promptlist)
 		promptlist.extend(self.intrlist)
+		self.lastoutput = self.output
 		self.output = self.screen.ReadString(promptlist, timeout)
 		self.ret = self.screen.MatchIndex
 		timeinterval = int(time.time()) - cursec
@@ -94,17 +97,19 @@ class sess:
 		self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
 		fcmdstr = cmdstr + "\n"
 		self.screen.Send(fcmdstr)
+		self.lastoutput = self.output
 		self.output = self.screen.ReadString([cmdstr], timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1: # wait for echo
 			self.errmsg = "# cmd "+cmdstr+" echo failed!"
-			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output)
+			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output + ", lastoutput " + self.lastoutput)
 			return False
+		self.lastoutput = self.output
 		self.output = self.screen.ReadString([prompt], timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1:
 			self.errmsg = "# cmd "+cmdstr+" prompt "+prompt+" wait failed!"
-			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output)
+			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output + ", lastoutput " + self.lastoutput)
 			return False
 		return True
 
