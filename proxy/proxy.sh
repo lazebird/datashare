@@ -42,6 +42,7 @@ configurl=$(cat $BASHDIR/$urlfile) # secret
 echo "#### starting proxy temporally in $workdir:"
 cd $workdir
 get_clash && chmod +x clash
+fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 touch $configname
 kill \`pgrep clash\` 2>/dev/null && sleep 3s
 ./clash -d . >proxy.log 2&>1 &
@@ -51,7 +52,6 @@ cd $workdir
 mv $configname $configname".bak" 2>/dev/null # force update
 fetch_file $configname $workdir $configurl
 fetch_file reconf.sh $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.sh"
-fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 
 echo "#### processing configure files in $workdir:"
 cd $workdir
