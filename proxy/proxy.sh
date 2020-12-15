@@ -26,7 +26,7 @@ get_clash() {
         fetch_file clash $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/clash-linux-mipsle-hardfloat"
         ;;
     *)
-        echo "# unsupportted arch $arch."
+        print_exit "# unsupportted arch $arch."
         ;;
     esac
 }
@@ -39,17 +39,24 @@ urlfile=proxyurl.txt
 configurl=$(cat $BASHDIR/$urlfile) # secret
 [ -z "$configurl" ] && print_exit "#### config url in $BASHDIR/$urlfile is invalid!"
 
+echo "#### starting proxy temporally in $workdir:"
 cd $workdir
+get_clash && chmod +x clash
+touch $configname
+kill \`pgrep clash\` 2>/dev/null && sleep 3s
+./clash -d . >proxy.log 2&>1 &
+
 echo "#### updating configure files in $workdir:"
+cd $workdir
 mv $configname $configname".bak" 2>/dev/null # force update
 fetch_file $configname $workdir $configurl
 fetch_file reconf.sh $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.sh"
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
-get_clash
+
 echo "#### processing configure files in $workdir:"
-cd $workdir && chmod +x reconf.sh clash
+cd $workdir
 sed -i 's/\r//g' $configname # dos2unix $configname # may not exist, use sed instead?
-./reconf.sh $configname || print_exit "# reconf $configname failed."
+chmod +x reconf.sh && ./reconf.sh $configname || print_exit "# reconf $configname failed."
 kill \`pgrep clash\` 2>/dev/null && sleep 3s
-./clash -d . >proxy.log &
+./clash -d . >proxy.log 2&>1 &
 echo "#### update successfully!"
