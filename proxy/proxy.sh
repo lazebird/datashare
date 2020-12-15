@@ -44,7 +44,7 @@ cd $workdir
 get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 ls $configname >/dev/null || fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
-kill \`pgrep clash\` 2>/dev/null && sleep 3s
+kill `pgrep clash` 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2&>1 &) && sleep 1s
 
 echo "#### updating configure files in $workdir:"
@@ -57,6 +57,6 @@ echo "#### processing configure files in $workdir:"
 cd $workdir
 sed -i 's/\r//g' $configname # dos2unix $configname # may not exist, use sed instead?
 chmod +x reconf.sh && ./reconf.sh $configname || print_exit "# reconf $configname failed."
-kill \`pgrep clash\` 2>/dev/null && sleep 3s
+kill `pgrep clash` 2>/dev/null && sleep 3s
 ./clash -d . >proxy.log 2&>1 &
 echo "#### update successfully!"
