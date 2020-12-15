@@ -45,7 +45,7 @@ get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 ls $configname || fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
 kill \`pgrep clash\` 2>/dev/null && sleep 3s
-./clash -d . >proxy.log 2&>1 &
+ls $configname && ./clash -d . >proxy.log 2&>1 &
 
 echo "#### updating configure files in $workdir:"
 cd $workdir
