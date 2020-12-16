@@ -39,8 +39,8 @@ urlfile=proxyurl.txt
 configurl=$(cat $BASHDIR/$urlfile) # secret
 [ -z "$configurl" ] && print_exit "#### config url in $BASHDIR/$urlfile is invalid!"
 
-echo "#### starting proxy temporally in $workdir:"
 cd $workdir
+echo "#### starting proxy temporally in $workdir:"
 get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 ls $configname >/dev/null 2>&1 || fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
@@ -48,14 +48,14 @@ kill $(pgrep clash) 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
 
 echo "#### updating configure files in $workdir:"
-cd $workdir
 mv $configname $configname".bak" 2>/dev/null # force update
 fetch_file $configname $workdir $configurl
 fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
 
 echo "#### processing configure files in $workdir:"
-cd $workdir
 lua reconf.lua $configname || print_exit "# reconf $configname failed."
+
+echo "#### restarting proxy in $workdir:"
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ./clash -d . >proxy.log 2>&1 &
 echo "#### update successfully!"
