@@ -55,7 +55,6 @@ fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/m
 
 echo "#### processing configure files in $workdir:"
 cd $workdir
-sed -i 's/\r//g' $configname # dos2unix $configname # may not exist, use sed instead?
 lua reconf.lua $configname || print_exit "# reconf $configname failed."
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ./clash -d . >proxy.log 2>&1 &

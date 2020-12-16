@@ -8,6 +8,8 @@ open F1, '<', $filename or die $filename . " open failed.\n";
 my @lines = <F1>;
 close F1;
 my $str = join "", @lines;
+# dos2unix
+$str =~ s/\r//mg;
 # allow lan
 $str =~ s/allow-lan: false/allow-lan: true/mg;
 # use auto group instead

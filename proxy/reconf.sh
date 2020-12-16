@@ -2,6 +2,9 @@
 
 filename=${1:-"config.yml"}
 
+# dos2unix
+sed -i 's/\r//g' $filename
+
 # remove game server
 sed -i '/游戏.*type/d' $filename
 sed -i 's/, "[^"]*游戏[^"]*"//g' $filename

@@ -6,6 +6,7 @@ text = f:read("*a")
 f:close()
 
 -- proc
+text = string.gsub(text, "\r", "")
 text = string.gsub(text, "allow-lan: false", "allow-lan: true")
 text = string.gsub(text, "节点选择\n    type: select", "节点选择\n    type: url-test\n    url: http://www.gstatic.com/generate_204\n    interval: 300")
 
