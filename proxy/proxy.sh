@@ -43,7 +43,7 @@ cd $workdir
 echo "#### starting proxy temporally in $workdir:"
 get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
-ls $configname >/dev/null 2>&1 || fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
+fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
 
