@@ -51,12 +51,12 @@ echo "#### updating configure files in $workdir:"
 cd $workdir
 mv $configname $configname".bak" 2>/dev/null # force update
 fetch_file $configname $workdir $configurl
-fetch_file reconf.sh $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.sh"
+fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
 
 echo "#### processing configure files in $workdir:"
 cd $workdir
 sed -i 's/\r//g' $configname # dos2unix $configname # may not exist, use sed instead?
-chmod +x reconf.sh && ./reconf.sh $configname || print_exit "# reconf $configname failed."
+lua reconf.lua $configname || print_exit "# reconf $configname failed."
 kill `pgrep clash` 2>/dev/null && sleep 3s
 ./clash -d . >proxy.log 2&>1 &
 echo "#### update successfully!"
