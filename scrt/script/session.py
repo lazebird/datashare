@@ -11,6 +11,7 @@ class sess:
 		self.ret = None
 		self.errmsg = None
 		self.screen.Synchronous = True
+		log.info(self.name + ": init session")
 	
 	def add_intr(self, intrlist):
 		self.intrlist.extend(intrlist)
