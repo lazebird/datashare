@@ -6,9 +6,9 @@ class sess:
 		self.screen = tab.Screen
 		self.name = tab.Caption
 		self.intrlist = ["^C", "<INTERRUPT>"]
-		self.output = None
-		self.ret = None
-		self.errmsg = None
+		self.output = ""
+		self.ret = 0
+		self.errmsg = ""
 		self.screen.Synchronous = True
 		log.info(self.name + ": init session")
 	
@@ -29,12 +29,12 @@ class sess:
 
 	def read(self, promptlist, timeout):
 		output = self.screen.ReadString(promptlist, timeout)
+		self.ret = self.screen.MatchIndex
 		if len(output) > 0:
 			self.output = output
 
 	def wait(self, timeout):
 		self.read(self.intrlist, timeout)
-		self.ret = self.screen.MatchIndex
 		if self.ret > 0:
 			self.errmsg = "###user terminated(" + str(self.ret) + ")!"
 			self.screen.Send(self.errmsg+"\n")
@@ -45,7 +45,6 @@ class sess:
 		plen = len(promptlist)
 		promptlist.extend(self.intrlist)
 		self.read(promptlist, timeout)
-		self.ret = self.screen.MatchIndex
 		timeinterval = int(time.time()) - cursec
 		log.info(self.name + ": " + "wait for promptlist [" + " ".join(promptlist) + "] used seconds " + str(timeinterval))
 		if self.ret > 0 and self.ret <= plen:
@@ -105,7 +104,6 @@ class sess:
 			log.err(self.name + ": errmsg " + self.errmsg)
 			return False
 		self.read([prompt], timeout)
-		self.ret = self.screen.MatchIndex
 		if self.ret != 1:
 			self.errmsg = "cmd "+cmdstr+" prompt "+prompt+" wait failed"
 			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output )
