@@ -6,7 +6,6 @@ class sess:
 		self.screen = tab.Screen
 		self.name = tab.Caption
 		self.intrlist = ["^C", "<INTERRUPT>"]
-		self.lastoutput = None
 		self.output = None
 		self.ret = None
 		self.errmsg = None
@@ -28,9 +27,13 @@ class sess:
 	def get_errmsg(self):
 		return self.errmsg
 
+	def read(self, promptlist, timeout):
+		output = self.screen.ReadString(promptlist, timeout)
+		if len(output) > 0:
+			self.output = output
+
 	def wait(self, timeout):
-		self.lastoutput = self.output
-		self.output = self.screen.ReadString(self.intrlist, timeout)
+		self.read(self.intrlist, timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret > 0:
 			self.errmsg = "###user terminated(" + str(self.ret) + ")!"
@@ -41,8 +44,7 @@ class sess:
 		cursec = int(time.time())
 		plen = len(promptlist)
 		promptlist.extend(self.intrlist)
-		self.lastoutput = self.output
-		self.output = self.screen.ReadString(promptlist, timeout)
+		self.read(promptlist, timeout)
 		self.ret = self.screen.MatchIndex
 		timeinterval = int(time.time()) - cursec
 		log.info(self.name + ": " + "wait for promptlist [" + " ".join(promptlist) + "] used seconds " + str(timeinterval))
@@ -98,19 +100,15 @@ class sess:
 		self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
 		fcmdstr = cmdstr + "\n"
 		self.screen.Send(fcmdstr)
-		self.lastoutput = self.output
-		self.output = self.screen.ReadString([cmdstr], timeout)
-		self.ret = self.screen.MatchIndex
-		if self.ret != 1: # wait for echo
-			self.errmsg = "# cmd "+cmdstr+" echo failed!"
-			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output + ", lastoutput " + self.lastoutput)
+		if self.screen.WaitForStrings([fcmdstr], timeout) != 1: # wait for echo
+			self.errmsg = "cmd "+cmdstr+" echo failed"
+			log.err(self.name + ": errmsg " + self.errmsg)
 			return False
-		self.lastoutput = self.output
-		self.output = self.screen.ReadString([prompt], timeout)
+		self.read([prompt], timeout)
 		self.ret = self.screen.MatchIndex
 		if self.ret != 1:
-			self.errmsg = "# cmd "+cmdstr+" prompt "+prompt+" wait failed!"
-			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output + ", lastoutput " + self.lastoutput)
+			self.errmsg = "cmd "+cmdstr+" prompt "+prompt+" wait failed"
+			log.err(self.name + ": ret " + str(self.ret) + ", errmsg " + self.errmsg + ", output " + self.output )
 			return False
 		return True
 
