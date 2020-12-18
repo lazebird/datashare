@@ -52,8 +52,9 @@ class sess:
 		return self.ret # 1/True: on success; 0: on timeout; 2/3: on interrupt
 
 	def wait2login(self):
-		ret = self.wait2exec(["login:"], 0xfffffff, "")
-		if ret == 1:
+		self.wait2exec(["login:"], 0xfffffff, "")
+		self.output = "" # reset output to ignore system reboot infos
+		if self.ret == 1:
 			time.sleep(5)
 			self.screen.Send("admin\n")
 			time.sleep(1)
