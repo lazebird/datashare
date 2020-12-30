@@ -1,4 +1,5 @@
 #!/bin/bash
+# [启动secureCRT报错 libjpeg.so.8: cannot open shared object file: No such file or direct](https://blog.csdn.net/HYESC/article/details/88238242)
 
 TARGET=jpeg-8d1
 TARNAME=${TARGET}.tar.gz
