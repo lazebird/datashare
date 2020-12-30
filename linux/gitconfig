@@ -1,0 +1,14 @@
+[user]
+	email = lazebird@gmail.com
+	name = lazebird
+[core]
+	editor = vim
+	filemode = false
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = No
+[alias]
+	d = difftool
+[credential]
+	helper = store
