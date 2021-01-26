@@ -96,8 +96,8 @@ class sess:
 		return True
 
 	# cmd send by crt may be later than send() called? there should be enough time to wait, if timeout, script fail; else no time will be wasted
-	def cmdexec(self, cmdstr, prompt="SWITCH", timeout=9): 
-		self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
+	def cmdexec(self, cmdstr, prompt="SWITCH", timeout=9, clean=True): 
+		if clean: self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
 		fcmdstr = cmdstr + "\n"
 		self.screen.Send(fcmdstr)
 		if self.screen.WaitForStrings([cmdstr], timeout) != 1: # wait for echo
@@ -111,10 +111,10 @@ class sess:
 			return False
 		return True
 
-	def cmdsexec(self, cmdsstr, prompt="SWITCH", timeout=9): 
+	def cmdsexec(self, cmdsstr, prompt="SWITCH", timeout=9, clean=True): 
 		cmdsstr = cmdsstr.replace("\r", "")
 		cmds = cmdsstr.split("\n")
 		for cmdstr in cmds:
-			if not self.cmdexec(cmdstr, prompt, timeout):
+			if not self.cmdexec(cmdstr, prompt, timeout, clean):
 				return False
 		return True
