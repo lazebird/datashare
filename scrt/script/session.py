@@ -61,7 +61,7 @@ class sess:
 			self.screen.Send(passwd+"\n")
 			time.sleep(3)
 			self.screen.Send("enable\nconfig t\n")
-			return self.wait(5) == 0  # wait for a moment, make sure system started.
+			return self.screen.WaitForStrings(["SWITCH>", "SWITCH#"], 5) != 0  # wait for a moment, make sure system started.
 		return False
 
 	def is_uboot(self):

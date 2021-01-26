@@ -37,9 +37,13 @@ def	cmdpreconfig():
 	return 1
 
 timeout = 1
+count = 0
 def	cmdloop(): 
+	global count
+	count = count + 1
 	cmdpreconfig()
-	gen_file(1024, "1k.txt")
+	if count == 1: gen_file(1024, "1k.txt")
+	if count > 1 and sess.wait(5): return False
 	while True: #not sess.wait(timeout):
 		if not dump_file("1k.txt", "abc.txt"): break
 	while True: #not sess.wait(timeout):
@@ -49,5 +53,5 @@ def	cmdloop():
 	return True
 
 while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "abc"):pass
-crt.Screen.Send("#game over!\n")
-crt.Dialog.MessageBox("#script exit")
+crt.Screen.Send("#game over, count "+str(count)+"!\n")
+crt.Dialog.MessageBox("#script exit, count "+str(count))
