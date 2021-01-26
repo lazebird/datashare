@@ -26,7 +26,7 @@ def gen_file(len, target):
 		if not sess.cmdsexec(gen_cmd(40, target), clean=False): return False
 	if not sess.cmdsexec(gen_cmd(len%40, target), clean=False): return False
 
-def dump_file(src, target):
+def cat_file(src, target):
 	if not sess.cmdsexec("cat "+src+" >> "+target, clean=False): return False
 	if "^C" in sess.get_output(): return False
 	if "No space left on device" in sess.get_output(): return False
@@ -45,7 +45,7 @@ def	cmdloop():
 	if count == 1: gen_file(1024, "1k.txt")
 	if count > 1 and sess.wait(5): return False
 	while True: #not sess.wait(timeout):
-		if not dump_file("1k.txt", "abc.txt"): break
+		if not cat_file("1k.txt", "abc.txt"): break
 	while True: #not sess.wait(timeout):
 		if not sess.cmdsexec(gen_cmd(random.randint(1, 40), "abc.txt"), clean=False): return False
 		if "^C" in sess.get_output(): return False
