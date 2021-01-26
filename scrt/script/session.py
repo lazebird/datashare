@@ -51,14 +51,14 @@ class sess:
 			self.screen.Send(cmd)
 		return self.ret # 1/True: on success; 0: on timeout; 2/3: on interrupt
 
-	def wait2login(self):
+	def wait2login(self, uname="admin", passwd="admin"):
 		self.wait2exec(["login:"], 0xfffffff, "")
 		self.output = "" # reset output to ignore system reboot infos
 		if self.ret == 1:
 			time.sleep(5)
-			self.screen.Send("admin\n")
+			self.screen.Send(uname+"\n")
 			time.sleep(1)
-			self.screen.Send("admin\n")
+			self.screen.Send(passwd+"\n")
 			time.sleep(3)
 			self.screen.Send("enable\nconfig t\n")
 			return self.wait(5) == 0  # wait for a moment, make sure system started.
