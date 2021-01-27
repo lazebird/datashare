@@ -46,8 +46,8 @@ Sub init_projects()
     sh.Range("A1:K1").HorizontalAlignment = Excel.xlCenter
     sh.Range("A1:K1") = Array("时间", "项目名称", "客户名称", "项目类别", "项目描述", "应收款", "实收款", "实付款/项目成本", "下一个账期", "项目状态", "备注")
     
-    sh.Range("C2:C1000").Validation.Add xlValidateList, "'初始数据'!$B$3:$E$3"
-    sh.Range("D2:D1000").Validation.Add xlValidateList, "'初始数据'!$B$1:$I$1"
+    sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$3:$E$3"
+    sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$1:$I$1"
     sh.Range("J2:J1000").Validation.Add xlValidateList, Formula1:="等待,进行,结束"
 End Sub
 
@@ -62,9 +62,9 @@ Sub init_orders()
     sh.Range("I1:K1") = "产品账户"
     sh.Range("A2:K2") = Array("时间", "描述", "类别", "预计金额", "实际金额", "关联项目", "客户名称", "下一个账期", "8+4", "xxx", "xxx")
     
-    sh.Range("C3:C1000").Validation.Add xlValidateList, "'初始数据'!$B$2:$M$2"
-    sh.Range("F3:F1000").Validation.Add xlValidateList, "'项目信息'!$B$2:$B$2000"
-    sh.Range("G3:G1000").Validation.Add xlValidateList, "'初始数据'!$B$3:$E$3"
+    sh.Range("C3:C1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$2:$M$2"
+    sh.Range("F3:F1000").Validation.Add xlValidateList, Formula1:="='项目信息'!$B$2:$B$2000"
+    sh.Range("G3:G1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$3:$E$3"
 End Sub
 
 Sub init_reimbursement()
