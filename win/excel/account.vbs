@@ -31,10 +31,9 @@ Sub init_db()
     sh.Range("A1:A3").Font.Bold = True
     sh.Range("A1:A3").Font.Color = RGB(255, 255, 255)
     sh.Range("A1:A3").HorizontalAlignment = Excel.xlCenter
-    sh.Range("A1:A3") = Array("项目类别", "账单类别", "客户名称")
-    sh.Range("B1:I1") = Array("管理型", "傻瓜机", "纯软件", "纯硬件", "软硬件", "仅开发费", "仅抽成", "开发费+抽成")
-    sh.Range("B2:M2") = Array("开发费", "layout费", "license费", "工资", "奖金", "房租", "水电", "聚餐", "食品", "办公", "饮料", "其他")
-    sh.Range("B3:E3") = Array("S", "B", "Y", "O")
+    sh.Range("A1:I1") = Array("项目类别", "管理型", "傻瓜机", "纯软件", "纯硬件", "软硬件", "仅开发费", "仅抽成", "开发费+抽成")
+    sh.Range("A2:M2") = Array("账单类别", "开发费", "layout费", "license费", "工资", "奖金", "房租", "水电", "聚餐", "食品", "办公", "饮料", "其他")
+    sh.Range("A3:E3") = Array("客户名称", "S", "B", "Y", "O")
 End Sub
 
 Sub init_projects()
@@ -85,3 +84,4 @@ Sub destroy()
         End If
     Next
 End Sub
+
