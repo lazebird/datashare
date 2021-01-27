@@ -52,6 +52,6 @@ def	cmdloop():
 		if "No space left on device" in sess.get_output(): break
 	return True
 
-while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "abc"):pass
+while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "admin"):pass
 crt.Screen.Send("#game over, count "+str(count)+"!\n")
 crt.Dialog.MessageBox("#script exit, count "+str(count))
