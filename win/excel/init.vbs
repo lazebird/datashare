@@ -46,7 +46,7 @@ End Sub
 
 Sub init_datas()
     dbtitles = Array("项目类别", "订单类别", "客户名称", "账户类型", "员工")
-    prjtypes = Array("管理型", "傻瓜机", "纯软件", "纯硬件", "软硬件", "仅开发费", "仅抽成", "开发费+抽成")
+    prjtypes = Array("管理型", "傻瓜机", "纯软件", "纯硬件", "软硬件", "仅开发费", "仅抽成", "开发费+抽成", "license")
     ordertypes = Array("开发费", "layout费", "license费", "工资", "奖金", "房租", "水电", "聚餐", "食品", "办公", "饮料", "其他")
     customers = Array("Z", "L", "Y", "O")
     debittypes = Array("公账", "私账", "lic50", "lic100", "lic200", "lic250")
@@ -126,12 +126,10 @@ Sub init_orders()
         .HorizontalAlignment = Excel.xlCenter
         .AutoFilter
     End With
-    sh.Range("A1:H1") = Array("日期", "描述", "类别", "预计金额", "实际金额", "关联项目", "客户名称", "下一个账期")
-    'sh.Range("I1:Z1").Merge
-    'sh.Range("I1:Z1") = "资金账户"
+    sh.Range("A1:G1") = Array("日期", "描述", "类别", "金额", "关联项目", "客户名称", "下一个账期")
     Dim i As Integer
     Dim r As Range
-    Set r = sh.Range("I1:Z1")
+    Set r = sh.Range("H1:Z1")
     For i = LBound(debittypes) To UBound(debittypes)
         r(i + 1) = debittypes(i)
     Next i
@@ -139,8 +137,8 @@ Sub init_orders()
     Call frozen_row(sh, "B1")
     
     sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B2:Z2")
-    sh.Range("F2:F1000").Validation.Add xlValidateList, Formula1:=get_validatelist("项目信息", "B2:B2000")
-    sh.Range("G2:G1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B3:Z3")
+    sh.Range("E2:E1000").Validation.Add xlValidateList, Formula1:=get_validatelist("项目信息", "B2:B2000")
+    sh.Range("F2:F1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B3:Z3")
 End Sub
 
 Sub init_reimbursement()
@@ -162,6 +160,7 @@ Sub init_reimbursement()
 End Sub
 
 Sub init()
+    init_notes
     init_db
     init_projects
     init_orders
@@ -170,9 +169,8 @@ End Sub
 
 Sub destroy()
     Dim sh          As Worksheet
-    Set sh = getsheet("reserve", True)
     For Each sh In Worksheets
-        If Not sh.name = "reserve" Then
+        If Not sh.name = "说明" Then
             sh.Delete
         End If
     Next

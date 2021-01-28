@@ -28,8 +28,8 @@ Sub order_completion(r As Range)
         If cel.Value = r.Value Then Exit For
     Next
     If cel Is Nothing Then Exit Sub
-    ActiveSheet.Range("G" & r.row) = Worksheets("项目信息").Range("C" & cel.row)
-    ActiveSheet.Range("H" & r.row) = Worksheets("项目信息").Range("I" & cel.row).Value
+    ActiveSheet.Range("F" & r.row) = Worksheets("项目信息").Range("C" & cel.row)
+    ActiveSheet.Range("G" & r.row) = Worksheets("项目信息").Range("I" & cel.row).Value
 End Sub
 
 Sub project_completion(r As Range)
@@ -41,11 +41,11 @@ Sub project_completion(r As Range)
     Dim total_out As Long
     Dim cval As Long
     Dim pval As Long
-    For Each cel In Worksheets("资金流水").Range("F2:F2000")
+    For Each cel In Worksheets("资金流水").Range("E2:E2000")
         If cel.Value = prjname Then
-            ' MsgBox "row: " & cel.row & " value: " & Worksheets("资金流水").Range("I" & cel.row).Value
-            cval = CLng(Worksheets("资金流水").Range("I" & cel.row).Value)
-            pval = CLng(Worksheets("资金流水").Range("J" & cel.row).Value)
+            ' MsgBox "row: " & cel.row & " value: " & Worksheets("资金流水").Range("H" & cel.row).Value
+            cval = CLng(Worksheets("资金流水").Range("H" & cel.row).Value)
+            pval = CLng(Worksheets("资金流水").Range("I" & cel.row).Value)
             If cval > 0 Then
                 total_in = total_in + cval
             Else
@@ -65,5 +65,3 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal r As Range) ' should put into sheet's code
     on_select r
 End Sub
-
-
