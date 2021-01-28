@@ -24,11 +24,15 @@ Function getsheet(name As String, clear_flag As Boolean) As Worksheet
 End Function
 Function get_validatelist(name As String, addr As String) As String
     If Worksheets(name) Is Nothing Then Exit Function
+    get_validatelist = "='" & name & "'!" & Worksheets(name).Range(addr).Address
+    Exit Function
+    ' string will expire when new project added, may be use xlValidateCust?
     Dim cel As Range
     Dim str As String
     For Each cel In Worksheets(name).Range(addr)
         If Not IsEmpty(cel.Value) Then str = str & cel.Value
     Next
+    If IsEmpty(str) Then str = ""
     get_validatelist = str
 End Function
 
@@ -94,8 +98,8 @@ Sub init_projects()
     sh.Range("A1:K1").HorizontalAlignment = Excel.xlCenter
     sh.Range("A1:K1") = Array("日期", "项目名称", "客户名称", "项目类别", "项目描述", "应收款", "实收款", "实付款/项目成本", "下一个账期", "项目状态", "备注")
     
-    sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$3:$Z$3"
-    sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$1:$Z$1"
+    sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B3:Z3")
+    sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B1:Z1")
     sh.Range("J2:J1000").Validation.Add xlValidateList, Formula1:="等待,进行,结束"
 End Sub
 
@@ -116,9 +120,9 @@ Sub init_orders()
         r(i + 1) = debittypes(i)
     Next i
     
-    sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$2:$Z$2"
-    sh.Range("F2:F1000").Validation.Add xlValidateList, Formula1:="='项目信息'!$B$2:$B$2000"
-    sh.Range("G2:G1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$3:$Z$3"
+    sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B2:Z2")
+    sh.Range("F2:F1000").Validation.Add xlValidateList, Formula1:=get_validatelist("项目信息", "B2:B2000")
+    sh.Range("G2:G1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B3:Z3")
 End Sub
 
 Sub init_reimbursement()
@@ -130,7 +134,7 @@ Sub init_reimbursement()
     sh.Range("A1:E1").HorizontalAlignment = Excel.xlCenter
     sh.Range("A1:E1") = Array("日期", "描述", "费用", "人员", "备注")
     
-    sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:="='初始数据'!$B$5:$Z$5"
+    sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B5:Z5")
 End Sub
 
 Sub init()
