@@ -100,11 +100,13 @@ End Sub
 Sub init_projects()
     Dim sh          As Worksheet
     Set sh = getsheet("项目信息", True)
-    sh.Range("A1:K1").Interior.ColorIndex = 10
-    sh.Range("A1:K1").Font.Bold = True
-    sh.Range("A1:K1").Font.Color = RGB(255, 255, 255)
-    sh.Range("A1:K1").HorizontalAlignment = Excel.xlCenter
-    sh.Range("A1:K1").AutoFilter
+    With sh.Range("A1:K1")
+        .Interior.ColorIndex = 10
+        .Font.Bold = True
+        .Font.Color = RGB(255, 255, 255)
+        .HorizontalAlignment = Excel.xlCenter
+        .AutoFilter
+    End With
     sh.Range("A1:K1") = Array("日期", "项目名称", "客户名称", "项目类别", "项目描述", "应收款", "实收款", "实付款/项目成本", "下一个账期", "项目状态", "备注")
     
     Call frozen_row(sh, "B1")
@@ -117,11 +119,13 @@ End Sub
 Sub init_orders()
     Dim sh          As Worksheet
     Set sh = getsheet("资金流水", True)
-    sh.Range("A1:Z1").Interior.ColorIndex = 10
-    sh.Range("A1:Z1").Font.Bold = True
-    sh.Range("A1:Z1").Font.Color = RGB(255, 255, 255)
-    sh.Range("A1:Z1").HorizontalAlignment = Excel.xlCenter
-    sh.Range("A1:Z1").AutoFilter
+    With sh.Range("A1:Z1")
+        .Interior.ColorIndex = 10
+        .Font.Bold = True
+        .Font.Color = RGB(255, 255, 255)
+        .HorizontalAlignment = Excel.xlCenter
+        .AutoFilter
+    End With
     sh.Range("A1:H1") = Array("日期", "描述", "类别", "预计金额", "实际金额", "关联项目", "客户名称", "下一个账期")
     'sh.Range("I1:Z1").Merge
     'sh.Range("I1:Z1") = "资金账户"
@@ -142,16 +146,19 @@ End Sub
 Sub init_reimbursement()
     Dim sh          As Worksheet
     Set sh = getsheet("报销单", True)
-    sh.Range("A1:E1").Interior.ColorIndex = 10
-    sh.Range("A1:E1").Font.Bold = True
-    sh.Range("A1:E1").Font.Color = RGB(255, 255, 255)
-    sh.Range("A1:E1").HorizontalAlignment = Excel.xlCenter
-    sh.Range("A1:E1").AutoFilter
-    sh.Range("A1:E1") = Array("日期", "描述", "费用", "人员", "备注")
+    With sh.Range("A1:F1")
+        .Interior.ColorIndex = 10
+        .Font.Bold = True
+        .Font.Color = RGB(255, 255, 255)
+        .HorizontalAlignment = Excel.xlCenter
+        .AutoFilter
+    End With
+    sh.Range("A1:F1") = Array("日期", "描述", "类别", "费用", "人员", "备注")
     
     Call frozen_row(sh, "B1")
     
-    sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B5:Z5")
+    sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B2:Z2")
+    sh.Range("E2:E1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B5:Z5")
 End Sub
 
 Sub init()

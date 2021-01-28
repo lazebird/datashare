@@ -16,8 +16,8 @@ End Sub
 Sub sample_reimbursements()
     Dim sh          As Worksheet
     Set sh = getsheet("报销单", False)
-    sh.Range("A2:E2") = Array("1/12/2021", "聚餐", "300", "lqy", "")
-    sh.Range("A3:E3") = Array("1/14/2021", "购物", "100", "lss", "")
+    sh.Range("A2:E2") = Array("1/12/2021", "聚餐", "聚餐", "300", "lqy", "")
+    sh.Range("A3:E3") = Array("1/14/2021", "购物", "食品", "100", "lss", "")
 End Sub
 
 Sub sample_all()
