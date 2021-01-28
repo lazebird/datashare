@@ -36,11 +36,19 @@ Function get_validatelist(name As String, addr As String) As String
     get_validatelist = str
 End Function
 
+Sub frozen_row(sht As Worksheet, addr As String)
+    sht.Activate
+    ActiveWindow.FreezePanes = False
+    ActiveWindow.SplitRow = sht.Range(addr).row
+    ' sht.Range(addr).Select
+    ActiveWindow.FreezePanes = True
+End Sub
+
 Sub init_datas()
     dbtitles = Array("项目类别", "订单类别", "客户名称", "账户类型", "员工")
     prjtypes = Array("管理型", "傻瓜机", "纯软件", "纯硬件", "软硬件", "仅开发费", "仅抽成", "开发费+抽成")
     ordertypes = Array("开发费", "layout费", "license费", "工资", "奖金", "房租", "水电", "聚餐", "食品", "办公", "饮料", "其他")
-    customers = Array("S", "L", "Y", "O")
+    customers = Array("Z", "L", "Y", "O")
     debittypes = Array("公账", "私账", "lic50", "lic100", "lic200", "lic250")
     employees = Array("csg", "lss", "lqy", "zxf")
 End Sub
@@ -96,7 +104,10 @@ Sub init_projects()
     sh.Range("A1:K1").Font.Bold = True
     sh.Range("A1:K1").Font.Color = RGB(255, 255, 255)
     sh.Range("A1:K1").HorizontalAlignment = Excel.xlCenter
+    sh.Range("A1:K1").AutoFilter
     sh.Range("A1:K1") = Array("日期", "项目名称", "客户名称", "项目类别", "项目描述", "应收款", "实收款", "实付款/项目成本", "下一个账期", "项目状态", "备注")
+    
+    Call frozen_row(sh, "B1")
     
     sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B3:Z3")
     sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B1:Z1")
@@ -110,6 +121,7 @@ Sub init_orders()
     sh.Range("A1:Z1").Font.Bold = True
     sh.Range("A1:Z1").Font.Color = RGB(255, 255, 255)
     sh.Range("A1:Z1").HorizontalAlignment = Excel.xlCenter
+    sh.Range("A1:Z1").AutoFilter
     sh.Range("A1:H1") = Array("日期", "描述", "类别", "预计金额", "实际金额", "关联项目", "客户名称", "下一个账期")
     'sh.Range("I1:Z1").Merge
     'sh.Range("I1:Z1") = "资金账户"
@@ -119,6 +131,8 @@ Sub init_orders()
     For i = LBound(debittypes) To UBound(debittypes)
         r(i + 1) = debittypes(i)
     Next i
+    
+    Call frozen_row(sh, "B1")
     
     sh.Range("C2:C1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B2:Z2")
     sh.Range("F2:F1000").Validation.Add xlValidateList, Formula1:=get_validatelist("项目信息", "B2:B2000")
@@ -132,7 +146,10 @@ Sub init_reimbursement()
     sh.Range("A1:E1").Font.Bold = True
     sh.Range("A1:E1").Font.Color = RGB(255, 255, 255)
     sh.Range("A1:E1").HorizontalAlignment = Excel.xlCenter
+    sh.Range("A1:E1").AutoFilter
     sh.Range("A1:E1") = Array("日期", "描述", "费用", "人员", "备注")
+    
+    Call frozen_row(sh, "B1")
     
     sh.Range("D2:D1000").Validation.Add xlValidateList, Formula1:=get_validatelist("初始数据", "B5:Z5")
 End Sub
