@@ -126,10 +126,10 @@ Sub init_orders()
         .HorizontalAlignment = Excel.xlCenter
         .AutoFilter
     End With
-    sh.Range("A1:G1") = Array("日期", "描述", "类别", "金额", "关联项目", "客户名称", "下一个账期")
+    sh.Range("A1:F1") = Array("日期", "描述", "类别", "金额", "关联项目", "客户名称")
     Dim i As Integer
     Dim r As Range
-    Set r = sh.Range("H1:Z1")
+    Set r = sh.Range("G1:Z1")
     For i = LBound(debittypes) To UBound(debittypes)
         r(i + 1) = debittypes(i)
     Next i
