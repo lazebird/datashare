@@ -29,7 +29,6 @@ Sub order_completion(r As Range)
     Next
     If cel Is Nothing Then Exit Sub
     ActiveSheet.Range("F" & r.row) = Worksheets("项目信息").Range("C" & cel.row)
-    ActiveSheet.Range("G" & r.row) = Worksheets("项目信息").Range("I" & cel.row).Value
 End Sub
 
 Sub project_completion(r As Range)
