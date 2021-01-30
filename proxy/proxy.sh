@@ -4,15 +4,23 @@ print_exit() { # parameter: logstr
     echo "$1" >&2 && exit 1
 }
 
-fetch_file() { # parameter: filename, path, url
+fetch_file() { # parameter: filename, path, url, alternate
     filename=$1
     path=$2
     url=$3
+    alt=$4
     if [ -f $path/$filename ]; then
         echo "# $path/$filename already exists."
         return
     fi
-    wget -q -O $path/$filename $url >/dev/null || print_exit "# $path/$filename download failed."
+    wget -q -O $path/$filename $url >/dev/null || mv $path/$alt $path/$filename 2>/dev/null || print_exit "# $path/$filename download failed."
+    # if [ $? -ne 0 ]; then
+    #     if [ "$alt" = "" || -z "$path/$alt" ]; then
+    #         print_exit "# $path/$filename download failed."
+    #     else
+    #         mv $path/$alt $path/$filename
+    #     fi
+    # fi
     echo "# $path/$filename download success."
 }
 
@@ -35,6 +43,7 @@ get_clash() {
 BASHDIR="$(cd "$(dirname "$SCRIPTPATH")" && pwd)"
 workdir=${1-"/tmp"}
 configname=config.yaml
+configbak=config.bak
 urlfile=proxyurl.txt
 configurl=$(cat $BASHDIR/$urlfile) # secret
 [ -z "$configurl" ] && print_exit "#### config url in $BASHDIR/$urlfile is invalid!"
@@ -43,13 +52,14 @@ cd $workdir
 echo "#### starting proxy temporally in $workdir:"
 get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
+mv $configname $configbak # save last config
 fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
 
 echo "#### updating configure files in $workdir:"
-mv $configname $configname".bak" 2>/dev/null # force update
-fetch_file $configname $workdir $configurl
+mv $configname $configname".bak" 2>/dev/null # save empty config
+fetch_file $configname $workdir $configurl $configbak
 fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
 
 echo "#### processing configure files in $workdir:"
