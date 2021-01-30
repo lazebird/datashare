@@ -51,7 +51,7 @@ kill $(pgrep clash) 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
 
 echo "#### updating configure files in $workdir:"
-[ ! -e "$configbak" ] && mv $configname $configbak 2>/dev/null # save empty config
+[ ! -e "$configbak" ] && mv $configname $configbak 2>/dev/null || rm -f $configname # save/remove empty config
 fetch_file $configname $workdir $configurl $configbak
 fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
 
