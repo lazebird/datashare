@@ -13,14 +13,7 @@ fetch_file() { # parameter: filename, path, url, alternate
         echo "# $path/$filename already exists."
         return
     fi
-    wget -q -O $path/$filename $url >/dev/null || mv $path/$alt $path/$filename 2>/dev/null || print_exit "# $path/$filename download failed."
-    # if [ $? -ne 0 ]; then
-    #     if [ "$alt" = "" || -z "$path/$alt" ]; then
-    #         print_exit "# $path/$filename download failed."
-    #     else
-    #         mv $path/$alt $path/$filename
-    #     fi
-    # fi
+    wget -q -O $path/$filename $url >/dev/null || (echo "# $path/$filename download failed." >&2 && rm -f $path/$filename && mv $path/$alt $path/$filename 2>/dev/null) || exit 1
     echo "# $path/$filename download success."
 }
 
