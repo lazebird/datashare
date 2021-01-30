@@ -45,13 +45,13 @@ cd $workdir
 echo "#### starting proxy temporally in $workdir:"
 get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
-mv $configname $configbak # save last config
+mv $configname $configbak 2>/dev/null # save last config
 fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
 
 echo "#### updating configure files in $workdir:"
-mv $configname $configname".bak" 2>/dev/null # save empty config
+[ ! -e "$configbak" ] && mv $configname $configbak 2>/dev/null # save empty config
 fetch_file $configname $workdir $configurl $configbak
 fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
 
