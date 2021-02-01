@@ -14,7 +14,10 @@ import session
 sess = session.sess(crt.GetActiveTab())
 opthash = opt.opt(crt.Arguments).tohash()
 
-srvip = "192.168.100.106" # "10.1.1.2"
+srvip = "192.168.100.106"
+if crt.Caption.find("com"): # local serial port
+	srvip = "2.2.2.106" 
+
 localip = "" # calc by srvip
 if "ip" in opthash:
 	srvip = opthash["ip"]
