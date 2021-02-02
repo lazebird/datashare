@@ -7,7 +7,7 @@ f:close()
 
 -- proc
 text = string.gsub(text, "\r", "")
--- remove game server
+-- remove game server, for game server's access to google is not very stable
 text = string.gsub(text, "[^\n]+游戏[^\n]+\n", "")
 -- allow lan
 text = string.gsub(text, "allow-lan: false", "allow-lan: true")
