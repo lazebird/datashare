@@ -19,7 +19,7 @@ count = 0
 def	cmdloop(): 
 	global count
 	count = count + 1
-	if "FAIL" in sess.get_output(): return False
+	if "Currently running processes (ps)" in sess.get_output(): return False
 	if sess.wait(3): return False
 	cmdpreconfig()
 	crt.Screen.Send("find /var/log/ -type f | xargs ls -l \n")
