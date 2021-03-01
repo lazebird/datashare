@@ -87,11 +87,12 @@ class sess:
 			return True
 		return False
 
-	def cmdreboot(self): 
+	def cmdreboot(self, clean=True): 
 		self.screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 		if not self.is_shell():
 			self.screen.Send("\x1a\x1a\x1a")  # ctrl+z; ctrl characters
 			self.screen.Send("\nentershell\n")
+		if clean: self.screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
 		self.screen.Send("reboot\n")
 		return True
 

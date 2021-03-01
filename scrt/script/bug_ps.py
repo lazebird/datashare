@@ -16,12 +16,12 @@ def	cmdpreconfig():
 
 timeout = 1
 count = 0
-cause = ""
+cause = "unknown"
 def	cmdloop(): 
 	global count
 	global cause
 	count = count + 1
-	if "[FAIL] Killing all remaining processes...failed." in sess.get_output(): 
+	if "ps -ef" in sess.get_output(): # "[FAIL] Killing all remaining processes...failed." always occurs invalid charactors
 		cause = "error detect"
 		return False
 	# if "Currently running processes (ps)" in sess.get_output(): return False
@@ -32,7 +32,7 @@ def	cmdloop():
 	sess.cmdexec("find /var/log/ -type f | xargs ls -l", clean=False)
 	sess.cmdexec("date -s \"2021-02-25 19:55\" && hwclock -w", clean=False)
 	# sess.cmdexec("/etc/init.d/rc 6 \n")
-	sess.cmdexec("reboot", clean=False)
+	# sess.cmdexec("reboot", clean=False)
 	return True
 
 while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "admin", False):pass
