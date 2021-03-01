@@ -11,24 +11,31 @@ import session
 sess = session.sess(crt.GetActiveTab())
 
 def	cmdpreconfig(): 
-	sess.cmdsexec("end\nentershell\n", clean=False)
+	sess.cmdsexec("end\nentershell", clean=False)
 	return 1
 
 timeout = 1
 count = 0
+cause = ""
 def	cmdloop(): 
 	global count
+	global cause
 	count = count + 1
-	if "[FAIL] Killing all remaining processes...failed." in sess.get_output(): return False
+	if "[FAIL] Killing all remaining processes...failed." in sess.get_output(): 
+		cause = "error detect"
+		return False
 	# if "Currently running processes (ps)" in sess.get_output(): return False
-	if sess.wait(3): return False
+	if sess.wait(3): 
+		cause = "user interrupt"
+		return False
 	cmdpreconfig()
-	sess.cmdexec("find /var/log/ -type f | xargs ls -l \n", clean=False)
-	sess.cmdexec("date -s \"2021-02-25 19:55\" && hwclock -w \n", clean=False)
+	sess.cmdexec("find /var/log/ -type f | xargs ls -l", clean=False)
+	sess.cmdexec("date -s \"2021-02-25 19:55\" && hwclock -w", clean=False)
 	# sess.cmdexec("/etc/init.d/rc 6 \n")
-	sess.cmdexec("reboot \n", clean=False)
+	sess.cmdexec("reboot", clean=False)
 	return True
 
 while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "admin", False):pass
-crt.Screen.Send("#game over, count "+str(count)+"!\n")
-crt.Dialog.MessageBox("#script exit, count "+str(count))
+errmsg = "#game over, count "+str(count)+", cause "+cause+"!"
+crt.Screen.Send(errmsg+"\n")
+crt.Dialog.MessageBox(errmsg)
