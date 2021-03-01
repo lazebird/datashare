@@ -36,6 +36,6 @@ def	cmdloop():
 	return True
 
 while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "admin", False):pass
-errmsg = "#game over, count "+str(count)+", cause "+cause+"!"
+errmsg = "#"+sess.name+" game over, count "+str(count)+", cause "+cause+"!"
 crt.Screen.Send(errmsg+"\n")
 crt.Dialog.MessageBox(errmsg)
