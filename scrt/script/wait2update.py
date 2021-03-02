@@ -15,7 +15,7 @@ sess = session.sess(crt.GetActiveTab())
 opthash = opt.opt(crt.Arguments).tohash()
 
 srvip = "192.168.100.106"
-if crt.GetActiveTab().Caption.find("com") >= 0: # local serial port
+if crt.GetActiveTab().Caption.find("serial") >= 0: # local serial port
 	srvip = "2.2.2.106" 
 
 localip = "" # calc by srvip
