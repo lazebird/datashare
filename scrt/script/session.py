@@ -59,9 +59,9 @@ class sess:
 			self.screen.Send(uname+"\n")
 			self.screen.WaitForStrings(["should never be matched"], 1) # time.sleep/crt.sleep will cause cpu high on linux
 			self.screen.Send(passwd+"\n")
-			self.screen.WaitForStrings(["should never be matched"], 3) # time.sleep/crt.sleep will cause cpu high on linux
+			if self.screen.WaitForStrings(["SWITCH>", "SWITCH#"], 5) == 0: return False  # wait for a moment, make sure system started.
 			self.screen.Send("enable\nconfig t\n")
-			return self.screen.WaitForStrings(["SWITCH>", "SWITCH#"], 5) != 0  # wait for a moment, make sure system started.
+			return True
 		return False
 
 	def is_uboot(self):
