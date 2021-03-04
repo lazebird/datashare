@@ -55,11 +55,11 @@ class sess:
 		self.wait2exec(["login:"], 0xfffffff, "")
 		if clear_flag: self.output = "" # reset output to ignore system reboot infos
 		if self.ret == 1:
-			time.sleep(5)
+			self.wait(5) # time.sleep/crt.sleep will cause cpu high on linux
 			self.screen.Send(uname+"\n")
-			time.sleep(1)
+			self.wait(1)
 			self.screen.Send(passwd+"\n")
-			time.sleep(3)
+			self.wait(3)
 			self.screen.Send("enable\nconfig t\n")
 			return self.screen.WaitForStrings(["SWITCH>", "SWITCH#"], 5) != 0  # wait for a moment, make sure system started.
 		return False
