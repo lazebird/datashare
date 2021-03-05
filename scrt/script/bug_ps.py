@@ -38,10 +38,10 @@ def	cmdloop():
 while cmdloop() and sess.cmdreboot() and sess.wait2login("admin", "admin", False):pass
 errmsg = "#"+sess.name+" game over, count "+str(count)+", cause "+cause+"!"
 if cause == "unknown": # dump stacks
-	crt.screen.sendspecial("TN_BREAK")
-	crt.screen.Send("l") # Shows a stack backtrace for all active CPUs.	
-	crt.sleep(1)
-	crt.screen.sendspecial("TN_BREAK")
-	crt.screen.Send("t") # Output a list of current tasks and their information to the console	
+	crt.Screen.sendspecial("TN_BREAK")
+	crt.Screen.Send("l") # Shows a stack backtrace for all active CPUs.	
+	crt.Sleep(1)
+	crt.Screen.sendspecial("TN_BREAK")
+	crt.Screen.Send("t") # Output a list of current tasks and their information to the console	
 crt.Screen.Send(errmsg+"\n")
 crt.Dialog.MessageBox(errmsg)
