@@ -30,7 +30,7 @@ def	cmdloop():
 		return False
 	cmdpreconfig()
 	sess.cmdexec("find /var/log/ -type f | xargs ls -l", clean=False)
-	sess.cmdexec("date -s \"2021-02-25 19:55\" && hwclock -w", clean=False)
+	if not "10001" in sess.name :sess.cmdexec("date -s \"2021-02-25 19:55\" && hwclock -w", clean=False)
 	# sess.cmdexec("/etc/init.d/rc 6 \n")
 	# sess.cmdexec("reboot", clean=False)
 	return True
