@@ -13,6 +13,9 @@ import opt
 opthash = opt.opt(crt.Arguments).tohash()
 
 srvip = "192.168.100.106"#"10.1.1.2"
+if crt.GetActiveTab().Caption.find("serial") >= 0: # local serial port
+	srvip = "2.2.2.106" 
+
 workdir="D:/" if os.path.isdir("D:/") else "/tmp"
 if "ip" in opthash:
 	srvip = opthash["ip"]
