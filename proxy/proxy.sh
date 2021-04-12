@@ -1,7 +1,9 @@
 #!/bin/sh
 
+logcmd="logger -is -p user.debug -t proxy"
+
 print_exit() { # parameter: logstr
-    echo "$1" >&2 && exit 1
+    $logcmd "$1" >&2 && exit 1
 }
 
 fetch_file() { # parameter: filename, path, url, alternate
@@ -10,17 +12,17 @@ fetch_file() { # parameter: filename, path, url, alternate
     url=$3
     alt=$4
     if [ -f $path/$filename ]; then
-        echo "# $path/$filename already exists."
+        $logcmd "# $path/$filename already exists."
         return
     fi
     wget -q -O $path/$filename $url >/dev/null
     if [ $? -ne 0 ]; then
         rm -f $path/$filename                     # remove empty file
         mv $path/$alt $path/$filename 2>/dev/null # try revert
-        echo "# $path/$filename download failed." >&2
+        $logcmd "# $path/$filename download failed." >&2
         exit 1
     fi
-    echo "# $path/$filename download success."
+    $logcmd "# $path/$filename download success."
 }
 
 get_clash() {
@@ -48,7 +50,7 @@ configurl=$(cat $BASHDIR/$urlfile) # secret
 [ -z "$configurl" ] && print_exit "#### config url in $BASHDIR/$urlfile is invalid!"
 
 cd $workdir
-echo "#### starting proxy temporally in $workdir:"
+$logcmd "#### starting proxy temporally in $workdir:"
 get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 mv $configname $configbak 2>/dev/null # save last config
@@ -56,15 +58,15 @@ fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
 
-echo "#### updating configure files in $workdir:"
+$logcmd "#### updating configure files in $workdir:"
 [ ! -e "$configbak" ] && mv $configname $configbak 2>/dev/null || rm -f $configname # save/remove empty config
 fetch_file $configname $workdir $configurl $configbak
 fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
 
-echo "#### processing configure files in $workdir:"
+$logcmd "#### processing configure files in $workdir:"
 lua reconf.lua $configname || print_exit "# reconf $configname failed."
 
-echo "#### restarting proxy in $workdir:"
+$logcmd "#### restarting proxy in $workdir:"
 kill $(pgrep clash) 2>/dev/null && sleep 3s
 ./clash -d . >proxy.log 2>&1 &
-echo "#### update successfully!"
+$logcmd "#### update successfully!"
