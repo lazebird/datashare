@@ -16,33 +16,29 @@ srvip = "192.168.100.106"#"10.1.1.2"
 if crt.GetActiveTab().Caption.find("serial") >= 0: # local serial port
 	srvip = "2.2.2.106" 
 
-workdir="D:/" if os.path.isdir("D:/") else "/tmp"
+workdir="D:/" if os.path.isdir("D:/") else "/var/lib"
 if "ip" in opthash:
 	srvip = opthash["ip"]
 if "workdir" in opthash:
 	workdir = opthash["workdir"]
 
-prog = crt.Dialog.Prompt("Please enter binary name; format: name [,mode]; mode: restart reboot none") # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
-restart_mode = "none"  # mode: restart reboot none
-modhash = {}
-modfilename = workdir + "/restart_mode.txt"
-
-def modeparse(s, modhash):
+def modeparse(s, modlist):
 	global prog
 	global restart_mode
-	s = s.replace("#", ",") # support '#' as ','
-	s = s.replace(" ", ",") # support ' ' as ','
-	s = s.replace(",,", ",") # remove extra separator
-	args = s.split(",")
+	global f
+	s = s.replace("#", " ") # support '#' as ' '
+	s = s.replace(",", " ") # support ',' as ' '
+	s = s.replace("  ", " ") # remove extra separator
+	args = s.split(" ")
 	if len(args) > 1:  # input string has args
 		prog = args[0]
 		restart_mode = args[1]
-		modhash[prog] = restart_mode
-	else: 
-		restart_mode = modhash[prog] if prog in modhash else "none"
+		f.setitem(modlist, prog, restart_mode)
+		return
+	restart_mode = f.findval(modlist, prog)
 
 def do_load(prog, restart_mode):
-	if prog == "":
+	if prog == "" or prog == None:
 		crt.Screen.Send("\3\r\n#invalid input\r\n")
 		crt.Screen.Send("\3\r\n#script terminated for u.\r\n")
 		return
@@ -65,8 +61,13 @@ def do_load(prog, restart_mode):
 	else: 
 		crt.Screen.Send("\3\r\n#something is wrong, ret "+str(ret)+"\r\n")
 
+restart_mode = "none"  # mode: restart reboot none
+modfilename = workdir + "/restart_mode.txt" # must create the file yourself on linux
 f = kvfile.kvfile(modfilename)
-modhash = f.read()
-modeparse(prog, modhash)
-f.write(modhash)
-do_load(prog, restart_mode)
+modlist = f.read()
+prog=f.getlastkey(modlist)
+prog = crt.Dialog.Prompt("Format: name [,mode]; mode: restart reboot none", "Binary name", str(prog)) # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
+if prog != "":
+	modeparse(prog, modlist)
+	f.write(modlist)
+	do_load(prog, restart_mode)
