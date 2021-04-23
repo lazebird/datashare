@@ -69,7 +69,8 @@ class sess:
 		return self.screen.WaitForStrings([">>"], 1) == 1
 
 	def wait2uboot(self):
-		return self.wait2exec(["stop with 'space'"], 0xfffffff, " ") == 1
+		ret = self.wait2exec(["stop with 'space'", "Hit any key to stop autoboot:"], 0xfffffff, " ")
+		return ret == 1 or ret == 2
 
 	def is_shell(self):
 		self.screen.Send("\r\n")
