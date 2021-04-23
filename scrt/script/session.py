@@ -66,7 +66,8 @@ class sess:
 
 	def is_uboot(self):
 		self.screen.Send("\r\n")
-		return self.screen.WaitForStrings([">>"], 1) == 1
+		ret = self.screen.WaitForStrings([">>", "sepal_x1021-sfcnand#"], 1)
+		return ret == 1 or ret == 2
 
 	def wait2uboot(self):
 		ret = self.wait2exec(["stop with 'space'", "Hit any key to stop autoboot:"], 0xfffffff, " ")
