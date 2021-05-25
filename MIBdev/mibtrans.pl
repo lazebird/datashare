@@ -145,16 +145,16 @@ sub proc_file {
 }
 
 sub usage {
-    print "Usage: $_[0] {source-file-path} [destination-file-path]\n";
+    # print "Usage: $_[0] {source-file-path} [destination-file-path]\n";
+    print "Usage: $_[0] {source-file-path1} ...\n";
 }
 
-my $srcfile=$ARGV[0];
-my $dstfile=$ARGV[1];
-if(!defined($srcfile)) {
+if(@ARGV < 1) {
     usage($0);
     exit(0);
 }
-if(!defined($dstfile)) {
-    $dstfile = $srcfile.".mod";
+foreach my $srcfile (@ARGV) {
+    my $dstfile = $srcfile.".mod";
+    print "transforming $srcfile to $dstfile ...\n";
+    proc_file($srcfile, $dstfile);
 }
-proc_file($srcfile, $dstfile);
