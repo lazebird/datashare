@@ -4,6 +4,8 @@ import os
 # define vars
 sn = ""
 mac = ""
+pid = ""
+ver = ""
 
 
 def debug(s):
@@ -23,7 +25,7 @@ def parse_opt(obj):
     for tv in pairs:
         args = tv.split("=")
         if len(args) < 2:
-            # crt.Screen.Send("# invalid args: " + tv)
+            # debug("invalid args: " + tv)
             continue
         opthash[args[0]] = args[1]
     return opthash
@@ -40,7 +42,7 @@ def char4_inc(s, base):
 
 def wait2uboot():
     ret = crt.Screen.WaitForStrings(
-        ["stop with 'space'", "stop autoboot:", "^C", "<INTERRUPT>"],
+        ["stop with 'space'", "stop autoboot", "^C", "<INTERRUPT>"],
         0xFFFFFFF,
     )
     return ret == 1 or ret == 2
@@ -61,7 +63,9 @@ def do_info_inc():
 
 
 def do_product_set():
-    crt.Screen.Send("product_set MAC3L-8GT4GS-1R1IO  " + sn + " " + mac + " V1.20 \n")
+    crt.Screen.Send(
+        "product_set    " + pid + "    " + sn + "    " + mac + "    " + ver + "   \n"
+    )
     ret = 0
     # ret = crt.Screen.WaitForStrings(["success", "fail"], 1) # read result
     ok = crt.Dialog.Prompt("Success?", "Confirmation", "ok")
@@ -74,7 +78,9 @@ def do_product_set():
 
 # init in code
 sn = "202106290001"
-mac = "04111980020A"
+mac = "FCCD2FD00001"
+pid = "LKST-6190-8GT2GS"
+ver = "V1.00"
 
 # init by command args
 opthash = parse_opt(crt.Arguments)
@@ -82,18 +88,25 @@ if "sn" in opthash:
     sn = opthash["sn"]
 if "mac" in opthash:
     mac = opthash["mac"]
+if "id" in opthash:
+    pid = opthash["id"]
+if "ver" in opthash:
+    ver = opthash["ver"]
 
 # init by prompt input
 sn = crt.Dialog.Prompt("Initial SN", "SN", sn)
 mac = crt.Dialog.Prompt("Initial MAC", "MAC", mac)
+pid = crt.Dialog.Prompt("Initial Product ID", "Product ID", pid)
+ver = crt.Dialog.Prompt("Initial Hardware Version", "Hardware Version", ver)
 
 if sn != "" and mac != "":
     while True:
         if not wait2uboot():
             break
+        crt.Sleep(1000)
         crt.Screen.Send("#    \n")
         if do_product_set():
             do_info_inc()
         # crt.Sleep(1000)
 
-crt.Screen.Send("# script terminated \n")
+crt.Dialog.MessageBox("#script exit")
