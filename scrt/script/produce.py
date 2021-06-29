@@ -89,7 +89,11 @@ mac = crt.Dialog.Prompt("Initial MAC", "MAC", mac)
 
 if sn != "" and mac != "":
     while True:
-        wait2uboot()
+        if not wait2uboot():
+            break
+        crt.Screen.Send("#    \n")
         if do_product_set():
             do_info_inc()
         # crt.Sleep(1000)
+
+crt.Screen.Send("# script terminated \n")
