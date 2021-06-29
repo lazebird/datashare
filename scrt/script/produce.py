@@ -34,13 +34,13 @@ def char4_inc(s, base):
     # debug("char4 inc: i=" + str(i) + ", i+1=" + str(i + 1) + ", base=" + str(base))
     i = i + 1
     if base == 10:
-        return "{:04d}".format(i)
-    return "{:04X}".format(i)
+        return "{0:04d}".format(i)
+    return "{0:04X}".format(i)
 
 
 def wait2uboot():
     ret = crt.Screen.WaitForStrings(
-        ["stop with 'space'", "Hit any key to stop autoboot:", "^C", "<INTERRUPT>"],
+        ["stop with 'space'", "stop autoboot:", "^C", "<INTERRUPT>"],
         0xFFFFFFF,
     )
     return ret == 1 or ret == 2
@@ -61,7 +61,7 @@ def do_info_inc():
 
 
 def do_product_set():
-    crt.Screen.Send("# product_set MAC3L-8GT4GS-1R1IO " + sn + " " + mac + " V1.20 \n")
+    crt.Screen.Send("product_set MAC3L-8GT4GS-1R1IO  " + sn + " " + mac + " V1.20 \n")
     ret = 0
     # ret = crt.Screen.WaitForStrings(["success", "fail"], 1) # read result
     ok = crt.Dialog.Prompt("Success?", "Confirmation", "ok")
