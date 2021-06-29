@@ -31,13 +31,13 @@ def parse_opt(obj):
     return opthash
 
 
-def char4_inc(s, base):
+def char6_inc(s, base):
     i = int(s, base)
-    # debug("char4 inc: i=" + str(i) + ", i+1=" + str(i + 1) + ", base=" + str(base))
+    # debug("char6 inc: i=" + str(i) + ", i+1=" + str(i + 1) + ", base=" + str(base))
     i = i + 1
     if base == 10:
-        return "{0:04d}".format(i)
-    return "{0:04X}".format(i)
+        return "{0:06d}".format(i)
+    return "{0:06X}".format(i)
 
 
 def wait2uboot():
@@ -51,12 +51,12 @@ def wait2uboot():
 def do_info_inc():
     global sn, mac
     # debug("before inc: sn=" + sn + ", mac=" + mac)
-    sn_pre = sn[0:8]
-    sn_post = sn[8:]
-    mac_pre = mac[0:8]
-    mac_post = mac[8:]
-    sn_post = char4_inc(sn_post, 10)
-    mac_post = char4_inc(mac_post, 16)
+    sn_pre = sn[0:6]
+    sn_post = sn[6:]
+    mac_pre = mac[0:6]
+    mac_post = mac[6:]
+    sn_post = char6_inc(sn_post, 10)
+    mac_post = char6_inc(mac_post, 16)
     sn = sn_pre + sn_post
     mac = mac_pre + mac_post
     # debug("after  inc: sn=" + sn + ", mac=" + mac)
