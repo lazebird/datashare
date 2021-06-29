@@ -103,8 +103,8 @@ if sn != "" and mac != "":
     while True:
         if not wait2uboot():
             break
-        crt.Sleep(1000)
         crt.Screen.Send("#    \n")
+        crt.Sleep(1000)
         if do_product_set():
             do_info_inc()
         # crt.Sleep(1000)
