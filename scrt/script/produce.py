@@ -66,14 +66,31 @@ def do_product_set():
     crt.Screen.Send(
         "product_set    " + pid + "    " + sn + "    " + mac + "    " + ver + "   \n"
     )
-    ret = 0
-    # ret = crt.Screen.WaitForStrings(["success", "fail"], 1) # read result
+
+
+def check_result():
+    # ret = crt.Screen.WaitForStrings(["Success", "Fail"], 1) # read result
     ok = crt.Dialog.Prompt("Success?", "Confirmation", "ok")
-    if ok == "exit" or ok == "quit":
-        sys.exit(0)
-    if ok != "":
-        ret = 1
-    return ret == 1
+    if ok == "":
+        return 0
+    if ok == "ok":
+        return 1
+    return -1
+
+
+def main_loop():
+    while True:
+        if not wait2uboot():
+            break
+        crt.Screen.Send("#    \n")
+        crt.Sleep(1000)
+        do_product_set()
+        ret = check_result()
+        if ret < 0:
+            break
+        if ret == 1:
+            do_info_inc()
+        # crt.Sleep(1000)
 
 
 # init in code
@@ -100,13 +117,5 @@ pid = crt.Dialog.Prompt("Initial Product ID", "Product ID", pid)
 ver = crt.Dialog.Prompt("Initial Hardware Version", "Hardware Version", ver)
 
 if sn != "" and mac != "":
-    while True:
-        if not wait2uboot():
-            break
-        crt.Screen.Send("#    \n")
-        crt.Sleep(1000)
-        if do_product_set():
-            do_info_inc()
-        # crt.Sleep(1000)
-
-crt.Dialog.MessageBox("#script exit")
+    main_loop()
+crt.Dialog.MessageBox("SN=" + sn + "\nMAC=" + mac, "#script exit")
