@@ -12,6 +12,10 @@ def debug(s):
     crt.Screen.Send("# " + s + "\n")
 
 
+def args2str():
+    return "SN=" + sn + "\nMAC=" + mac + "\nID=" + pid + "\nVER=" + ver
+
+
 def parse_opt(obj):
     opthash = {}
     s = ""
@@ -31,13 +35,32 @@ def parse_opt(obj):
     return opthash
 
 
-def char6_inc(s, base):
-    i = int(s, base)
-    # debug("char6 inc: i=" + str(i) + ", i+1=" + str(i + 1) + ", base=" + str(base))
-    i = i + 1
-    if base == 10:
-        return "{0:06d}".format(i)
-    return "{0:06X}".format(i)
+def sint6_inc(s):
+    i = int(s)
+    # debug("sint6_inc: i=" + str(i) + ", i+1=" + str(i + 1) + ", base=" + str(base))
+    if i == 999999:
+        sys.exit(0)  # overflow
+    return "{0:06d}".format(i + 1)
+
+
+def shex6_inc(s):
+    i = int(s, 16)
+    # debug("shex6_inc: i=" + str(i) + ", i+1=" + str(i + 1) + ", base=" + str(base))
+    if i == 0xFFFFFF:
+        sys.exit(0)  # overflow
+    return "{0:06X}".format(i + 1)
+
+
+def do_info_inc():
+    global sn, mac
+    sn_pre = sn[0:6]
+    sn_post = sn[6:]
+    mac_pre = mac[0:6]
+    mac_post = mac[6:]
+    sn_post = sint6_inc(sn_post)
+    mac_post = shex6_inc(mac_post)
+    sn = sn_pre + sn_post
+    mac = mac_pre + mac_post
 
 
 def wait2uboot():
@@ -48,24 +71,8 @@ def wait2uboot():
     return ret == 1 or ret == 2
 
 
-def do_info_inc():
-    global sn, mac
-    # debug("before inc: sn=" + sn + ", mac=" + mac)
-    sn_pre = sn[0:6]
-    sn_post = sn[6:]
-    mac_pre = mac[0:6]
-    mac_post = mac[6:]
-    sn_post = char6_inc(sn_post, 10)
-    mac_post = char6_inc(mac_post, 16)
-    sn = sn_pre + sn_post
-    mac = mac_pre + mac_post
-    # debug("after  inc: sn=" + sn + ", mac=" + mac)
-
-
 def do_product_set():
-    crt.Screen.Send(
-        "product_set    " + pid + "    " + sn + "    " + mac + "    " + ver + "   \n"
-    )
+    crt.Screen.Send("product_set    " + pid + "    " + sn + "    " + mac + "    " + ver + "   \n")
 
 
 def check_result():
@@ -116,6 +123,9 @@ mac = crt.Dialog.Prompt("Initial MAC", "MAC", mac)
 pid = crt.Dialog.Prompt("Initial Product ID", "Product ID", pid)
 ver = crt.Dialog.Prompt("Initial Hardware Version", "Hardware Version", ver)
 
+# init by file? max_mac?
+
 if sn != "" and mac != "":
+    crt.Dialog.MessageBox(args2str(), "Initial Args")
     main_loop()
-crt.Dialog.MessageBox("SN=" + sn + "\nMAC=" + mac, "#script exit")
+crt.Dialog.MessageBox(args2str(), "Script Exit")
