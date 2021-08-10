@@ -1,0 +1,55 @@
+<svg width="240" height="175" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    .global {
+      fill: none;
+      stroke: black;
+    }
+
+    .thick {
+      stroke-width: 5px;
+    }
+
+    .thin {
+      stroke-width: 2px;
+    }
+
+    .speed_1g {
+      fill: #2ef055;
+    }
+
+    .speed_100m {
+      fill: #fae70f;
+    }
+
+    .speed_error {
+      fill: #e42121;
+    }
+
+    .speed_down {
+      fill: transparent;
+    }
+
+    .blink_fast {
+      animation: color-blink .1s infinite alternate;
+    }
+
+    .blink_slow {
+      animation: color-blink .5s infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: transparent;
+      }
+    }
+  </style>
+  <g class="global" id="eport">
+    <g id="light" class="speed_1g blink_slow">
+      <path class="thick" d="m70,0 l0,31 l-18,0 l0, 28 l -51.5, 0 l 0, -40 l 72, 0" />
+      <!-- <animate attributeName="fill" values="green; gray" dur="0.1s" begin="0s" repeatCount="indefinite" /> -->
+      <path class="thick" d="m147,0 l0,31 l18, 0 l0, 28, l 51.5, 0 l 0, -40 l-72, 0" />
+    </g>
+    <path class="thin" d="m70,7.938l74.532,0" />
+    <path class="thick" d="m7.5,57l0,114 l204, 0 l 0, -114" />
+  </g>
+</svg>

@@ -1,0 +1,67 @@
+<svg t="1628304343537" class="icon" viewBox="0 0 1536 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4652"
+    width="200" height="200">
+    <style>
+        .speed_1g {
+            fill: #2ef055;
+        }
+
+        .speed_100m {
+            fill: #fae70f;
+        }
+
+        .speed_error {
+            fill: #e42121;
+        }
+
+        .speed_down {
+            fill: transparent;
+        }
+
+        .blink_fast {
+            animation: color-blink .1s infinite alternate;
+        }
+
+        .blink_slow {
+            animation: color-blink .5s infinite alternate;
+        }
+
+        @keyframes color-blink {
+            to {
+                fill: transparent;
+            }
+        }
+    </style>
+    <path d="M0 0h1536v1024H0z" fill="#2C2D2D" p-id="4653"></path>
+    <path d="M32 21.333333h1469.866667v972.8H32z" fill="#C1BDB3" p-id="4654"></path>
+    <path d="M76.8 93.866667h1380.266667v870.4H76.8z" p-id="4655"></path>
+    <path d="M68.266667 987.733333h1399.466666v6.4H68.266667z" fill="#736F57" p-id="4656"></path>
+    <path d="M1009.066667 930.133333h492.8v66.133334H1009.066667z" fill="#FFFFFF" p-id="4657"></path>
+    <path
+        d="M1421.717333 994.133333v-298.666666h81.066667v298.666666zM113.066667 695.466667v234.666666h413.866666v64H32v-298.666666z"
+        fill="#FFFFFF" p-id="4658"></path>
+    <path d="M1053.866667 746.666667H1386.666667v153.6H1053.866667z" class="speed_1g blink_slow" p-id="4659"></path>
+    <path d="M149.333333 746.666667h332.8v153.6H149.333333z" class="speed_1g blink_slow" p-id="4661"></path>
+    <path
+        d="M1459.2 93.866667h8.533333v601.6h-8.533333zM68.266667 93.866667h8.533333v601.6h-8.533333zM471.466667 746.666667h8.533333v153.6h-8.533333z"
+        fill="#EBEAD8" p-id="4662"></path>
+    <path d="M149.333333 746.666667h8.533334v153.6H149.333333zM1053.866667 746.666667h8.533333v153.6h-8.533333z"
+        fill="#8A897A" p-id="4663"></path>
+    <path d="M1378.133333 746.666667h8.533334v153.6h-8.533334z" fill="#EBEAD8" p-id="4664"></path>
+    <path
+        d="M1054.656 753.28v-6.4h332.8v6.4zM149.12 754.410667v-6.4h332.8v6.4zM24.597333 1003.008v-14.933333h501.333334v14.933333zM114.325333 936.832v-6.4h411.733334v6.4zM1010.901333 937.408v-6.4h411.733334v6.4z"
+        fill="#EBEAD8" p-id="4665"></path>
+    <path d="M42.133333 995.328h-17.066666v-298.666667h17.066666zM1513.066667 995.328h-17.066667v-298.666667h17.066667z"
+        fill="#EBEAD8" p-id="4666"></path>
+    <path d="M1010.858667 1001.536v-14.933333h501.333333v14.933333z" fill="#EBEAD8" p-id="4667"></path>
+    <path d="M32 343.466667h106.666667v160h-106.666667z" fill="#CAC9B2" p-id="4668"></path>
+    <path d="M128 343.466667h12.8v160H128z" fill="#EBEAD8" p-id="4669"></path>
+    <path d="M76.8 494.933333H128v6.4H76.8z" fill="#736F57" p-id="4670"></path>
+    <path d="M1503.616 501.930667h-106.666667v-160h106.666667z" fill="#CAC9B2" p-id="4671"></path>
+    <path d="M1408 501.930667h-12.8v-160h12.8z" fill="#EBEAD8" p-id="4672"></path>
+    <path
+        d="M1457.941333 503.509333h-51.2v-6.4h51.2zM149.333333 891.733333h332.8v6.4H149.333333zM1053.866667 891.733333H1386.666667v6.4H1053.866667zM68.266667 87.466667h1399.466666v6.4H68.266667z"
+        fill="#736F57" p-id="4673"></path>
+    <path d="M32 21.333333h1469.866667v6.4H32z" fill="#8A897A" p-id="4674"></path>
+    <path d="M32 21.333333h8.533333v674.133334h-8.533333zM1493.333333 21.333333h8.533334v674.133334H1493.333333z"
+        fill="#8A897A" p-id="4675"></path>
+</svg>

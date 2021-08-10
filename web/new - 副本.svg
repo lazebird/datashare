@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2661" height="612">
+  <style>
+    .global {
+      fill: transparent;
+      stroke: black;
+    }
+
+    .linestyle {
+      stroke: black;
+      /* fill: "param(lightcolor) transparent"; */
+    }
+
+    .thick {
+      stroke-width: 5px;
+    }
+
+    .thin {
+      stroke-width: 2px;
+    }
+
+    .speed_1g {
+      fill: #2ef055;
+    }
+
+    .speed_100m {
+      fill: #fae70f;
+    }
+
+    .speed_error {
+      fill: #e42121;
+    }
+
+    .speed_down {
+      fill: transparent;
+    }
+
+    .blink_fast {
+      animation: color-blink .1s infinite alternate;
+    }
+
+    .blink_slow {
+      animation: color-blink .5s infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: transparent;
+      }
+    }
+
+    #fport {
+      transform: rotate(180deg) scale(2);
+    }
+  </style>
+  <symbol>
+    <g id="eport" class="linestyle">
+      <g id="elight" fill="param(lightcolor) transparent">
+        <path class="thick" d="m70,0 l0,31 l-18,0 l0, 28 l -51.5, 0 l 0, -40 l 72, 0" />
+        <path class="thick" d="m147,0 l0,31 l18, 0 l0, 28, l 51.5, 0 l 0, -40 l-72, 0" />
+      </g>
+      <path class="thin global" d="m70,7.938l74.532,0" />
+      <path class="thick global" d="m7.5,57l0,114 l204, 0 l 0, -114" />
+    </g>
+    <g id="fport" class="linestyle">
+      <path d="m0,-0l101,0l0,69l-27,0l-4.5,-5l-39,0l-4.5,5l-27,0l1,-69z" class="global thin" />
+      <g id="flight">
+        <path d="m30,64l4,5 l32,0 l4, -5" />
+      </g>
+    </g>
+  </symbol>
+  <rect class="global thick" x="42" y="68" width="2577" height="477" />
+  <path class="global thick"
+    d="M109.156,115.219H2546.87a10,10,0,0,1,10,10V487.813a10,10,0,0,1-10,10H109.156a10,10,0,0,1-10-10V125.219A10,10,0,0,1,109.156,115.219Z" />
+  <rect id="inner_rect" class="global thick" x="186.125" y="228" width="1036.285" height="203.719" />
+
+  <use xlink:href="#eport" id="port1" x="215" y="229" class="speed_1g blink_fast">
+    <param name="lightcolor" value="red" />
+  </use>
+  <use xlink:href="#eport" id="port2" x="469" y="229" class="speed_down" />
+  <use xlink:href="#eport" id="port3" x="723" y="229" class="speed_error" />
+  <use xlink:href="#eport" id="port4" x="976" y="229" class="speed_100m blink_slow" />
+
+  <!-- <path d="m0,432 l3000,0" class="global thick" /> -->
+
+  <use xlink:href="#fport" id="port5" x="1650" y="430" class="speed_1g blink_fast" />
+  <use xlink:href="#fport" id="port6" x="1900" y="430" class="speed_down" />
+  <use xlink:href="#fport" id="port7" x="2150" y="430" class="speed_error" />
+  <use xlink:href="#fport" id="port8" x="2400" y="430" class="speed_100m blink_slow" />
+
+</svg>
