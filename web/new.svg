@@ -46,7 +46,9 @@
     d="M109.156,115.219H2546.87a10,10,0,0,1,10,10V487.813a10,10,0,0,1-10,10H109.156a10,10,0,0,1-10-10V125.219A10,10,0,0,1,109.156,115.219Z" />
   <rect id="inner_rect" class="global" x="186.125" y="228" width="1036.285" height="203.719" />
 
-  <use xlink:href="#eport" id="port1" x="215" y="229" style="--led-color:#2ef055;--blink-speed:0.1s;" />
+  <use xlink:href="#eport" id="port1" x="215" y="229" style="--led-color:#2ef055;--blink-speed:0.1s;">
+    <param>
+  </use>
   <use xlink:href="#eport" id="port2" x="469" y="229" style="--led-color:transparent;" />
   <use xlink:href="#eport" id="port3" x="723" y="229" style="--led-color:#e42121;" />
   <use xlink:href="#eport" id="port4" x="976" y="229" style="--led-color:#fae70f;--blink-speed:0.5s;" />
