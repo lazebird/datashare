@@ -1,40 +1,18 @@
-<svg width="242" height="168" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<svg width="242" height="168" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <style>
     .global {
-      fill: none;
+      fill: transparent;
       stroke: black;
-    }
-
-    .thick {
-      stroke-width: 2px;
+      stroke-width: 5px;
     }
 
     .thin {
-      stroke-width: 1px;
+      stroke-width: 2px;
     }
 
-    .speed_1g {
-      fill: #2ef055;
-    }
-
-    .speed_100m {
-      fill: #fae70f;
-    }
-
-    .speed_error {
-      fill: #e42121;
-    }
-
-    .speed_down {
-      fill: transparent;
-    }
-
-    .blink_fast {
-      animation: color-blink .1s infinite alternate;
-    }
-
-    .blink_slow {
-      animation: color-blink .5s infinite alternate;
+    .led {
+      fill: var(--led-color, black);
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
     }
 
     @keyframes color-blink {
@@ -43,11 +21,13 @@
       }
     }
   </style>
-  <g class="global fport">
-    <path d="m0,-0l101,0l0,69l-27,0l-4.5,-5l-39,0l-4.5,5l-27,0l1,-69z" class="global thick" />
-    <g id="light" class="speed_1g blink_slow">
-      <path d="m30,64l4,5 l32,0 l4, -5" />
-      <!-- <animate attributeName="fill" values="green; gray" dur="0.1s" begin="0s" repeatCount="indefinite" /> -->
+  <symbol>
+    <g id="fport" class="global">
+      <path d="m0 -0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
+      <g id="flight" class="thin led">
+        <path d="m30 64l4 5 l32 0 l4 -5" />
+      </g>
     </g>
-  </g>
+  </symbol>
+  <use xlink:href="#fport" id="port5" style="--led-color:#2ef055;--blink-speed:0.1;" />
 </svg>

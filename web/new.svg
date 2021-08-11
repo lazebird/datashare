@@ -12,7 +12,7 @@
 
     .led {
       fill: var(--led-color, black);
-      animation: color-blink var(--blink-speed, 0s) infinite alternate;
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
     }
 
     @keyframes color-blink {
@@ -27,17 +27,17 @@
   </style>
   <symbol>
     <g id="eport" class="global">
-      <g id="elight">
-        <path class="led" d="m70,0 l0,31 l-18,0 l0, 28 l -51.5, 0 l 0, -40 l 72, 0" />
-        <path class="led" d="m147,0 l0,31 l18, 0 l0, 28, l 51.5, 0 l 0, -40 l-72, 0" />
+      <g id="elight" class="led">
+        <path d="m70 0 l0 31 l-18 0 l0 28 l -51.5 0 l 0 -40 l 72 0" />
+        <path d="m147 0 l0 31 l18 0 l0 28 l 51.5 0 l 0 -40 l-72 0" />
       </g>
-      <path class="thin" d="m70,7.938l74.532,0" />
-      <path d="m7.5,57l0,114 l204, 0 l 0, -114" />
+      <path class="thin" d="m70 7.938l74.532 0" />
+      <path d="m7.5 57l0 114 l204 0 l 0 -114" />
     </g>
     <g id="fport" class="global">
-      <path d="m0,-0l101,0l0,69l-27,0l-4.5,-5l-39,0l-4.5,5l-27,0l1,-69z" class="thin" />
-      <g id="flight" class="thin">
-        <path class="led" d="m30,64l4,5 l32,0 l4, -5" />
+      <path d="m0 -0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
+      <g id="flight" class="thin led">
+        <path d="m30 64l4 5 l32 0 l4 -5" />
       </g>
     </g>
   </symbol>
@@ -46,19 +46,17 @@
     d="M109.156,115.219H2546.87a10,10,0,0,1,10,10V487.813a10,10,0,0,1-10,10H109.156a10,10,0,0,1-10-10V125.219A10,10,0,0,1,109.156,115.219Z" />
   <rect id="inner_rect" class="global" x="186.125" y="228" width="1036.285" height="203.719" />
 
-  <use xlink:href="#eport" id="port1" x="215" y="229" style="--led-color:#2ef055;--blink-speed:0.1s;">
-    <param>
-  </use>
+  <use xlink:href="#eport" id="port1" x="215" y="229" style="--led-color:#2ef055;--blink-speed:0.1;" />
   <use xlink:href="#eport" id="port2" x="469" y="229" style="--led-color:transparent;" />
   <use xlink:href="#eport" id="port3" x="723" y="229" style="--led-color:#e42121;" />
-  <use xlink:href="#eport" id="port4" x="976" y="229" style="--led-color:#fae70f;--blink-speed:0.5s;" />
+  <use xlink:href="#eport" id="port4" x="976" y="229" style="--led-color:#fae70f;--blink-speed:0.5;" />
 
   <!-- <path d="m0,432 l3000,0" class="global " /> -->
 
-  <use xlink:href="#fport" id="port5" x="1650" y="430" style="--led-color:#2ef055;--blink-speed:0.1s;" />
+  <use xlink:href="#fport" id="port5" x="1650" y="430" style="--led-color:#2ef055;--blink-speed:0.1;" />
   <use xlink:href="#fport" id="port6" x="1900" y="430" style="--led-color:transparent;" />
   <use xlink:href="#fport" id="port7" x="2150" y="430" style="--led-color:#e42121;" />
-  <use xlink:href="#fport" id="port8" x="2400" y="430" style="--led-color:#fae70f;--blink-speed:0.5s;" />
+  <use xlink:href="#fport" id="port8" x="2400" y="430" style="--led-color:#fae70f;--blink-speed:0.5;" />
 
   <script type="text/ecmascript" xlink:href="https://www.w3.org/TR/2009/WD-SVGParamPrimer-20090616/param.js" />
 
