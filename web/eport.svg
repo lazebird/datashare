@@ -21,15 +21,12 @@
       }
     }
   </style>
-  <symbol>
-    <g id="eport" class="global">
-      <g id="elight" class="led">
-        <path d="m70 0 l0 31 l-18 0 l0 28 l -51.5 0 l 0 -40 l 72 0" />
-        <path d="m147 0 l0 31 l18 0 l0 28 l 51.5 0 l 0 -40 l-72 0" />
-      </g>
-      <path class="thin" d="m70 7.938l74.532 0" />
-      <path d="m7.5 57l0 114 l204 0 l 0 -114" />
+  <g id="eport" class="global">
+    <g id="elight" class="led">
+      <path d="m70 0 l0 31 l-18 0 l0 28 l -51.5 0 l 0 -40 l 72 0" />
+      <path d="m147 0 l0 31 l18 0 l0 28 l 51.5 0 l 0 -40 l-72 0" />
     </g>
-  </symbol>
-  <use xlink:href="#eport" id="port1" style="--led-color:#2ef055;--blink-speed:0.1;" />
+    <path class="thin" d="m70 7.938l74.532 0" />
+    <path d="m7.5 57l0 114 l204 0 l 0 -114" />
+  </g>
 </svg>

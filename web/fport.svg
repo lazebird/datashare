@@ -21,13 +21,10 @@
       }
     }
   </style>
-  <symbol>
-    <g id="fport" class="global">
-      <path d="m0 -0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
-      <g id="flight" class="thin led">
-        <path d="m30 64l4 5 l32 0 l4 -5" />
-      </g>
+  <g id="fport" class="global">
+    <path d="m0 -0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
+    <g id="flight" class="thin led">
+      <path d="m30 64l4 5 l32 0 l4 -5" />
     </g>
-  </symbol>
-  <use xlink:href="#fport" id="port5" style="--led-color:#2ef055;--blink-speed:0.1;" />
+  </g>
 </svg>

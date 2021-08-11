@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2661" height="612">
+  <!-- can only be accessed via network, to avoid security risks -->
+  <style>
+    .global {
+      fill: transparent;
+      stroke: black;
+      stroke-width: 5px;
+    }
+
+    .thin {
+      stroke-width: 2px;
+    }
+
+    .led {
+      fill: var(--led-color, black);
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: transparent;
+      }
+    }
+
+    #fport {
+      transform: rotate(180deg) scale(2);
+    }
+  </style>
+  <rect class="global " x="42" y="68" width="2577" height="477" />
+  <path class="global "
+    d="M109.156,115.219H2546.87a10,10,0,0,1,10,10V487.813a10,10,0,0,1-10,10H109.156a10,10,0,0,1-10-10V125.219A10,10,0,0,1,109.156,115.219Z" />
+  <rect id="inner_rect" class="global" x="186.125" y="228" width="1036.285" height="203.719" />
+
+  <use href="eport.svg#eport" id="port1" x="215" y="229" style="--led-color:#2ef055;--blink-speed:0.1;" />
+  <use href="eport.svg#eport" id="port2" x="469" y="229" style="--led-color:transparent;" />
+  <use href="eport.svg#eport" id="port3" x="723" y="229" style="--led-color:#e42121;" />
+  <use href="eport.svg#eport" id="port4" x="976" y="229" style="--led-color:#fae70f;--blink-speed:0.5;" />
+
+  <!-- <path d="m0,432 l3000,0" class="global " /> -->
+
+  <use href="fport.svg#fport" id="port5" x="1650" y="430" style="--led-color:#2ef055;--blink-speed:0.1;" />
+  <use href="fport.svg#fport" id="port6" x="1900" y="430" style="--led-color:transparent;" />
+  <use href="fport.svg#fport" id="port7" x="2150" y="430" style="--led-color:#e42121;" />
+  <use href="fport.svg#fport" id="port8" x="2400" y="430" style="--led-color:#fae70f;--blink-speed:0.5;" />
+
+</svg>
