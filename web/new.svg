@@ -58,6 +58,4 @@
   <use xlink:href="#fport" id="port7" x="2150" y="430" style="--led-color:#e42121;" />
   <use xlink:href="#fport" id="port8" x="2400" y="430" style="--led-color:#fae70f;--blink-speed:0.5;" />
 
-  <script type="text/ecmascript" xlink:href="https://www.w3.org/TR/2009/WD-SVGParamPrimer-20090616/param.js" />
-
 </svg>
