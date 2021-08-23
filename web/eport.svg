@@ -28,5 +28,6 @@
     </g>
     <path class="thin" d="m70 7.938l74.532 0" />
     <path d="m7.5 57l0 114 l204 0 l 0 -114" />
+    <path d="m7.5 8l0 163 l204 0 l 0 -163z" desc="clickable" stroke-width="0px" />
   </g>
 </svg>

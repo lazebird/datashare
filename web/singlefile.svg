@@ -38,12 +38,14 @@
       </g>
       <path class="thin" d="m70 7.938l74.532 0" />
       <path d="m7.5 57l0 114 l204 0 l 0 -114" />
+      <path d="m7.5 8l0 163 l204 0 l 0 -163z" desc="clickable" stroke-width="0px" />
     </g>
     <g id="fport" class="global">
-      <path d="m0 -0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
+      <path d="m0 0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
       <g id="flight" class="thin led">
         <path d="m30 64l4 5 l32 0 l4 -5" />
       </g>
+      <path d="m0 0l101 0l0 69l-101 0z" desc="clickable" stroke-width="0px" />
     </g>
   </symbol>
   <rect class="global " x="42" y="68" width="2577" height="477" />
@@ -77,7 +79,6 @@
       msg += "  speed: 1000M, duplex: Full" + "\n";
       msg += "  ingress: 10kBps, egress: 3kBps" + "\n";
       msg += " \nmore detail >>>"
-      console.log(msg);
       return msg;
     }
     function msg2text(t, msg) {

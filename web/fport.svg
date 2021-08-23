@@ -22,9 +22,10 @@
     }
   </style>
   <g id="fport" class="global">
-    <path d="m0 -0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
+    <path d="m0 0l101 0l0 69l-27 0l-4.5 -5l-39 0l-4.5 5l-27 0l1 -69z" class="thin" />
     <g id="flight" class="thin led">
       <path d="m30 64l4 5 l32 0 l4 -5" />
     </g>
+    <path d="m0 0l101 0l0 69l-101 0z" desc="clickable" stroke-width="0px" />
   </g>
 </svg>
