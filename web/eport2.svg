@@ -1,0 +1,36 @@
+<svg width="160" height="250" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    .led {
+      fill: var(--led-color, green);
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: transparent;
+      }
+    }
+  </style>
+  <symbol>
+    <g id="eport1" stroke-width="0px">
+      <rect width="160" height="125" fill="silver" />
+      <rect x="15" y="10" width="130" height="105" fill="black" />
+      <rect x="60" y="1" width="40" height="10" fill="black" />
+      <g id="elight1" class="led">
+        <rect x="10" y="10" width="40" height="20" />
+        <rect x="110" y="10" width="40" height="20" />
+      </g>
+    </g>
+    <g id="eport2" stroke-width="0px">
+      <rect width="160" height="125" fill="silver" />
+      <rect x="15" y="10" width="130" height="105" fill="black" />
+      <rect x="60" y="114" width="40" height="10" fill="black" />
+      <g id="elight2" class="led">
+        <rect x="10" y="95" width="40" height="20" />
+        <rect x="110" y="95" width="40" height="20" />
+      </g>
+    </g>
+  </symbol>
+  <use href="#eport1" x="0" y="0" style="--led-color:#2ef055;--blink-speed:0.1;" />
+  <use href="#eport2" x="0" y="125" style="--led-color:#2ef055;--blink-speed:0.1;" />
+</svg>

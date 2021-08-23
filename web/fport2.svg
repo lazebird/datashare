@@ -1,0 +1,32 @@
+<svg width="140" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    .led {
+      fill: var(--led-color, black);
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: transparent;
+      }
+    }
+  </style>
+  <symbol>
+    <g id="fport1" stroke="silver">
+      <rect width="140" height="90" fill="black" stroke-width="3px" />
+      <g id="flight1" class="led">
+        <rect x="42" y="-5" width="55" height="10" stroke-width="0px" />
+      </g>
+      <path d="m 42 5 l 55 0" stroke-width="3px" />
+    </g>
+    <g id="fport2" stroke="silver">
+      <rect width="140" height="90" fill="black" stroke-width="3px" />
+      <g id="flight2" class="led">
+        <rect x="42" y="85" width="55" height="10" stroke-width="0px" />
+      </g>
+      <path d="m 42 85 l 55 0" stroke-width="3px" />
+    </g>
+  </symbol>
+  <use href="#fport1" x="0" y="0" style="--led-color:#2ef055;--blink-speed:0.1;" />
+  <use href="#fport2" x="0" y="100" style="--led-color:#2ef055;--blink-speed:0.1;" />
+</svg>

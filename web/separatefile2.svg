@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2661" height="800">
+  <!-- can only be accessed via network, to avoid security risks -->
+  <style>
+    .global {
+      fill: transparent;
+      stroke: black;
+      stroke-width: 5px;
+    }
+
+    .led {
+      fill: var(--led-color, black);
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: black;
+      }
+    }
+  </style>
+  <rect class="global" width="1600" height="450" />
+
+  <use href="eport2.svg#eport1" id="port1" x="100" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+    onclick="onSelect(this)" />
+  <use href="eport2.svg#eport2" id="port2" x="100" y="225" style="--led-color:#e42121;" onclick="onSelect(this)" />
+  <use href="eport2.svg#eport1" id="port3" x="260" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+    onclick="onSelect(this)" />
+  <use href="eport2.svg#eport2" id="port4" x="260" y="225" style="--led-color:black;" onclick="onSelect(this)" />
+  <use href="eport2.svg#eport1" id="port5" x="420" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+    onclick="onSelect(this)" />
+  <use href="eport2.svg#eport2" id="port6" x="420" y="225" style="--led-color:#fae70f;--blink-speed:0.5;"
+    onclick="onSelect(this)" />
+  <use href="eport2.svg#eport1" id="port7" x="580" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+    onclick="onSelect(this)" />
+  <use href="eport2.svg#eport2" id="port8" x="580" y="225" style="--led-color:#fae70f;--blink-speed:0.5;"
+    onclick="onSelect(this)" />
+
+  <use href="fport2.svg#fport1" id="port9" x="800" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+    onclick="onSelect(this)" />
+  <use href="fport2.svg#fport1" id="port10" x="1000" y="100" style="--led-color:black;" onclick="onSelect(this)" />
+  <text id="desc" x="0" y="500" onclick="click2go()"></text>
+  <script xlink:href="port.js" />
+</svg>
