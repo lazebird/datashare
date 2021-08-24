@@ -38,6 +38,7 @@
   <use href="fport2.svg#fport1" id="port9" x="800" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
     onclick="onSelect(this)" />
   <use href="fport2.svg#fport1" id="port10" x="1000" y="100" style="--led-color:black;" onclick="onSelect(this)" />
+  <use href="serial.svg#serial1" id="serial1" x="1220" y="225" style="--led-color:black;" onclick="onSelect(this)" />
   <text id="desc" x="0" y="500" onclick="click2go()"></text>
   <script xlink:href="port.js" />
 </svg>

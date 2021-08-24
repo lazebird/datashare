@@ -1,0 +1,16 @@
+<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <symbol>
+    <g id="serial1" stroke-width="0px">
+      <rect width="160" height="125" fill="silver" />
+      <rect x="15" y="15" width="130" height="100" fill="black" />
+      <rect x="55" y="1" width="50" height="15" fill="black" />
+    </g>
+    <g id="serial2" stroke-width="0px">
+      <rect width="160" height="125" fill="silver" />
+      <rect x="15" y="10" width="130" height="100" fill="black" />
+      <rect x="55" y="109" width="50" height="15" fill="black" />
+    </g>
+  </symbol>
+  <use href="#serial1" x="0" y="0" />
+  <use href="#serial1" x="0" y="150" transform="rotate(180 80 212.5)" />
+</svg>
