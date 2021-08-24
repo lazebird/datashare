@@ -21,15 +21,7 @@
         <rect x="110" y="10" width="40" height="20" />
       </g>
     </g>
-    <g id="eport2" stroke-width="0px">
-      <rect width="160" height="125" fill="silver" />
-      <rect x="15" y="10" width="130" height="105" fill="black" />
-      <rect x="60" y="114" width="40" height="10" fill="black" />
-      <g id="elight2" class="led">
-        <rect x="10" y="95" width="40" height="20" />
-        <rect x="110" y="95" width="40" height="20" />
-      </g>
-    </g>
+    <use id="eport2" href="#eport1" transform="rotate(180 80 62.5)" />
   </symbol>
   <use href="#eport1" x="0" y="0" style="--led-color:#2ef055;--blink-speed:0.1;" />
   <use href="#eport2" x="0" y="125" style="--led-color:#2ef055;--blink-speed:0.1;" />

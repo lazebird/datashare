@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2661" height="800">
+  <style>
+    .global {
+      fill: transparent;
+      stroke: black;
+      stroke-width: 5px;
+    }
+
+    .led {
+      fill: var(--led-color, black);
+      animation: color-blink calc(var(--blink-speed, 0)*1s) infinite alternate;
+    }
+
+    @keyframes color-blink {
+      to {
+        fill: black;
+      }
+    }
+  </style>
+  <symbol>
+    <g id="eport1" stroke-width="0px">
+      <rect width="160" height="125" fill="silver" />
+      <rect x="15" y="10" width="130" height="105" fill="black" />
+      <rect x="60" y="1" width="40" height="10" fill="black" />
+      <g id="elight1" class="led">
+        <rect x="10" y="10" width="40" height="20" />
+        <rect x="110" y="10" width="40" height="20" />
+      </g>
+    </g>
+    <use id="eport2" href="#eport1" transform="rotate(180 80 62.5)" />
+    <g id="fport1" stroke="silver">
+      <rect width="140" height="90" fill="black" stroke-width="3px" />
+      <g id="flight1" class="led">
+        <rect x="42" y="-5" width="55" height="10" stroke-width="0px" />
+      </g>
+      <path d="m 42 5 l 55 0" stroke-width="3px" />
+    </g>
+    <use id="fport2" href="#fport1" transform="rotate(180 70 42.5)" />
+    <g id="serial1" stroke-width="0px">
+      <rect width="160" height="125" fill="silver" />
+      <rect x="15" y="15" width="130" height="100" fill="black" />
+      <rect x="55" y="1" width="50" height="15" fill="black" />
+    </g>
+    <use id="serial2" href="#serial1" transform="rotate(180 80 62.5)" />
+  </symbol>
+  <g class="global">
+    <rect width="1600" height="450" />
+    <use href="#eport1" id="port1" x="100" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+      onclick="onSelect(this)" />
+    <use href="#eport2" id="port2" x="100" y="225" style="--led-color:#e42121;" onclick="onSelect(this)" />
+    <use href="#eport1" id="port3" x="260" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+      onclick="onSelect(this)" />
+    <use href="#eport2" id="port4" x="260" y="225" style="--led-color:black;" onclick="onSelect(this)" />
+    <use href="#eport1" id="port5" x="420" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+      onclick="onSelect(this)" />
+    <use href="#eport2" id="port6" x="420" y="225" style="--led-color:#fae70f;--blink-speed:0.5;"
+      onclick="onSelect(this)" />
+    <use href="#eport1" id="port7" x="580" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
+      onclick="onSelect(this)" />
+    <use href="#eport2" id="port8" x="580" y="225" style="--led-color:#fae70f;--blink-speed:0.5;"
+      onclick="onSelect(this)" />
+
+    <use href="#fport2" id="port9" x="800" y="105" style="--led-color:#2ef055;--blink-speed:0.1;"
+      onclick="onSelect(this)" />
+    <use href="#fport1" id="port10" x="800" y="260" style="--led-color:#2ef055;--blink-speed:0.1;"
+      onclick="onSelect(this)" />
+    <use href="#fport2" id="port11" x="960" y="105" style="--led-color:black;" onclick="onSelect(this)" />
+    <use href="#fport1" id="port12" x="960" y="260" style="--led-color:black;" onclick="onSelect(this)" />
+
+    <use href="#serial1" id="serial1" x="1220" y="225" style="--led-color:black;" onclick="onSelect(this)" />
+    <text id="desc" x="0" y="500" onclick="click2go()"></text>
+
+    <path desc="align line" d="m 0 100 l 0 250 l 1600 0  l 0 -250 z" visibility="hidden" />
+  </g>
+  <script>
+    <![CDATA[
+    var selectedport = "";
+    function setportevt() {
+      for (var i = 1; i < 9; i++) {
+        var port = document.getElementById("port"+i);
+      }
+    }
+    function genMsg(e) {
+      var msg = e.id + ":" + "\n";
+      msg += "  speed: 1000M, duplex: Full" + "\n";
+      msg += "  ingress: 10kBps, egress: 3kBps" + "\n";
+      msg += " \nmore detail >>>"
+      return msg;
+    }
+    function msg2text(t, msg) {
+      var lines = msg.split("\n");
+      for (const v of lines) {
+        var tspan = document.createElementNS("http://www.w3.org/2000/svg", 'tspan');
+        tspan.setAttribute('x',t.getAttribute("x"));
+        tspan.setAttribute('dy','1.2em');
+        tspan.textContent  = v;
+        t.appendChild(tspan);
+      }
+    }
+    function onSelect(e) {
+      var desc = document.getElementById("desc");
+      desc.textContent  = "";
+      if (e.id === selectedport) {
+        selectedport = "";
+        return;
+      }
+      selectedport = e.id;
+      msg2text(desc, genMsg(e));
+    }
+    function click2go() {
+      if (selectedport === "") { return; }
+      var desc = document.getElementById("desc");
+      desc.textContent  = "here we go to detail page of " + selectedport + " ...";
+    }
+    ]]>
+  </script>
+</svg>
