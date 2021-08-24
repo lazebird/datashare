@@ -12,14 +12,16 @@
     }
   </style>
   <symbol>
-    <g id="fport1" stroke="silver">
-      <rect width="140" height="90" fill="black" stroke-width="3px" />
-      <g id="flight1" class="led">
-        <rect x="42" y="-5" width="55" height="10" stroke-width="0px" />
+    <g id="fport1" stroke="silver" stroke-width="3px" fill="black">
+      <rect y="5" width="140" height="90" />
+      <rect x="42" width="55" height="10" stroke-width="0px" />
+      <path d="m 42 10 l 55 0" />
+      <g id="flight1" class="led" stroke-width="0px">
+        <rect width="35" height="5" />
+        <rect x="105" width="35" height="5" />
       </g>
-      <path d="m 42 5 l 55 0" stroke-width="3px" />
     </g>
-    <use id="fport2" href="#fport1" transform="rotate(180 70 42.5)" />
+    <use id="fport2" href="#fport1" transform="rotate(180 70 47.5)" />
   </symbol>
   <use href="#fport1" x="0" y="0" style="--led-color:#2ef055;--blink-speed:0.1;" />
   <use href="#fport2" x="0" y="100" style="--led-color:#2ef055;--blink-speed:0.1;" />

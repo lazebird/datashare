@@ -19,7 +19,7 @@
     }
   </style>
   <g class="global">
-    <rect width="1600" height="450" />
+    <rect width="1600" height="450" fill="gray" stroke-width="0px" />
     <use href="eport2.svg#eport1" id="port1" x="100" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
       onclick="onSelect(this)" />
     <use href="eport2.svg#eport2" id="port2" x="100" y="225" style="--led-color:#e42121;" onclick="onSelect(this)" />
@@ -35,17 +35,16 @@
     <use href="eport2.svg#eport2" id="port8" x="580" y="225" style="--led-color:#fae70f;--blink-speed:0.5;"
       onclick="onSelect(this)" />
 
-    <use href="fport2.svg#fport2" id="port9" x="800" y="105" style="--led-color:#2ef055;--blink-speed:0.1;"
+    <use href="fport2.svg#fport2" id="port9" x="800" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
       onclick="onSelect(this)" />
-    <use href="fport2.svg#fport1" id="port10" x="800" y="260" style="--led-color:#2ef055;--blink-speed:0.1;"
+    <use href="fport2.svg#fport1" id="port10" x="800" y="255" style="--led-color:#2ef055;--blink-speed:0.1;"
       onclick="onSelect(this)" />
-    <use href="fport2.svg#fport2" id="port11" x="960" y="105" style="--led-color:black;" onclick="onSelect(this)" />
-    <use href="fport2.svg#fport1" id="port12" x="960" y="260" style="--led-color:black;" onclick="onSelect(this)" />
+    <use href="fport2.svg#fport2" id="port11" x="960" y="100" style="--led-color:black;" onclick="onSelect(this)" />
+    <use href="fport2.svg#fport1" id="port12" x="960" y="255" style="--led-color:black;" onclick="onSelect(this)" />
 
     <use href="serial.svg#serial1" id="serial1" x="1220" y="225" style="--led-color:black;" onclick="onSelect(this)" />
-    <text id="desc" x="0" y="500" onclick="click2go()"></text>
-
     <path desc="align line" d="m 0 100 l 0 250 l 1600 0  l 0 -250 z" visibility="hidden" />
   </g>
+  <text id="desc" x="0" y="500" onclick="click2go()"></text>
   <script xlink:href="port.js" />
 </svg>

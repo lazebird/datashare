@@ -16,7 +16,7 @@
       <rect width="160" height="125" fill="silver" />
       <rect x="15" y="10" width="130" height="105" fill="black" />
       <rect x="60" y="1" width="40" height="10" fill="black" />
-      <g id="elight1" class="led">
+      <g id="elight1" class="led" stroke-width="0px">
         <rect x="10" y="10" width="40" height="20" />
         <rect x="110" y="10" width="40" height="20" />
       </g>

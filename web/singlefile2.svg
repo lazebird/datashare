@@ -28,14 +28,16 @@
       </g>
     </g>
     <use id="eport2" href="#eport1" transform="rotate(180 80 62.5)" />
-    <g id="fport1" stroke="silver">
-      <rect width="140" height="90" fill="black" stroke-width="3px" />
-      <g id="flight1" class="led">
-        <rect x="42" y="-5" width="55" height="10" stroke-width="0px" />
+    <g id="fport1" stroke="silver" stroke-width="3px" fill="black">
+      <rect y="5" width="140" height="90" />
+      <rect x="42" width="55" height="10" stroke-width="0px" />
+      <path d="m 42 10 l 55 0" />
+      <g id="flight1" class="led" stroke-width="0px">
+        <rect width="35" height="5" />
+        <rect x="105" width="35" height="5" />
       </g>
-      <path d="m 42 5 l 55 0" stroke-width="3px" />
     </g>
-    <use id="fport2" href="#fport1" transform="rotate(180 70 42.5)" />
+    <use id="fport2" href="#fport1" transform="rotate(180 70 47.5)" />
     <g id="serial1" stroke-width="0px">
       <rect width="160" height="125" fill="silver" />
       <rect x="15" y="15" width="130" height="100" fill="black" />
@@ -44,7 +46,7 @@
     <use id="serial2" href="#serial1" transform="rotate(180 80 62.5)" />
   </symbol>
   <g class="global">
-    <rect width="1600" height="450" />
+    <rect width="1600" height="450" fill="gray" stroke-width="0px" />
     <use href="#eport1" id="port1" x="100" y="100" style="--led-color:#2ef055;--blink-speed:0.1;"
       onclick="onSelect(this)" />
     <use href="#eport2" id="port2" x="100" y="225" style="--led-color:#e42121;" onclick="onSelect(this)" />
@@ -68,10 +70,9 @@
     <use href="#fport1" id="port12" x="960" y="260" style="--led-color:black;" onclick="onSelect(this)" />
 
     <use href="#serial1" id="serial1" x="1220" y="225" style="--led-color:black;" onclick="onSelect(this)" />
-    <text id="desc" x="0" y="500" onclick="click2go()"></text>
-
     <path desc="align line" d="m 0 100 l 0 250 l 1600 0  l 0 -250 z" visibility="hidden" />
   </g>
+  <text id="desc" x="0" y="500" onclick="click2go()"></text>
   <script>
     <![CDATA[
     var selectedport = "";
