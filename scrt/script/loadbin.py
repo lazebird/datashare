@@ -46,10 +46,10 @@ def do_load(prog, restart_mode):
 	crt.Screen.Send("\3") # ctrl+c; ctrl characters
 	crt.Screen.WaitForString("root", 1)
 	crt.Screen.Send("wget http://"+srvip+"/bin/"+prog+"\r\n")
-	ret = crt.Screen.WaitForStrings(["saved","failed", "ERROR", "No such", "^C"])
-	if ret == 1:
+	ret = crt.Screen.WaitForStrings(["saved", "100%","failed", "ERROR", "No such", "^C"])
+	if ret == 1 or ret == 2:
 		crt.Screen.Send("chmod 777 "+prog+" && mv /usr/bin/"+prog+" /"+prog+".bak && mv "+prog+" /usr/bin && sync\r\n")
-		crt.Screen.WaitForStrings(["root", "^C"])
+		crt.Screen.WaitForStrings(["root", "#", "^C"])
 		if restart_mode == "restart": 
 			crt.Screen.Send("pkill "+prog+"\r\n")
 			crt.Screen.WaitForString("root", 1)
