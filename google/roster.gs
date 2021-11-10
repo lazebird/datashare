@@ -98,6 +98,7 @@ function set_flag() {
 function autorun(e = null) {
   if (e && e.range.getA1Notation() !== 'D2') return
   _set_checkbox(_getsheet(spreadsheet, 'origin', false), "Update", 'D1', 'D2', 'no')
+  spreadsheet.setActiveSheet(_getsheet(spreadsheet, 'layout', true))
   data_process();
   draw_buildings();
   set_flag()
