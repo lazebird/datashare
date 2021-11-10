@@ -99,8 +99,23 @@ function set_flag() {
   var sheet = _getsheet(spreadsheet, "layout", false);
   _forEachRangeCell(sheet.getRange("A1:M30"), _set_cell_flag, datas)
 }
-function autorun() {
+function autorun(e = null) {
+  if (e && e.range.getA1Notation() !== 'D2') return
+  _set_checkbox(_getsheet(spreadsheet, 'origin', false), "Update", 'D1', 'D2', 'no')
   data_process();
   draw_buildings();
   set_flag()
+}
+
+function _set_checkbox(sheet, prompt, promptpos, cbpos, val) {
+  sheet.getRange(promptpos).setHorizontalAlignment("center");
+  sheet.getRange(promptpos).setValue(prompt);
+  sheet.getRange(cbpos).removeCheckboxes(); // avoid too many checkboxes are created
+  sheet.getRange(cbpos).insertCheckboxes("yes", "no");
+  sheet.getRange(cbpos).setValue(val);
+  sheet.getRange(cbpos).setNote("Last modified: " + new Date());
+}
+function onEdit(e) {
+  var name = spreadsheet.getActiveSheet().getName();
+  if (name == 'origin') autorun(e);
 }
