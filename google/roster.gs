@@ -78,26 +78,22 @@ function _read_procData() {
   var values = sheet.getRange("A1:A250").getValues();
   return [].concat(...values).filter(v => v !== '')
 }
-function _forEachRangeCell(range, f, datas) {
-  const numRows = range.getNumRows();
-  const numCols = range.getNumColumns();
-  for (let i = 1; i <= numCols; i++) {
-    for (let j = 1; j <= numRows; j++) {
-      const cell = range.getCell(j, i)
-      f(cell, datas)
+
+function values2colors(values, datas) {
+  for (var i in values) {
+    for (var j in values[i]) {
+      if (!values[i][j].length) continue;
+      values[i][j] = (datas.indexOf(values[i][j]) >= 0 && 'green' || 'red')
     }
   }
-}
-function _set_cell_flag(cell, datas) {
-  var value = cell.getValue()
-  if (!value.length) return
-  cell.setBackground(datas.indexOf(value) >= 0 && 'green' || 'red')
+  return values
 }
 function set_flag() {
   var datas = _read_procData();
-  // console.log('[set_flag] datas %s', JSON.stringify(datas))
   var sheet = _getsheet(spreadsheet, "layout", false);
-  _forEachRangeCell(sheet.getRange("A1:M30"), _set_cell_flag, datas)
+  var range = sheet.getRange("A1:M30")
+  var values = range.getValues();
+  range.setBackgrounds(values2colors(values, datas))
 }
 function autorun(e = null) {
   if (e && e.range.getA1Notation() !== 'D2') return
