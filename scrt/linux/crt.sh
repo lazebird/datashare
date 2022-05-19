@@ -1,7 +1,7 @@
 #!/bin/bash
 # [Ubuntu18.04下安装 并破解 SecureCRT8.5 的方法记录](https://www.tuziang.com/combat/1237.html)
 
-TARGET=scrt-9.2.1
+TARGET=scrt-sfx-8.5.3 # scrt-9.2.1
 TARNAME=${TARGET}.tar.gz
 test -f ${TARNAME} || wget -O ${TARNAME} https://code.aliyun.com/lazebird/datashare/raw/master/scrt/linux/scrt-9.2.1.2768.ubuntu18-64.tar.gz || exit 1
 test -d ${TARGET} || tar -xf ${TARNAME} || exit 1
