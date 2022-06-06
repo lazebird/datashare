@@ -55,7 +55,7 @@ get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 mv $configname $configbak 2>/dev/null # save last config
 fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
-while [kill $(pgrep clash) 2>/dev/null]; do sleep 1s; done
+while [ kill $(pgrep clash) ] 2>/dev/null; do sleep 1s; done
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && $logcmd "# starting proxy temporally success"
 
 $logcmd "#### updating configure files in $workdir:"
