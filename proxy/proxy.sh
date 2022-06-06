@@ -19,7 +19,7 @@ fetch_file() { # parameter: filename, path, url, alternate
     if [ $? -ne 0 ]; then
         rm -f $path/$filename                     # remove empty file
         mv $path/$alt $path/$filename 2>/dev/null # try revert
-        $logcmd "# $path/$filename download failed." >&2
+        $logcmd "# $url download failed." >&2
         exit 1
     fi
     $logcmd "# $path/$filename download success."
@@ -55,8 +55,8 @@ get_clash && chmod +x clash
 fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
 mv $configname $configbak 2>/dev/null # save last config
 fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
-kill $(pgrep clash) 2>/dev/null && sleep 3s
-ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && sleep 1s
+while [kill $(pgrep clash) 2>/dev/null]; do sleep 1s; done
+ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && $logcmd "# starting proxy temporally success"
 
 $logcmd "#### updating configure files in $workdir:"
 [ ! -e "$configbak" ] && mv $configname $configbak 2>/dev/null || rm -f $configname # save/remove empty config
