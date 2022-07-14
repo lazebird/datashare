@@ -1,4 +1,5 @@
 import sys
+
 # import os
 
 # (strScriptPath, strScriptName) = os.path.split(__file__)
@@ -16,7 +17,7 @@ import sys
 crt.Screen.Synchronous = True
 crt.Screen.IgnoreEscape = True
 crt.Screen.Send("\n")
-crt.Screen.WaitForStrings(["should never be matched"], 1) # clear screen buffer
+crt.Screen.WaitForStrings(["should never be matched"], 1)  # clear screen buffer
 lastcol = crt.Screen.CurrentColumn
 lastrow = crt.Screen.CurrentRow
 crt.Screen.Send("show version" + "\n")
@@ -26,5 +27,5 @@ currow = crt.Screen.CurrentRow
 msg = crt.Screen.Get2(lastrow, lastcol, curcol, currow)
 ret = crt.Screen.MatchIndex
 crt.Dialog.MessageBox(crt.GetActiveTab().Caption + ": ret " + str(ret) + ", output " + output)
-crt.Dialog.MessageBox("("+str(lastrow)+","+str(lastcol)+") - ("+str(currow)+","+str(curcol)+")")
+crt.Dialog.MessageBox("(" + str(lastrow) + "," + str(lastcol) + ") - (" + str(currow) + "," + str(curcol) + ")")
 crt.Dialog.MessageBox(crt.GetActiveTab().Caption + ": msg: " + msg)

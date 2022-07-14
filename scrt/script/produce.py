@@ -1,5 +1,4 @@
-import sys
-import os
+import sys, os
 
 # define vars
 sn = ""
@@ -41,11 +40,7 @@ def cmdargs2line(obj):
 
 def opt_parse(s):
     opthash = {}
-    s = s.replace('"', "")  # strip extra \"
-    s = s.replace("#", " ")  # support '#' as ' '
-    s = s.replace(",", " ")  # support ',' as ' '
-    s = s.replace("  ", " ")  # support '  ' as ' '
-    s = s.strip()
+    s = s.replace('"', "").replace("#", " ").replace(",", " ").replace("  ", " ").strip()  # strip extra \", support '#' as ' ', support ',' as ' ', support '  ' as ' '
     pairs = s.split(" ")
     for tv in pairs:
         args = tv.split("=")
