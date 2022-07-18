@@ -44,11 +44,12 @@ def do_load(prog, restart_mode):
 
 conf = kvlist.kvlist(file.read(modfilename))
 prog = conf.lastkey() or ""
-prog = crt.Dialog.Prompt("Format: name [,mode]; mode: restart reboot none", "Binary name", str(prog))  # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
+prog = crt.Dialog.Prompt("Format: name [=mode]; mode: restart reboot none", "Binary name", str(prog))  # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
 prog = prog.encode("utf-8").strip()
 if len(prog) > 0:
     cmd = (opt.parse(prog)).items()[0]
-    mode = (cmd[1] == True and conf.findval(cmd[0]) or "none") or cmd[1]  # mode: restart reboot none
+    mode = (cmd[1] == True and (conf.findval(cmd[0]) or "none")) or cmd[1]  # mode: restart reboot none
+    # log.info("conf=" + str(conf.get()) + ", cmd[0]=" + cmd[0] + ", cmd[1]=" + str(cmd[1]) + ", mode=" + mode)
     conf.add(cmd[0], mode)
     file.write(modfilename, str(conf.get()) + "\n")
     do_load(cmd[0], mode)
