@@ -32,7 +32,7 @@ def parse_opt(obj):
 
 def chars_inc(s, base):
     i = int(s, base) + 1
-    ret = str(i) if base == 10 else "{:X}".format(i)
+    ret = str(i) if base == 10 else "{0:X}".format(i)
     debug("chars inc: i=" + str(i) + ", base=" + str(base) + ", ret=" + ret)
     return ret.zfill(len(s))  # may be overflow
 
