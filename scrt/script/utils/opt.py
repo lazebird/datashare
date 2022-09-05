@@ -1,10 +1,10 @@
 class opt:
-    def __init__(self, args):  # obj: crt.Arguments; example: 'a=true b,c=1'
+    def __init__(self, args):  # args: crt.Arguments; example: 'a=true b,c=1'
         self.o = {}
         s = ""
         if type(args) != str:
             for index in range(args.Count):
-                s = s + self.obj[index] + " "
+                s = s + args[index] + " "
         else:
             s = args
         self.o = parse(s)
@@ -23,7 +23,7 @@ class opt:
 
 
 def parse(s):
-    s = s.replace("#", " ").replace(",", " ").replace("  ", " ").strip()  # support '[#,  ]' as ' '
+    s = s.replace(",", " ").replace("  ", " ").strip()  # support '[,  ]' as ' '
     pairs = s.split(" ")
     o = {}
     if len(s) == 0:
