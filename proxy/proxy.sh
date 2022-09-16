@@ -15,7 +15,7 @@ fetch_file() { # parameter: filename, path, url, alternate
         $logcmd "# $path/$filename already exists."
         return
     fi
-    wget -q -O $path/$filename $url >/dev/null
+    wget -q --no-check-certificate -O $path/$filename $url >/dev/null
     if [ $? -ne 0 ]; then
         rm -f $path/$filename                     # remove empty file
         mv $path/$alt $path/$filename 2>/dev/null # try revert
