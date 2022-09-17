@@ -8,14 +8,9 @@ sys.dont_write_bytecode = True
 from utils import session
 
 defcmdarray = [
-    "interface eth0/25\r\nshutdown\r\nexit",
-    "interface eth0/25\r\nno shutdown\r\nexit",
-    "interface eth0/26\r\nshutdown\r\nexit",
-    "interface eth0/26\r\nno shutdown\r\nexit",
-    "interface eth0/27\r\nshutdown\r\nexit",
-    "interface eth0/27\r\nno shutdown\r\nexit",
-    "interface eth0/28\r\nshutdown\r\nexit",
-    "interface eth0/28\r\nno shutdown\r\nexit",
+    "#multi cmd 1.1\n#multi cmd 1.2",
+    "#multi cmd 2.1\n#multi cmd 2.2",
+    "#multi cmd 3",
 ]
 
 sess = session.sess(crt.GetActiveTab())
