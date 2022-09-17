@@ -1,18 +1,18 @@
-import sys, os, time
+import sys, os, time, json
 
 (strScriptPath, strScriptName) = os.path.split(__file__)
 if strScriptPath not in sys.path:
     sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-from utils import opt, session
+from utils import session
 
 sess = session.sess(crt.GetActiveTab())
-opts = opt.opt(crt.Arguments)
-
 srvip = "2.2.2.106" if crt.GetActiveTab().Caption.find("serial") >= 0 else "192.168.100.106"
-srvip = opts.getval("ip") or srvip
 localip = ""  # calc by srvip
+
+opts = json.loads(crt.Arguments[0]) if crt.Arguments.Count == 1 else {}
+srvip = opts.get("ip", srvip)
 
 
 def genLip(crt):

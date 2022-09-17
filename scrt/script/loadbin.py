@@ -1,19 +1,18 @@
-import sys, os
+import sys, os, json
 
 (strScriptPath, strScriptName) = os.path.split(__file__)
 if strScriptPath not in sys.path:
     sys.path.insert(0, strScriptPath)
 sys.dont_write_bytecode = True
 
-from utils import opt, kvlist, log, file
-
-opts = opt.opt(crt.Arguments)
+from utils import log
 
 srvip = "2.2.2.106" if crt.GetActiveTab().Caption.find("serial") >= 0 else "192.168.100.106"
-srvip = opts.getval("ip") or srvip
-
 workdir = "D:/" if os.path.isdir("D:/") else "/var/lib"
-workdir = opts.getval("workdir") or workdir
+
+opts = json.loads(crt.Arguments[0]) if crt.Arguments.Count == 1 else {}
+srvip = opts.get("ip", srvip)
+workdir = opts.get("workdir", workdir)
 modfilename = workdir + "/restart_mode.txt"  # must create the file yourself on linux
 
 
@@ -42,14 +41,25 @@ def do_load(prog, restart_mode):
         crt.Screen.Send("\3\r\n#something is wrong, ret " + str(ret) + "\r\n")
 
 
-conf = kvlist.kvlist(file.read(modfilename))
-prog = conf.lastkey() or ""
-prog = crt.Dialog.Prompt("Format: name [=mode]; mode: restart reboot none", "Binary name", str(prog))  # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
-prog = prog.encode("utf-8").strip()
-if len(prog) > 0:
-    cmd = (opt.parse(prog)).items()[0]
-    mode = (cmd[1] == True and (conf.findval(cmd[0]) or "none")) or cmd[1]  # mode: restart reboot none
-    # log.info("conf=" + str(conf.get()) + ", cmd[0]=" + cmd[0] + ", cmd[1]=" + str(cmd[1]) + ", mode=" + mode)
-    conf.add(cmd[0], mode)
-    file.write(modfilename, str(conf.get()) + "\n")
+try:
+    with open(modfilename) as f:
+        conflst = json.load(f)
+except:
+    conflst = []
+prog = len(conflst) and conflst[-1]["name"] or ""
+cmd = crt.Dialog.Prompt('Format: NAME, or {"name": "NAME", "mode": {"restart"|"reboot"|"none"}}', "Binary name", str(prog))  # prog = crt.Screen.ReadString({"\r\n","?", "^C"})
+cmd = cmd.encode("utf-8").strip()
+if len(cmd) > 0:
+    try:
+        args = json.loads(cmd)
+    except:
+        args = {}
+    name = args.get("name", cmd)
+    mode = args.get("mode", (next((x for x in conflst if x["name"] == name), {"mode": "none"}))["mode"] or "none")
+    # log.info("conflst=" + str(conflst.get()) + ", cmd[0]=" + cmd[0] + ", cmd[1]=" + str(cmd[1]) + ", mode=" + mode)
+    oldobj = len(conflst) and (next((x for x in conflst if x["name"] == name), None))
+    oldobj and conflst.remove(oldobj)
+    conflst.append({"name": name, "mode": mode})
+    with open(modfilename, "w") as f:
+        json.dump(conflst, f)
     do_load(cmd[0], mode)
