@@ -1,4 +1,4 @@
-import sys, os, random
+import sys, os, random, json
 
 (strScriptPath, strScriptName) = os.path.split(__file__)
 if strScriptPath not in sys.path:
@@ -7,10 +7,7 @@ sys.dont_write_bytecode = True
 
 from utils import session
 
-sess = session.sess(crt.GetActiveTab())
-loopcmdnum = 5 + random.randint(0, 9)
-timeout = 5 + random.randint(0, 9)
-cmdarray = (
+defcmdarray = [
     "interface eth0/25\r\nshutdown\r\nexit",
     "interface eth0/25\r\nno shutdown\r\nexit",
     "interface eth0/26\r\nshutdown\r\nexit",
@@ -19,7 +16,15 @@ cmdarray = (
     "interface eth0/27\r\nno shutdown\r\nexit",
     "interface eth0/28\r\nshutdown\r\nexit",
     "interface eth0/28\r\nno shutdown\r\nexit",
-)
+]
+
+sess = session.sess(crt.GetActiveTab())
+opts = json.loads(crt.Arguments[0]) if crt.Arguments.Count == 1 else {}
+loopnumbase = opts.get("loop", 5)
+timeoutbase = opts.get("timeout", 5)
+cmdarray = opts.get("cmds", defcmdarray)
+reboot = opts.get("reboot", True)
+order = opts.get("order", False)
 
 
 def execcmd(cmdstr):
@@ -31,20 +36,27 @@ def cmdpreconfig():
     return 1
 
 
-def cmdloop(num):
-    while num > 0 and not sess.wait(timeout):
-        num = num - 1
+def cmdloop(num, timeout):
+    cnt = 0
+    while cnt < num and not sess.wait(timeout):
+        index = (cnt % len(cmdarray)) if order else random.randint(0, len(cmdarray) - 1)
         if "Terminating" in sess.get_output():  # exception when waiting
             return False
-        if not sess.cmdsexec(cmdarray[random.randint(0, len(cmdarray) - 1)]):
+        if not sess.cmdsexec(cmdarray[index]):
             return False
         if "Terminating" in sess.get_output():
             return False
-    return num == 0
+        cnt = cnt + 1
+    return cnt == num
 
 
-crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
-while cmdloop(loopcmdnum) and sess.cmdreboot() and sess.wait2login():
-    pass
+while True:
+    loopcmdnum = loopnumbase + random.randint(0, 9)
+    timeout = timeoutbase + random.randint(0, 9)
+    crt.Screen.Send("#loopcmdnum " + str(loopcmdnum) + " timeout " + str(timeout) + "\n")
+    if not cmdloop(loopcmdnum, timeout):
+        break
+    if reboot and not (sess.cmdreboot() and sess.wait2login()):
+        break
 crt.Screen.Send("#game over!\n")
 crt.Dialog.MessageBox("#script exit")

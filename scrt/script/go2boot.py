@@ -8,10 +8,10 @@ sys.dont_write_bytecode = True
 from utils import session
 
 sess = session.sess(crt.GetActiveTab())
-opts = json.loads(crt.Arguments[0]) if crt.Arguments.Count == 1 else None
+opts = json.loads(crt.Arguments[0]) if crt.Arguments.Count == 1 else {}
 
-loopcnt = opts and opts.get("count", 1)
-key = opts and opts.get("key")
+loopcnt = opts.get("count", 1)
+key = opts.get("key")
 
 if not sess.is_uboot():
     sess.try_login()
