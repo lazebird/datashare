@@ -33,6 +33,7 @@ def cmdpreconfig():
 
 def cmdloop(num, timeout):
     cnt = 0
+    num = (num * len(cmdarray)) if order else num
     while cnt < num and not sess.wait(timeout):
         index = (cnt % len(cmdarray)) if order else random.randint(0, len(cmdarray) - 1)
         if "Terminating" in sess.get_output():  # exception when waiting
