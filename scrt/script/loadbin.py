@@ -62,4 +62,4 @@ if len(cmd) > 0:
     conflst.append({"name": name, "mode": mode})
     with open(modfilename, "w") as f:
         json.dump(conflst, f)
-    do_load(cmd[0], mode)
+    do_load(name, mode)
