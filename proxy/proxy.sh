@@ -1,6 +1,7 @@
 #!/bin/sh
 
 logcmd="logger -is -p user.debug -t proxy"
+repoURL="https://github.com/lazebird/datashare/raw/master"
 
 print_exit() { # parameter: logstr
     $logcmd "$1" >&2 && exit 1
@@ -29,10 +30,10 @@ get_clash() {
     arch=$(uname -m)
     case $arch in
     x86_64)
-        fetch_file clash $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/clash-linux-amd64"
+        fetch_file clash $workdir "$repoURL/proxy/clash-linux-amd64"
         ;;
     mips)
-        fetch_file clash $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/clash-linux-mipsle-hardfloat"
+        fetch_file clash $workdir "$repoURL/proxy/clash-linux-mipsle-hardfloat"
         ;;
     *)
         print_exit "# unsupportted arch $arch."
@@ -52,16 +53,16 @@ configurl=$(cat $BASHDIR/$urlfile) # secret
 cd $workdir
 $logcmd "#### starting proxy temporally in $workdir:"
 get_clash && chmod +x clash
-fetch_file Country.mmdb $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/Country.mmdb"
+fetch_file Country.mmdb $workdir "$repoURL/proxy/Country.mmdb"
 mv $configname $configbak 2>/dev/null # save last config
-fetch_file $configname $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/config.yaml"
+fetch_file $configname $workdir "$repoURL/proxy/config.yaml"
 while [ kill $(pgrep clash) ] 2>/dev/null; do sleep 1s; done
 ls $configname >/dev/null && (./clash -d . >proxy.log 2>&1 &) && $logcmd "# starting proxy temporally success"
 
 $logcmd "#### updating configure files in $workdir:"
 [ ! -e "$configbak" ] && mv $configname $configbak 2>/dev/null || rm -f $configname # save/remove empty config
 fetch_file $configname $workdir $configurl $configbak
-fetch_file reconf.lua $workdir "https://code.aliyun.com/lazebird/datashare/raw/master/proxy/reconf.lua"
+fetch_file reconf.lua $workdir "$repoURL/proxy/reconf.lua"
 
 $logcmd "#### processing configure files in $workdir:"
 lua reconf.lua $configname || print_exit "# reconf $configname failed."
